@@ -345,7 +345,7 @@ GO
 --Login
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[Login](
-	[Idusuario] [nchar](10) NOT NULL,
+	[Idusuario] [int] NOT NULL,
 	[Reintentos] [smallint] NULL,
 	[Fecha] [date] NOT NULL,
 	[Logeoexitoso] [nchar](2) NOT NULL
