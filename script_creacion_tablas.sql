@@ -53,6 +53,22 @@ CREATE TABLE [gd_esquema].[FSOCIETY.UruarioRoles](
 ) ON [PRIMARY]
 
 GO
+CREATE TABLE [gd_esquema].[FSOCIETY.Login](
+	[Idusuario] [nchar](10) NOT NULL,
+	[Reintentos] [smallint] NULL,
+	[Fecha] [date] NOT NULL,
+	[Logeoexitoso] [nchar](2) NOT NULL
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [gd_esquema].[FSOCIETY.Usuarios](
+	[Idusuario] [int] NOT NULL,
+	[Username] [varchar](30) NOT NULL,
+	[Password] [varbinary](50) NOT NULL,
+  PRIMARY KEY ([Idusuario])
+ )ON [PRIMARY]
+
+ GO
 
 SET ANSI_PADDING OFF
 GO
