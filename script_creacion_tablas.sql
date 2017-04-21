@@ -52,6 +52,53 @@ CREATE TABLE [gd_esquema].[FSOCIETY.UruarioRoles](
 	[IDRol] [int] NOT NULL FOREIGN KEY REFERENCES [gd_esquema].[FSOCIETY.Roles](ID),
 ) ON [PRIMARY]
 
+/****** Object:  Table [gd_esquema].[FSOCIETY.Clientes]    Script Date: 4/20/2017 10:05:17 PM ******/
+CREATE TABLE [gd_esquema].[FSOCIETY.Clientes](
+	[ID] [int] NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[Apellido] [varchar](50) NOT NULL,
+	[DNI] [int] NOT NULL,
+	[Mail] [varchar](50) NULL,
+	[Telefono] [int] NOT NULL,
+	[Direccion] [varchar](100) NOT NULL,
+	[CodigoPostal] [int] NOT NULL,
+	[FechaDeNacimiento] [smalldatetime] NOT NULL,
+	[Inhabilitado] [bit] NOT NULL,
+ CONSTRAINT [PK_FSOCIETY.Clientes] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [gd_esquema].[FSOCIETY.Facturacion]    Script Date: 4/20/2017 10:05:28 PM ******/
+CREATE TABLE [gd_esquema].[FSOCIETY.Facturacion](
+	[ID] [int] NOT NULL,
+	[IDClientes] [int] NOT NULL,
+	[IDViaje] [int] NOT NULL,
+	[FechaInicio] [smalldatetime] NOT NULL,
+	[FechaFin] [smalldatetime] NOT NULL,
+	[Importe] [int] NOT NULL,
+ CONSTRAINT [PK_FSOCIETY.Facturacion] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+/****** Object:  Table [gd_esquema].[FSOCIETY.Rendicion]    Script Date: 4/20/2017 11:24:58 PM ******/
+CREATE TABLE [gd_esquema].[FSOCIETY.Rendicion](
+	[ID] [int] NOT NULL,
+	[IDChofer] [int] NOT NULL,
+	[IDTurno] [int] NOT NULL,
+	[Fecha] [smalldatetime] NOT NULL,
+	[ImporteTotal] [int] NOT NULL,
+ CONSTRAINT [PK_FSOCIETY.Rendicion] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 CREATE TABLE [gd_esquema].[FSOCIETY.Login](
 	[Idusuario] [nchar](10) NOT NULL,
