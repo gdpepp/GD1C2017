@@ -10,24 +10,35 @@ GO
 SET ANSI_PADDING ON
 GO
 
-/****** Object:  Table [gd_esquema].[FSOCIETY.Roles]    Script Date: 4/19/2017 7:01:31 PM ******/
+CREATE SEQUENCE [gd_esquema].[FSOCIETY.RolesIDSeq]
+	START WITH 1
+	INCREMENT BY 1
+	NO CACHE
+	;
+GO
+
 CREATE TABLE [gd_esquema].[FSOCIETY.Roles](
-	[ID] [int] NOT NULL PRIMARY KEY,
+	[ID] [int] NOT NULL PRIMARY KEY DEFAULT (NEXT VALUE FOR [gd_esquema].[FSOCIETY.RolesIDSeq]),
 	[Descripcion] [varchar](50) NOT NULL UNIQUE,
 	[Habilitado] [Bit] NOT NULL DEFAULT 1,
 ) ON [PRIMARY]
 
 GO
 
-/****** Object:  Table [gd_esquema].[FSOCIETY.Funcionalidades]    Script Date: 4/19/2017 7:01:31 PM ******/
+CREATE SEQUENCE [gd_esquema].[FSOCIETY.FuncionalidadesIDSeq]
+	START WITH 1
+	INCREMENT BY 1
+	NO CACHE
+	;
+GO
+
 CREATE TABLE [gd_esquema].[FSOCIETY.Funcionalidades](
-	[ID] [int] NOT NULL PRIMARY KEY,
+	[ID] [int] NOT NULL PRIMARY KEY DEFAULT (NEXT VALUE FOR [gd_esquema].[FSOCIETY.FuncionalidadesIDSeq]),
 	[Descripcion] [varchar](50) NOT NULL UNIQUE,
 ) ON [PRIMARY]
 
 GO
 
-/****** Object:  Table [gd_esquema].[FSOCIETY.RolFuncionalidades]    Script Date: 4/19/2017 7:01:31 PM ******/
 CREATE TABLE [gd_esquema].[FSOCIETY.RolFuncionalidades](
 	[IDRol] [int] NOT NULL FOREIGN KEY REFERENCES [gd_esquema].[FSOCIETY.Roles](ID), 
 	[IDFuncionalidad] [int] NOT NULL FOREIGN KEY REFERENCES [gd_esquema].[FSOCIETY.Funcionalidades](ID),
@@ -36,12 +47,12 @@ CREATE TABLE [gd_esquema].[FSOCIETY.RolFuncionalidades](
 
 GO
 
-/****** Object:  Table [gd_esquema].[FSOCIETY.UsuarioRoles]    Script Date: 4/19/2017 7:01:31 PM ******/
---TBD
+CREATE TABLE [gd_esquema].[FSOCIETY.UruarioRoles](
+	[IDUsuario] [int] NOT NULL FOREIGN KEY REFERENCES [gd_esquema].[FSOCIETY.Usuarios](ID), 
+	[IDRol] [int] NOT NULL FOREIGN KEY REFERENCES [gd_esquema].[FSOCIETY.Roles](ID),
+) ON [PRIMARY]
 
-　
-SET ANSI_PADDING OFF
 GO
 
-　
-　
+SET ANSI_PADDING OFF
+GO
