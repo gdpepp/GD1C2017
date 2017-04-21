@@ -39,6 +39,39 @@ GO
 /****** Object:  Table [gd_esquema].[FSOCIETY.UsuarioRoles]    Script Date: 4/19/2017 7:01:31 PM ******/
 --TBD
 
+/****** Object:  Table [gd_esquema].[FSOCIETY.Clientes]    Script Date: 4/20/2017 10:05:17 PM ******/
+CREATE TABLE [gd_esquema].[FSOCIETY.Clientes](
+	[ID] [int] NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[Apellido] [varchar](50) NOT NULL,
+	[DNI] [int] NOT NULL,
+	[Mail] [varchar](50) NULL,
+	[Telefono] [int] NOT NULL,
+	[Direccion] [varchar](100) NOT NULL,
+	[CodigoPostal] [int] NOT NULL,
+	[FechaDeNacimiento] [smalldatetime] NOT NULL,
+	[Inhabilitado] [bit] NOT NULL,
+ CONSTRAINT [PK_FSOCIETY.Clientes] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table [gd_esquema].[FSOCIETY.Facturacion]    Script Date: 4/20/2017 10:05:28 PM ******/
+CREATE TABLE [gd_esquema].[FSOCIETY.Facturacion](
+	[ID] [int] NOT NULL,
+	[IDClientes] [int] NOT NULL,
+	[IDViaje] [int] NOT NULL,
+	[FechaInicio] [smalldatetime] NOT NULL,
+	[FechaFin] [smalldatetime] NOT NULL,
+	[Importe] [int] NOT NULL,
+ CONSTRAINT [PK_FSOCIETY.Facturacion] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 　
 SET ANSI_PADDING OFF
 GO
