@@ -101,7 +101,7 @@ CREATE TABLE [gd_esquema].[FSOCIETY.Rendicion](
 
 GO
 CREATE TABLE [gd_esquema].[FSOCIETY.Login](
-	[Idusuario] [nchar](10) NOT NULL,
+	[Idusuario] [int] NOT NULL,
 	[Reintentos] [smallint] NULL,
 	[Fecha] [date] NOT NULL,
 	[Logeoexitoso] [nchar](2) NOT NULL
