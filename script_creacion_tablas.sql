@@ -1,6 +1,9 @@
 USE [GD1C2017]
 GO
 
+CREATE SCHEMA FSOCIETY
+GO
+
 /****** Object:  Table [FSOCIETY].[Autos]    Script Date: 21/04/2017 12:36:03 p.m. ******/
 SET ANSI_NULLS ON
 GO
