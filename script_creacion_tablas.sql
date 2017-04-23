@@ -288,6 +288,52 @@ GO
 ALTER TABLE [FSOCIETY].[Cliente] CHECK CONSTRAINT [FK_Cliente_Usuarios]
 GO
 
+----------------------------------------
+--Viajes
+----------------------------------------
+CREATE TABLE [FSOCIETY].[Viaje](
+	[IdChofer] [int] NOT NULL,
+	[IdAuto] [int] NOT NULL,
+	[IdCliente] [int] NOT NULL,
+	[IdTurno] [int] NOT NULL,
+	[CantKm] [int] NOT NULL,
+	[FechaHoraInicio] [date] NOT NULL,
+	[FechaHoraFin] [date] NOT NULL
+ CONSTRAINT [PK_Viaje] PRIMARY KEY CLUSTERED 
+(
+	[IdChofer], [IdCliente], [IdTurno]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje]  WITH CHECK ADD  CONSTRAINT [FK_Viaje_Chofer] FOREIGN KEY([IdChofer])
+REFERENCES [FSOCIETY].[Chofer] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje] CHECK CONSTRAINT [FK_Viaje_Chofer]
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje]  WITH CHECK ADD  CONSTRAINT [FK_Viaje_Auto] FOREIGN KEY([IdAuto])
+REFERENCES [FSOCIETY].[Autos] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje] CHECK CONSTRAINT [FK_Viaje_Auto]
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje]  WITH CHECK ADD  CONSTRAINT [FK_Viaje_Cliente] FOREIGN KEY([IdCliente])
+REFERENCES [FSOCIETY].[Cliente] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje] CHECK CONSTRAINT [FK_Viaje_Cliente]
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje]  WITH CHECK ADD  CONSTRAINT [FK_Viaje_Turno] FOREIGN KEY([IdTurno])
+REFERENCES [FSOCIETY].[Turnos] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[Viaje] CHECK CONSTRAINT [FK_Viaje_Turno]
+GO
 
 ----------------------------------------
 --Facturacion
@@ -356,6 +402,9 @@ CREATE TABLE [FSOCIETY].[Login](
 
 GO
 
+ALTER TABLE [FSOCIETY].[Login] WITH CHECK ADD  CONSTRAINT [FK_Login_Usuario] FOREIGN KEY([Idusuario])
+REFERENCES [FSOCIETY].[Usuarios] ([Id])
+GO
 
 SET ANSI_PADDING OFF
 GO
