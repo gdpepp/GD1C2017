@@ -553,9 +553,11 @@ GO
 
 CREATE PROCEDURE FSOCIETY.sp_insert_funcionalidad (@idrol INT, @idfun INT) AS 
 BEGIN TRANSACTION T1
-  /* agrego funcionalidad si es que no lo tenia asignado previamente */
+  /* agrego funcionalidad si no existe */
     INSERT INTO FSOCIETY.RolFuncionalidades (idRol, IdFuncionalidad)
     VALUES (@idrol, @idfun)
+    if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
 COMMIT TRANSACTION T1
 GO
 
