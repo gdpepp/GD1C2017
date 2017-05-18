@@ -15,7 +15,7 @@ BEGIN TRANSACTION T1
   SELECT * FROM FSOCIETY.Roles
   WHERE (ID <> 1) 
   OR 1 = (SELECT ID
-			FROM FSOCIETY.Usuarios u, FSOCIETY.UsuariosRoles r
+	  FROM FSOCIETY.Usuarios u, FSOCIETY.UsuariosRoles r
             WHERE u.Username = @username
             AND r.IdRol = u.IdPersona);
 COMMIT TRANSACTION T1
@@ -25,9 +25,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_usua
 DROP PROCEDURE FSOCIETY.sp_delete_usuarios_roles
 GO
 
-CREATE PROCEDURE FSOCIETY.sp_delete_usuarios_roles(@id int) AS 
+CREATE PROCEDURE FSOCIETY.sp_delete_usuarios_roles(@id int) AS
 BEGIN TRANSACTION T1
-	DELETE FSOCIETY.Usuarios where Id = @id 
+    DELETE FSOCIETY.UsuariosRoles where IdRol = @id
 COMMIT TRANSACTION T1
 GO
 
