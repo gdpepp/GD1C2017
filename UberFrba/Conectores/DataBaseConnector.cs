@@ -60,6 +60,16 @@ namespace UberFrba.Utils
             }
         }
 
+        public void executeQueryWithParameters(String query, Dictionary<String,String> dictionary) {
+            openConnection();
+            SqlCommand command = new SqlCommand(query, getConnectionString());
+            foreach(String key in dictionary.Keys){
+                command.Parameters.Add(key, dictionary[key]);
+            }
+            command.ExecuteNonQuery();
+            closeConnection();
+        }
+
         public DataTable select_query(String query)
         {
 
