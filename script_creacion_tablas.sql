@@ -176,7 +176,7 @@ GO
 CREATE TABLE [FSOCIETY].[Usuarios](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [varchar](30) NOT NULL,
-	[Password] [varbinary](50) NOT NULL,
+	[Password] [varchar](250) NOT NULL,
 	[IdPersona] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
