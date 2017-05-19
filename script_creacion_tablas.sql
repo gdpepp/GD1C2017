@@ -178,6 +178,7 @@ CREATE TABLE [FSOCIETY].[Usuarios](
 	[Username] [varchar](30) NOT NULL,
 	[Password] [varchar](250) NOT NULL,
 	[IdPersona] [int] NOT NULL,
+	[Reintentos] [smallint] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -454,20 +455,23 @@ GO
 
 ALTER TABLE [FSOCIETY].[Rendicion] CHECK CONSTRAINT [FK_Rendicion_Turnos]
 GO
+
 ----------------------------------------
---Login
+--Creo al admin
 ----------------------------------------
-CREATE TABLE [FSOCIETY].[Login](
-	[Idusuario] [int] NOT NULL,
-	[Reintentos] [smallint] NULL,
-	[Fecha] [date] NOT NULL,
-	[Logeoexitoso] [nchar](2) NOT NULL
-) ON [PRIMARY]
+insert into FSOCIETY.Direccion(Calle,Altura,Localidad)
+values('saraza','877','CABA')
 
 GO
 
-ALTER TABLE [FSOCIETY].[Login] WITH CHECK ADD  CONSTRAINT [FK_Login_Usuario] FOREIGN KEY([Idusuario])
-REFERENCES [FSOCIETY].[Usuarios] ([Id])
+insert into FSOCIETY.Personas(Nombre,Apellido,DNI,IdDireccion,[Fecha de Nacimiento])
+values('Admin','Admin','35323521',1,'1990/07/25')
+
+GO
+
+insert into FSOCIETY.Usuarios(Username,Password,IdPersona,Reintentos)
+values('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7',1,0)
+
 GO
 
 SET ANSI_PADDING OFF

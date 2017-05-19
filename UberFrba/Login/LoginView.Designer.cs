@@ -56,6 +56,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(226, 20);
             this.txtPassword.TabIndex = 2;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -99,13 +100,14 @@
             // lbErrorMessage
             // 
             this.lbErrorMessage.AutoSize = true;
-            this.lbErrorMessage.Location = new System.Drawing.Point(94, 242);
+            this.lbErrorMessage.Location = new System.Drawing.Point(94, 238);
             this.lbErrorMessage.Name = "lbErrorMessage";
             this.lbErrorMessage.Size = new System.Drawing.Size(0, 13);
             this.lbErrorMessage.TabIndex = 6;
+            this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbErrorMessage.Visible = false;
             // 
-            // Login
+            // LoginView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -118,7 +120,7 @@
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.MaximizeBox = false;
-            this.Name = "Login";
+            this.Name = "LoginView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);

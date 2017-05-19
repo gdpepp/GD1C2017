@@ -26,6 +26,7 @@ namespace UberFrba
 
         private void button1_Click(object sender, EventArgs e)
         {
+            hideErrorMessage();
             username = this.txtUsername.Text;
             password = this.txtPassword.Text;
             try
@@ -33,33 +34,43 @@ namespace UberFrba
                 validateFields();
                 DAOUsers dao = new DAOUsers();
                 Usuario usuario = dao.getUser(username);
-
-                if (usuario.passwordEquals(SHA256.encriptar(password)))
+                if (!usuario.isBloqued())
                 {
-                    setupRoles(usuario);
-                    hideErrorMessage();
-                    showSelectProfile(usuario);
+                    if (usuario.passwordEquals(SHA256.encriptar(password)))
+                    {
+                        dao.resetRetries(usuario);
+                        setupRoles(usuario);
+                        hideErrorMessage();
+                        showSelectProfile(usuario);
+                    }
+                    else
+                    {
+                        dao.incrementRetries(usuario);
+                        throw new Exception("Por favor ingrese correctamente la password");
+                    }
                 }
                 else {
-                    throw new Exception("Por favor ingrese correctamente la password");
+                    throw new Exception("El usuario esta bloqueado, comuniquese con el administrador");
                 }
-
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 //MessageBox.Show(ex.Message.ToString());
                 showErrorMessage(ex.Message.ToString());
             }
 
         }
 
-        private void validateFields(){
-            if (txtUsername.Text == string.Empty || txtPassword.Text == string.Empty )
+        private void validateFields()
+        {
+            if (txtUsername.Text == string.Empty || txtPassword.Text == string.Empty)
             {
                 throw new Exception("El usuario y password son obligatorios");
             }
         }
 
-        private void showErrorMessage(String message) {
+        private void showErrorMessage(String message)
+        {
             lbErrorMessage.ForeColor = Color.Red;
             lbErrorMessage.Text = message;
             lbErrorMessage.Visible = true;
@@ -77,7 +88,8 @@ namespace UberFrba
             usuario.setRoles(dr.getRolesByUserId(usuario.getId()));
         }
 
-        private void showSelectProfile(Usuario u) {
+        private void showSelectProfile(Usuario u)
+        {
 
             if (u.rolesCount() == 1)
             {
@@ -86,7 +98,7 @@ namespace UberFrba
                 this.Hide();
                 profile.Show();
             }
-            
+
         }
     }
 }

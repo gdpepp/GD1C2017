@@ -14,6 +14,7 @@ namespace UberFrba.Mapping
         private String username = "";
         private String pass = "";
         private Int32 idPersona;
+        private Int32 reintentos;
         private List<Rol> roles;
 
         public Usuario() { 
@@ -24,6 +25,7 @@ namespace UberFrba.Mapping
             this.username = username;
             this.pass = pass;
             this.idPersona = idPersona;
+            this.reintentos = 0;
             this.roles = new List<Rol>();
         }
 
@@ -33,7 +35,8 @@ namespace UberFrba.Mapping
                 this.username = Convert.ToString(r["Username"]);
                 this.id = Convert.ToInt32(r["id"]);
                 this.pass = Convert.ToString(r["Password"]);
-                this.id = Convert.ToInt32(r["idPersona"]);
+                this.idPersona = Convert.ToInt32(r["idPersona"]);
+                this.reintentos = Convert.ToInt32(r["Reintentos"]);
             }
         }
 
@@ -72,9 +75,27 @@ namespace UberFrba.Mapping
         public int rolesCount() {
             return roles.Count;
         }
-       
 
+        public void setIntentos(Int32 i) {
+            this.reintentos = i;
+        }
 
+        public Int32 getIntentos() {
+            return this.reintentos;
+        }
 
+        public Boolean isBloqued() {
+            return reintentos.Equals(3);
+        }
+
+        public void incrementarReintentos() {
+            if (reintentos < 3) {
+                reintentos = reintentos + 1;
+            }
+        }
+
+        public void resetearReintentos() {
+            this.reintentos = 0;
+        }
     }
 }

@@ -11,11 +11,15 @@ namespace UberFrba.Dao
 {
     class DAOUsers
     {
-        public Usuario getUser(String username)
-        {
+        private DataBaseConnector db;
 
-                DataBaseConnector db = DataBaseConnector.getInstance();
-                DataTable dt = db.select_query("Select Id,Username,Password,IdPersona from FSOCIETY.Usuarios where Username = '" + username + "'");
+        public DAOUsers() {
+            this.db = DataBaseConnector.getInstance();
+        }
+
+        public Usuario getUser(String username)
+        {       
+                DataTable dt = db.select_query("Select Id,Username,Password,IdPersona,Reintentos from FSOCIETY.Usuarios where Username = '" + username + "'");
 
                 if (dt.Rows.Count == 1)
                 {
@@ -35,5 +39,21 @@ namespace UberFrba.Dao
                 }
         }
 
+        public void incrementRetries(Usuario user) {
+            user.incrementarReintentos();
+            updateUserRetries(user);    
+        }
+
+        public void resetRetries(Usuario user) {
+            user.resetearReintentos();
+            updateUserRetries(user);
+        }
+
+        private void updateUserRetries(Usuario user){
+            Dictionary<String, String> dic = new Dictionary<String, String>();
+            dic.Add("@reintentos", user.getIntentos().ToString());
+            dic.Add("idUsuario", user.getId().ToString());
+            db.executeQueryWithParameters("update FSOCIETY.Usuarios set Reintentos = @reintentos where id = @idUsuario",dic);
+        }
     }
 }
