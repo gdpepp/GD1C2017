@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace UberFrba.Abm_Automovil
 {
-    public partial class Form2 : Form
+    public partial class AltaModificacion : Form
     {
-        public Form2()
+        public AltaModificacion()
         {
             InitializeComponent();
         }

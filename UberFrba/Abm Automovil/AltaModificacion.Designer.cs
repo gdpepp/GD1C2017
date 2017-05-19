@@ -1,6 +1,6 @@
 ﻿namespace UberFrba.Abm_Automovil
 {
-    partial class Form2
+    partial class AltaModificacion
     {
         /// <summary>
         /// Required designer variable.
