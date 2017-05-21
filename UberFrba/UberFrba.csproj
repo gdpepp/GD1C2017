@@ -57,11 +57,23 @@
     <Compile Include="Abm Automovil\AltaModificacion.Designer.cs">
       <DependentUpon>AltaModificacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Chofer\Form1.cs">
+   <Compile Include="Abm Chofer\ABMChofer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Chofer\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Chofer\ABMChofer.Designer.cs">
+      <DependentUpon>ABMChofer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Chofer\Alta_Chofer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Chofer\Alta_Chofer.Designer.cs">
+      <DependentUpon>Alta_Chofer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Chofer\ModificarChofer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Chofer\ModificarChofer.Designer.cs">
+      <DependentUpon>ModificarChofer.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Cliente\Form1.cs">
       <SubType>Form</SubType>
@@ -127,7 +139,16 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\SHA256.cs" />
-    <EmbeddedResource Include="Abm Automovil\Automovil.resx">
+   <EmbeddedResource Include="Abm Chofer\ABMChofer.resx">
+      <DependentUpon>ABMChofer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Chofer\Alta_Chofer.resx">
+      <DependentUpon>Alta_Chofer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Chofer\ModificarChofer.resx">
+      <DependentUpon>ModificarChofer.cs</DependentUpon>
+    </EmbeddedResource> 
+ <EmbeddedResource Include="Abm Automovil\Automovil.resx">
       <DependentUpon>Automovil.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Automovil\AltaModificacion.resx">
