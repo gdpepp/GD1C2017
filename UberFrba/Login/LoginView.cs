@@ -39,7 +39,6 @@ namespace UberFrba
                     if (usuario.passwordEquals(SHA256.encriptar(password)))
                     {
                         dao.resetRetries(usuario);
-                        setupRoles(usuario);
                         hideErrorMessage();
                         showSelectProfile(usuario);
                     }
@@ -49,7 +48,8 @@ namespace UberFrba
                         throw new Exception("Por favor ingrese correctamente la password");
                     }
                 }
-                else {
+                else
+                {
                     throw new Exception("El usuario esta bloqueado, comuniquese con el administrador");
                 }
             }
@@ -82,23 +82,11 @@ namespace UberFrba
             lbErrorMessage.Text = "";
         }
 
-        private void setupRoles(Usuario usuario)
-        {
-            DAORoles dr = new DAORoles();
-            usuario.setRoles(dr.getRolesByUserId(usuario.getId()));
-        }
-
         private void showSelectProfile(Usuario u)
         {
-
-            if (u.rolesCount() == 1)
-            {
-                SelectProfile profile = new SelectProfile();
-                profile.user = u;
-                this.Hide();
-                profile.Show();
-            }
-
+            SelectProfile profile = new SelectProfile(u);
+            profile.ShowDialog();
+            this.Close();
         }
     }
 }

@@ -233,6 +233,7 @@ namespace UberFrba.Abm_Rol
             this.button1.TabIndex = 12;
             this.button1.Text = "Guardar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // DefinicionRol
             // 
@@ -264,5 +265,10 @@ namespace UberFrba.Abm_Rol
         private TextBox textBox1;
         private Label label2;
         private Button button1;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
