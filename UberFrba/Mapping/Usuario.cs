@@ -15,7 +15,7 @@ namespace UberFrba.Mapping
         private String pass = "";
         private Int32 idPersona;
         private Int32 reintentos;
-        private List<Rol> roles;
+        private Rol rol;
 
         public Usuario() { 
         }
@@ -26,7 +26,6 @@ namespace UberFrba.Mapping
             this.pass = pass;
             this.idPersona = idPersona;
             this.reintentos = 0;
-            this.roles = new List<Rol>();
         }
 
         public Usuario(DataRowCollection rows) {
@@ -60,22 +59,14 @@ namespace UberFrba.Mapping
             return this.idPersona;
         }
 
-        public List<Rol> getRoles() {
-            return this.roles;
+        public Rol getRol() {
+            return this.rol;
         }
 
-        public void setRoles(List<Rol> roles) {
-            this.roles = roles;
+        public void setRol(Rol rol) {
+            this.rol = rol;
         }
-
-        public void addRol(Rol rol) {
-            this.roles.Add(rol);
-        }
-
-        public int rolesCount() {
-            return roles.Count;
-        }
-
+        
         public void setIntentos(Int32 i) {
             this.reintentos = i;
         }

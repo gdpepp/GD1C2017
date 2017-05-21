@@ -39,7 +39,8 @@
             this.comboBox1.Location = new System.Drawing.Point(97, 89);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(225, 21);
-            this.comboBox1.TabIndex = 0;
+            this.comboBox1.TabIndex = 2;
+            this.comboBox1.Text = "Seleccione un usuario";
             // 
             // label1
             // 
@@ -48,7 +49,7 @@
             this.label1.Location = new System.Drawing.Point(59, 56);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(322, 16);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Seleccione el rol con el que desea ingresar...";
             // 
             // btnContinuar
@@ -56,7 +57,7 @@
             this.btnContinuar.Location = new System.Drawing.Point(165, 181);
             this.btnContinuar.Name = "btnContinuar";
             this.btnContinuar.Size = new System.Drawing.Size(75, 23);
-            this.btnContinuar.TabIndex = 2;
+            this.btnContinuar.TabIndex = 1;
             this.btnContinuar.Text = "Continuar";
             this.btnContinuar.UseVisualStyleBackColor = true;
             this.btnContinuar.Click += new System.EventHandler(this.btnContinuar_Click);

@@ -64,7 +64,7 @@ namespace UberFrba.Utils
             openConnection();
             SqlCommand command = new SqlCommand(query, getConnectionString());
             foreach(String key in dictionary.Keys){
-                command.Parameters.Add(key, dictionary[key]);
+                command.Parameters.AddWithValue(key,dictionary[key]);
             }
             command.ExecuteNonQuery();
             closeConnection();
