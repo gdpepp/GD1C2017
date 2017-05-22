@@ -20,7 +20,7 @@ namespace UberFrba.Abm_Rol
         public AbmRol(Form parent, string userName)
         {
             this.parent = parent;
-            this.username = username;
+            this.userName = userName;
             InitializeComponent();
             this.fill_data_set();
         }
@@ -32,7 +32,7 @@ namespace UberFrba.Abm_Rol
                 //ejecuto sp para traer roles modificables
                 SqlCommand query = new SqlCommand("FSOCIETY.sp_get_modif_roles", connection);
                 query.CommandType = CommandType.StoredProcedure;
-                query.Parameters.Add(new SqlParameter("@username", this.username));
+                query.Parameters.Add(new SqlParameter("@username", this.userName));
 
                 //adapter
                 SqlDataAdapter adapter = new SqlDataAdapter(query);
