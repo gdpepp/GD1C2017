@@ -55,7 +55,6 @@ namespace UberFrba
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message.ToString());
                 showErrorMessage(ex.Message.ToString());
             }
 

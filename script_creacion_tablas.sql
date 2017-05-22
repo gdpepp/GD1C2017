@@ -1,7 +1,6 @@
 USE [GD1C2017]
 GO
 
-
 /*Set schema*/
 DECLARE @schemaName as nvarchar(100)
 DECLARE @schemaId as int
@@ -129,31 +128,14 @@ ALTER TABLE [FSOCIETY].[RolFuncionalidades] CHECK CONSTRAINT [FK_RolFuncionalida
 GO
 
 ----------------------------------------
---Direccion
-----------------------------------------
-CREATE TABLE [FSOCIETY].[Direccion](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Calle] [varchar](100) NOT NULL,
-	[Altura] [varchar](10) NOT NULL,
-	[Piso] [nchar](10) NULL,
-	[Dpto] [nchar](10) NULL,
-	[Localidad] [varchar](100) NOT NULL,
- CONSTRAINT [PK_Direccion] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-
-----------------------------------------
 --Personas
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[Personas](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Nombre] [varchar](100) NOT NULL,
 	[Apellido] [varchar](100) NOT NULL,
-	[DNI] [varchar](8) NOT NULL,
-	[IdDireccion] [int] NOT NULL,
+	[DNI] [varchar](8) NOT NULL UNIQUE,
+	[Direccion] [varchar](250) NOT NULL,
 	[Fecha de Nacimiento] [smalldatetime] NOT NULL,
  CONSTRAINT [PK_Personas] PRIMARY KEY CLUSTERED 
 (
@@ -161,13 +143,6 @@ CREATE TABLE [FSOCIETY].[Personas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-
-ALTER TABLE [FSOCIETY].[Personas]  WITH CHECK ADD  CONSTRAINT [FK_Persona_Direccion] FOREIGN KEY([IdDireccion])
-REFERENCES [FSOCIETY].[Direccion] ([Id])
-GO
-
-ALTER TABLE [FSOCIETY].[Personas] CHECK CONSTRAINT [FK_Persona_Direccion]
 GO
 
 ----------------------------------------
@@ -459,13 +434,8 @@ GO
 ----------------------------------------
 --Creo al admin
 ----------------------------------------
-insert into FSOCIETY.Direccion(Calle,Altura,Localidad)
-values('saraza','877','CABA')
-
-GO
-
-insert into FSOCIETY.Personas(Nombre,Apellido,DNI,IdDireccion,[Fecha de Nacimiento])
-values('Admin','Admin','35323521',1,'1990/07/25')
+insert into FSOCIETY.Personas(Nombre,Apellido,DNI,Direccion,[Fecha de Nacimiento])
+values('Admin','Admin','35323521','Salvigny 1821','1990/07/25')
 
 GO
 
@@ -474,10 +444,10 @@ values('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7
 
 GO
 
-INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-VALUES (1, 'Administrador', 1),
-       (2, 'Chofer', 1),
-       (3, 'Cliente', 1);
+INSERT INTO FSOCIETY.Roles (Descripcion, Habilitado)
+VALUES ('Administrador', 1),
+       ('Chofer', 1),
+       ('Cliente', 1);
 
 GO
 

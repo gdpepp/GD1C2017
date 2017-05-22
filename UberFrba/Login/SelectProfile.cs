@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Mapping;
 using UberFrba.Dao;
+using UberFrba.Menu;
 
 namespace UberFrba.Login
 {
@@ -22,7 +23,6 @@ namespace UberFrba.Login
             this.user = (Usuario)user;
             setupRoles();
             InitializeComponent();
-
             setupCombobox();
 
         }
@@ -30,31 +30,32 @@ namespace UberFrba.Login
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-
+            Rol r = comboBox1.SelectedItem as Rol;
+            user.setRol(r);
+            showMainMenu();
         }
 
 
         private void setupCombobox()
         {
-            this.comboBox1.DataSource = new BindingSource(convertToDic(), null);
-            this.comboBox1.ValueMember = "Key";
-            this.comboBox1.DisplayMember = "Value";
-        }
-
-        private Dictionary<string, string> convertToDic()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            foreach (Rol r in roles)
-            {
-                dic.Add(r.getId().ToString(), r.getDescription());
-            }
-            return dic;
+            this.comboBox1.ValueMember = "id";
+            this.comboBox1.DisplayMember = "description";
+            this.comboBox1.Sorted = true;
+            this.comboBox1.DataSource = roles;
         }
 
         private void setupRoles()
         {
             DAORoles dao = new DAORoles();
             this.roles = dao.getRolesByUserId(user.getId());
+        }
+
+        private void showMainMenu() {
+            UberFrba.Menu.MainMenu menu = new UberFrba.Menu.MainMenu(user);
+            this.Hide();//reimplementar con un close.
+            menu.ShowDialog();
+            this.Close();
+            
         }
 
         public void present()
@@ -66,7 +67,8 @@ namespace UberFrba.Login
             else
             {
                 user.setRol(roles[0]);
-                throw new Exception("No existe otra pantalla");
+                showMainMenu();
+                //throw new Exception("No existe otra pantalla");
             }
         }
 
