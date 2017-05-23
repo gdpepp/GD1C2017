@@ -30,6 +30,11 @@ namespace UberFrba.Mapping
             return description;
         }
 
+        public override string ToString()
+        {
+            return this.description;
+        }
+
     }
 
 
