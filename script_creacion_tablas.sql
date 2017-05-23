@@ -1,6 +1,10 @@
 USE [GD1C2017]
 GO
 
+/*Create schema*/
+CREATE SCHEMA FSOCIETY
+GO
+
 /*Set schema*/
 DECLARE @schemaName as nvarchar(100)
 DECLARE @schemaId as int
