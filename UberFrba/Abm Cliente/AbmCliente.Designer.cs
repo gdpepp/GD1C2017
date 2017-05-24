@@ -68,7 +68,6 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
             this.dataGridView1.Size = new System.Drawing.Size(493, 183);
             this.dataGridView1.TabIndex = 45;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_2);
             // 
             // DNI
             // 
@@ -135,6 +134,7 @@
             this.BTeliminar.TabIndex = 43;
             this.BTeliminar.Text = "Eliminar";
             this.BTeliminar.UseVisualStyleBackColor = true;
+            this.BTeliminar.Click += new System.EventHandler(this.BTeliminar_Click_1);
             // 
             // BTModificar
             // 
@@ -152,7 +152,6 @@
             this.CBbuscarf.Name = "CBbuscarf";
             this.CBbuscarf.Size = new System.Drawing.Size(80, 21);
             this.CBbuscarf.TabIndex = 41;
-            this.CBbuscarf.SelectedIndexChanged += new System.EventHandler(this.CBbuscarf_SelectedIndexChanged);
             // 
             // tb_obtener_filtro
             // 
@@ -169,6 +168,7 @@
             this.bt_Volver.TabIndex = 39;
             this.bt_Volver.Text = "Volver";
             this.bt_Volver.UseVisualStyleBackColor = true;
+            this.bt_Volver.Click += new System.EventHandler(this.bt_Volver_Click_1);
             // 
             // bt_buscar
             // 
@@ -178,6 +178,7 @@
             this.bt_buscar.TabIndex = 38;
             this.bt_buscar.Text = "Buscar";
             this.bt_buscar.UseVisualStyleBackColor = true;
+            this.bt_buscar.Click += new System.EventHandler(this.bt_buscar_Click);
             // 
             // bt_nuevo_cliente
             // 

@@ -72,5 +72,10 @@ namespace UberFrba.Login
             }
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
