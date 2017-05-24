@@ -18,10 +18,11 @@ namespace UberFrba
     {
         String username = "";
         String password = "";
-
+        
         public LoginView()
         {
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,8 +85,8 @@ namespace UberFrba
         private void showSelectProfile(Usuario u)
         {
             SelectProfile profile = new SelectProfile(u);
-            profile.ShowDialog();
-            this.Close();
+            this.Hide();
+            profile.present();
         }
     }
 }
