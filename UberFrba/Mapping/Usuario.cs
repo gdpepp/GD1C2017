@@ -40,7 +40,7 @@ namespace UberFrba.Mapping
         }
 
         public Boolean passwordEquals(String pass) {
-            return this.pass.Equals(pass);
+            return this.pass.ToUpper().Equals(pass);
         }
 
         public Int32 getId() {
