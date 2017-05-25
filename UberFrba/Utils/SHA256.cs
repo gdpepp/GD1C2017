@@ -18,9 +18,9 @@ namespace UberFrba.Utils
             StringBuilder output = new StringBuilder();
 
             for (int i = 0; i < hashedBytes.Length; i++)
-                output.Append(hashedBytes[i].ToString("x2").ToLower());
+                output.Append(hashedBytes[i].ToString("x2"));
 
-            return output.ToString();
+            return output.ToString().ToUpper();
         }
 
     }

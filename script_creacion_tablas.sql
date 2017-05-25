@@ -455,5 +455,62 @@ VALUES ('Administrador', 1),
 
 GO
 
+INSERT INTO FSOCIETY.UsuariosRoles
+VALUES(1,1)
+INSERT INTO FSOCIETY.UsuariosRoles
+VALUES(1,2)
+
 SET ANSI_PADDING OFF
 GO
+
+---------------------------------------
+--Creo stores
+---------------------------------------
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_hash_password')
+DROP PROCEDURE FSOCIETY.sp_hash_password
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_hash_password](@password VARCHAR(50),@hash NVARCHAR(65) OUTPUT)
+AS
+SELECT @hash = CONVERT(NVARCHAR(64),HashBytes('SHA2_256', @password),2)
+
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_insert_user')
+DROP PROCEDURE FSOCIETY.sp_insert_user
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_insert_user](@username VARCHAR(50),@idPersona int)
+AS
+	DECLARE @PASSWORD NVARCHAR(65)
+	EXECUTE FSOCIETY.sp_hash_password @username,@PASSWORD output
+	INSERT INTO FSOCIETY.Usuarios(Username,Password,IdPersona,Reintentos)
+	VALUES (@username, @PASSWORD, @idPersona,0)
+
+
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_create_user')
+DROP PROCEDURE FSOCIETY.sp_create_user
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_create_user](@idPersona int)
+AS
+
+DECLARE @ID int
+DECLARE @USER VARCHAR(50)
+DECLARE @usernameDefault varchar(50)
+SET @usernameDefault = 'user'
+
+	SELECT top 1 @ID=Id FROM FSOCIETY.Usuarios WHERE Username LIKE CONCAT(@usernameDefault,'%') ORDER BY Id DESC
+IF	(@ID IS NULL)
+	SET @USER = CONCAT(@usernameDefault,1)
+ELSE
+	SET @USER = CONCAT(@usernameDefault,@ID+1)
+
+EXECUTE FSOCIETY.sp_insert_user @USER,@idPersona
+
+
+GO
+
