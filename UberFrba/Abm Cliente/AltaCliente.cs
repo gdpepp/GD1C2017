@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApplication1;
+using UberFrba.Dao;
+
 
 namespace UberFrba.Abm_Cliente
 {
@@ -38,6 +40,7 @@ namespace UberFrba.Abm_Cliente
                 //dsp el cliente
                 //y dsp le agrego el rol
 
+                DAOClientes dao = new DAOClientes();
                 int idPersona = 0;
                 String direccion = string.Concat("Calle: " + this.fieldStreet +
                                                  " numero: " + this.FieldStreetNumer +
@@ -45,46 +48,25 @@ namespace UberFrba.Abm_Cliente
                                                  " dto: " + this.fieldDepartment +
                                                  " localidad: " + this.fieldLocalidad);
 
-                SqlConnection personConnection = DBConnection.getInstance().getConnection();
-                SqlCommand createPerson = new SqlCommand("FSOCIETY.sp_crear_persona", personConnection);
-                createPerson.Parameters.Add(new SqlParameter("@nombre", this.fieldName));
-                createPerson.Parameters.Add(new SqlParameter("@apellido", this.fieldSurname));
-                createPerson.Parameters.Add(new SqlParameter("@dni", this.fieldDocument));
-                createPerson.Parameters.Add(new SqlParameter("@direccion", direccion));
-                createPerson.Parameters.Add(new SqlParameter("@fecha_nacimiento", this.birthTimePicker.Value));
-                createPerson.Parameters.Add(new SqlParameter("@id", idPersona));
-                createPerson.CommandType = CommandType.StoredProcedure;
-                personConnection.Open();
+                Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, direccion, this.birthTimePicker.Value, idPersona);
 
-                if (createPerson.ExecuteNonQuery() > 0)
+                if (dao.crearPersona(persona) > 0)
                 {
-
-                    SqlConnection userConnection = DBConnection.getInstance().getConnection();
-                    SqlCommand createUser = new SqlCommand("FSOCIETY.sp_create_user", userConnection);
-                    createUser.Parameters.Add(new SqlParameter("@idPersona", idPersona));
-                    createUser.CommandType = CommandType.StoredProcedure;
-                    userConnection.Open();
-
-                    if (createUser.ExecuteNonQuery() > 0)
+                    persona.setIdPersona(dao.getIdPersona(persona));
+                 
+                    if (dao.crearUsuario(persona.idPerson) > 0)
                     {
                         //usuario.id es fk de cliente
                         //ver si queda asi o si se cambia
                         int idCliente = 0;
-                        SqlConnection clientConnection = DBConnection.getInstance().getConnection();
-                        SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", userConnection);
-                        createClient.Parameters.Add(new SqlParameter("@telefono", this.fieldTelephone));
-                        createClient.Parameters.Add(new SqlParameter("@mail", this.fieldMail));
-                        createClient.Parameters.Add(new SqlParameter("@codigoPostal", this.fieldZipcode));
-                        createClient.Parameters.Add(new SqlParameter("@idCliente", idCliente));
-                        createClient.CommandType = CommandType.StoredProcedure;
-                        clientConnection.Open();
 
-                        if (createClient.ExecuteNonQuery() > 0)
+                        Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona);
+
+                        if (dao.crearCliente(cliente) > 0)
                         {
                             MessageBox.Show("El cliente fue creado exitosamente");
-                            personConnection.Close();
-                            userConnection.Close();
-                            clientConnection.Close();
+                            cliente.setIdCliente(dao.getIdcliente(cliente));
+                            dao.closeConnections();
                             this.Close();
                         }
                         else
@@ -114,7 +96,8 @@ namespace UberFrba.Abm_Cliente
 
         public bool emptyFields()
         {
-            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, this.fieldTelephone, this.fieldZipcode, this.fieldStreet, this.FieldStreetNumer, this.fieldLocalidad};
+            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, 
+                this.fieldTelephone, this.fieldZipcode, this.fieldStreet, this.FieldStreetNumer, this.fieldLocalidad};
             return inputs.Any((t) => t.Text == "");
         }
     }

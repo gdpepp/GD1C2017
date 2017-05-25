@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UberFrba.Utils;
 using System.Data;
 using UberFrba.Mapping;
+using UberFrba.Abm_Cliente;
 
 namespace UberFrba.Dao
 {
@@ -17,9 +18,9 @@ namespace UberFrba.Dao
             this.db = DataBaseConnector.getInstance();
         }
 
-        public Usuario getUser(String username)
+        public Usuario getUser(Persona persona)
         {       
-                DataTable dt = db.select_query("Select Id,Username,Password,IdPersona,Reintentos from FSOCIETY.Usuarios where Username = '" + username + "'");
+               DataTable dt = db.select_query("Select Id,Username,Password,IdPersona,Reintentos from FSOCIETY.Usuarios where Username = '" + persona + "'");
 
                 if (dt.Rows.Count == 1)
                 {
