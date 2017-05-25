@@ -1,10 +1,6 @@
 USE [GD1C2017]
 GO
 
-/*Create schema*/
-CREATE SCHEMA FSOCIETY
-GO
-
 /*Set schema*/
 DECLARE @schemaName as nvarchar(100)
 DECLARE @schemaId as int
@@ -256,8 +252,8 @@ GO
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[Turnos](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Hora_De_Inicio] [time](0) NOT NULL,
-	[Hora_De_Finalizacion] [time](0) NOT NULL,
+	[Hora_De_Inicio] [int] NOT NULL,
+	[Hora_De_Finalizacion] [int] NOT NULL,
 	[Descripcion] [varchar](100) NOT NULL,
 	[Valor_Km] [smallmoney] NOT NULL,
 	[Precio_Base] [smallmoney] NOT NULL,

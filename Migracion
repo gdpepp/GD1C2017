@@ -14,3 +14,7 @@ Select distinct Chofer_Dni,Chofer_Nombre, Chofer_Apellido, Chofer_Direccion, Cho
 --Ingreso Personas de clientes
 insert into FSOCIETY.Personas(DNI,Nombre,Apellido,Direccion,[Fecha de Nacimiento])
 Select distinct Cliente_Dni,Cliente_Nombre,Cliente_Apellido,Cliente_Direccion,Cliente_Fecha_Nac from gd_esquema.Maestra
+
+-- Migro Turnos
+INSERT INTO FSOCIETY.Turnos(Hora_De_Inicio, Hora_De_Finalizacion, Descripcion, Valor_Km, Precio_Base, Habilitado)
+	SELECT DISTINCT Turno_Hora_Inicio, Turno_Hora_Fin, Turno_Descripcion, Turno_Valor_Kilometro, Turno_Precio_Base, 1 FROM gd_esquema.Maestra
