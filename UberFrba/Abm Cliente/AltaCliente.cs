@@ -33,34 +33,75 @@ namespace UberFrba.Abm_Cliente
             }
             if (!this.fieldDocument.Equals("0"))
             {
-                SqlConnection connection = DBConnection.getInstance().getConnection();
-                SqlCommand createUser = new SqlCommand("FSOCIETY.sp_crear_usuario", connection);
-                createUser.Parameters.Add(new SqlParameter("@username", this.fieldName));
-                createUser.CommandType = CommandType.StoredProcedure;
-                connection.Open();
-                if (createUser.ExecuteNonQuery() > 0)
+                //primero creo la persona
+                //dsp el usuario
+                //dsp el cliente
+                //y dsp le agrego el rol
+
+                int idPersona = 0;
+                String direccion = string.Concat("Calle: " + this.fieldStreet +
+                                                 " numero: " + this.FieldStreetNumer +
+                                                 " piso: " + this.fieldFloor +
+                                                 " dto: " + this.fieldDepartment +
+                                                 " localidad: " + this.fieldLocalidad);
+
+                SqlConnection personConnection = DBConnection.getInstance().getConnection();
+                SqlCommand createPerson = new SqlCommand("FSOCIETY.sp_crear_persona", personConnection);
+                createPerson.Parameters.Add(new SqlParameter("@nombre", this.fieldName));
+                createPerson.Parameters.Add(new SqlParameter("@apellido", this.fieldSurname));
+                createPerson.Parameters.Add(new SqlParameter("@dni", this.fieldDocument));
+                createPerson.Parameters.Add(new SqlParameter("@direccion", direccion));
+                createPerson.Parameters.Add(new SqlParameter("@fecha_nacimiento", this.birthTimePicker.Value));
+                createPerson.Parameters.Add(new SqlParameter("@id", idPersona));
+                createPerson.CommandType = CommandType.StoredProcedure;
+                personConnection.Open();
+
+                if (createPerson.ExecuteNonQuery() > 0)
                 {
-                    SqlConnection clientConnection = DBConnection.getInstance().getConnection();
-                    SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", clientConnection);
-                    createClient.Parameters.Add(new SqlParameter("@username", this.fieldName));
-                    createClient.CommandType = CommandType.StoredProcedure;
-                    clientConnection.Open();
+
+                    SqlConnection userConnection = DBConnection.getInstance().getConnection();
+                    SqlCommand createUser = new SqlCommand("FSOCIETY.sp_create_user", userConnection);
+                    createUser.Parameters.Add(new SqlParameter("@idPersona", idPersona));
+                    createUser.CommandType = CommandType.StoredProcedure;
+                    userConnection.Open();
+
                     if (createUser.ExecuteNonQuery() > 0)
                     {
-                        MessageBox.Show("El cliente fue creado exitosamente");
-                        connection.Close();
-                        clientConnection.Close();
-                        this.Close();
+                        //usuario.id es fk de cliente
+                        //ver si queda asi o si se cambia
+                        int idCliente = 0;
+                        SqlConnection clientConnection = DBConnection.getInstance().getConnection();
+                        SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", userConnection);
+                        createClient.Parameters.Add(new SqlParameter("@telefono", this.fieldTelephone));
+                        createClient.Parameters.Add(new SqlParameter("@mail", this.fieldMail));
+                        createClient.Parameters.Add(new SqlParameter("@codigoPostal", this.fieldZipcode));
+                        createClient.Parameters.Add(new SqlParameter("@idCliente", idCliente));
+                        createClient.CommandType = CommandType.StoredProcedure;
+                        clientConnection.Open();
+
+                        if (createClient.ExecuteNonQuery() > 0)
+                        {
+                            MessageBox.Show("El cliente fue creado exitosamente");
+                            personConnection.Close();
+                            userConnection.Close();
+                            clientConnection.Close();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al guardar los datos del cliente.\nIntente nuevamente", "Error Cliente");
+                            return;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Error al guardar los datos del cliente.\nIntente nuevamente", "Error Cliente");
+                        MessageBox.Show("Error al guardar los datos del usuario.\nIntente nuevamente", "Error Usuario");
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Error al guardar los datos del usuario.\nIntente nuevamente", "Error Usuario");
+                    MessageBox.Show("Error al guardar los datos de la persona.\nIntente nuevamente", "Error Persona");
                     return;
                 }
             }
@@ -73,7 +114,7 @@ namespace UberFrba.Abm_Cliente
 
         public bool emptyFields()
         {
-            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, this.fieldTelephone, this.birthTimePicker, this.fieldZipcode, this.fieldStreet, this.FieldStreetNumer, this.fieldLocalidad};
+            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, this.fieldTelephone, this.fieldZipcode, this.fieldStreet, this.FieldStreetNumer, this.fieldLocalidad};
             return inputs.Any((t) => t.Text == "");
         }
     }

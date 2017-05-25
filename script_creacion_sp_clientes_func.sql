@@ -1,36 +1,64 @@
-IF (OBJECT_ID ('FSOCIETY.sp_alta_cliente') IS NOT NULL)
-  DROP PROCEDURE FSOCIETY.sp_alta_cliente
+IF (OBJECT_ID ('FSOCIETY.sp_crear_persona') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_crear_persona
+GO
 
-CREATE PROCEDURE FSOCIETY.sp_alta_cliente (@nombre NVARCHAR(255),
+CREATE PROCEDURE FSOCIETY.sp_crear_persona (@nombre NVARCHAR(255),
                                         @apellido NVARCHAR(255),
                                         @dni NUMERIC(18, 0),
-										@mail NVARCHAR(50),
-                                        @telefono NVARCHAR(255),
+										@direccion NVARCHAR(255),
                                         @fecha_nacimiento DATETIME,
-                                        @direccion NVARCHAR(255),
-                                        @localidad NVARCHAR(255),
-                                        @codigo_postal NVARCHAR(50)) 
+										@id INT OUTPUT)
 AS BEGIN
-  BEGIN TRY
-    BEGIN TRANSACTION
-    DECLARE @codigo_persona INT
-    EXEC @codigo_persona = FSOCIETY.sp_alta_persona @nombre, @apellido, @dni, @direccion, @fecha_nacimiento,  
+    BEGIN TRANSACTION T1
 
-    IF @codigo_usuario = -1
-      RAISERROR('El usuario ya existe', 16, 1)  -- Que salte directamente al CATCH
+	set @id = (SELECT MAX(id)+1 from FSOCIETY.Personas);
 
-    DECLARE @codigo_contacto INT
-    EXEC @codigo_contacto = FSOCIETY.sp_alta_persona @nombre, @apellido, @dni, @fecha_nacimiento
+	insert into FSOCIETY.Personas (id, Nombre, Apellido, DNI, Direccion, [Fecha de Nacimiento])
+	values (@id, @nombre, @apellido, @dni, @direccion, @fecha_nacimiento)
 
-    INSERT INTO HARDCOR.Cliente (cod_us, cod_contacto, cli_nombre, cli_apellido, cli_num_doc, cli_fecha_Nac, cli_tipo_doc)
-    VALUES (@codigo_usuario, @codigo_contacto, @nombre, @apellido, @dni, @fecha_nacimiento, @tipo_doc)
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+END
+GO
 
-    COMMIT TRANSACTION
-	SELECT @codigo_usuario
-  END TRY
-  BEGIN CATCH
-    ROLLBACK TRANSACTION
-	SELECT -1
-  END CATCH
+IF (OBJECT_ID ('FSOCIETY.sp_crear_cliente') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_crear_cliente
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_crear_cliente (@telefono varchar(50), 
+											@mail varchar(50),
+											@codigoPostal varchar(10),
+											@idCliente int OUTPUT)
+AS BEGIN
+    BEGIN TRANSACTION T1
+
+	set @idCliente = (SELECT MAX(id)+1 from FSOCIETY.Cliente);
+
+	insert into FSOCIETY.Cliente(id, Telefono, Email, Codigo_Postal, Habilitado)
+	values (@idCliente, @telefono, @mail, @codigoPostal, 1);
+	
+	execute FSOCIETY.sp_set_rol_cliente @idCliente;
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+	
+END
+GO
+
+IF (OBJECT_ID ('FSOCIETY.sp_set_rol_cliente') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_set_rol_cliente
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_set_rol_cliente (@idCliente int)
+AS BEGIN
+BEGIN TRANSACTION
+	INSERT INTO FSOCIETY.UsuariosRoles (IdUsuario, IdRol)
+	values(@idCliente, 3)
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+COMMIT TRANSACTION
 END
 GO
