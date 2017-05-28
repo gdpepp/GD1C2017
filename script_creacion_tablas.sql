@@ -108,7 +108,12 @@ CREATE TABLE [FSOCIETY].[Funcionalidades](
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[RolFuncionalidades](
 	[IdRol] [int] NOT NULL,
-	[IdFuncionalidad] [int] NOT NULL
+	[IdFuncionalidad] [int] NOT NULL,
+ CONSTRAINT [PK_RolFuncionalidades] PRIMARY KEY CLUSTERED 
+(
+	[IdRol] ASC,
+	[IdFuncionalidad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -173,7 +178,12 @@ GO
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[UsuariosRoles](
 	[IdUsuario] [int] NOT NULL,
-	[IdRol] [int] NOT NULL
+	[IdRol] [int] NOT NULL,
+ CONSTRAINT [PK_UsuariosRoles] PRIMARY KEY CLUSTERED 
+(
+	[IdUsuario] ASC,
+	[IdRol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
