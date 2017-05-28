@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Mapping;
+using UberFrba.Abm_Automovil;
 
 namespace UberFrba.Menu
 {
@@ -20,6 +21,13 @@ namespace UberFrba.Menu
             this.user = (Usuario)user;
             InitializeComponent();
             this.label1.Text = "Bienvenido " + this.user.getUsername() + " con perfil: " + this.user.getRol().getDescription();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Automovil form = new Automovil();
+            this.Hide();
+            form.ShowDialog();
         }
     }
 }
