@@ -16,7 +16,9 @@ namespace UberFrba.Abm_Cliente
         private String inicialTB = "Ingrese criterio de Busqueda";
         private String inicialCB = "";
         private String condicionWhere;
+        SqlDataAdapter adapter;
         Form parent;
+        int clientIdForUpdate = 0;
 
         public ABMCliente(Form parent)
 
@@ -32,26 +34,25 @@ namespace UberFrba.Abm_Cliente
              CBbuscarf.Items.Insert(5, "Direccion"); 
              CBbuscarf.Items.Insert(6, "Codigo_Postal");
              CBbuscarf.Items.Insert(7, "Fecha_de_Nacimiento");
-             BTeliminar.Visible = false;
              BTModificar.Visible = false;
         }
 
         private void bt_nuevo_cliente_Click(object sender, EventArgs e)
         {
             AltaCliente form = new AltaCliente();
-            //this.Hide();
+            this.Hide();
             form.ShowDialog();
         }
 
         private void bt_Volver_Click_1(object sender, EventArgs e)
         {
-            BTeliminar.Visible = false;
             BTModificar.Visible = false;
             bt_nuevo_cliente.Visible = true;
             CBbuscarf.Visible = true;
             tb_obtener_filtro.Visible = true;
             BuscarPor.Visible = true;
             this.Close();
+            parent.Show();
         }
 
         private void bt_buscar_Click(object sender, EventArgs e)
@@ -65,7 +66,6 @@ namespace UberFrba.Abm_Cliente
                 var conection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
 
                 BTModificar.Visible = true;
-                BTeliminar.Visible = true;
                 bt_nuevo_cliente.Visible = false;
                 CBbuscarf.Visible = false;
                 tb_obtener_filtro.Visible = false;
@@ -96,13 +96,43 @@ namespace UberFrba.Abm_Cliente
         {
             var connection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
             SqlCommand get_Clientes = new SqlCommand("FSOCIETY.sp_get_clientes", connection);
+            get_Clientes.CommandType = CommandType.StoredProcedure;
+            
             get_Clientes.Parameters.Add(new SqlParameter("@fieldName", this.condicionWhere));
             get_Clientes.Parameters.Add(new SqlParameter("@fieldValue", this.tb_obtener_filtro.Text));
-            get_Clientes.CommandType = CommandType.StoredProcedure;
+            
             connection.Open();
             SqlDataReader reader = get_Clientes.ExecuteReader();
+
+            //Creo el adapter usando el select_query
+            this.adapter = new SqlDataAdapter(get_Clientes);
+
+            //Lleno el dataset y lo seteo como source del dataGridView
+            DataTable table = new DataTable();
+            this.adapter.Fill(table);
+            this.dataGridView1.DataSource = table;
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Columns[0].Visible = false;
+
+            connection.Close();
         }
 
-            
+        private void BTModificar_Click_1(object sender, EventArgs e)
+        {
+            if(this.dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("seleccione un cliente del listado para modificar");
+                return;
+            }
+
+            int clientId = Int32.Parse(dataGridView1.SelectedRows[0].Cells[""].Value.ToString());
+            new AltaCliente(clientId).Show();
+            //TODO modificar "cod_us"
+        }
+                
     }
 }

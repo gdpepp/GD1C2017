@@ -38,7 +38,6 @@
             this.Codigo_postal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Fecha_de_nacimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BuscarPor = new System.Windows.Forms.Label();
-            this.BTeliminar = new System.Windows.Forms.Button();
             this.BTModificar = new System.Windows.Forms.Button();
             this.CBbuscarf = new System.Windows.Forms.ComboBox();
             this.tb_obtener_filtro = new System.Windows.Forms.TextBox();
@@ -53,19 +52,8 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DNI,
-            this.Nombre,
-            this.Apellido,
-            this.Email,
-            this.Telefono,
-            this.Direccion,
-            this.Codigo_postal,
-            this.Fecha_de_nacimiento});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 38);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 34);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
             this.dataGridView1.Size = new System.Drawing.Size(493, 183);
             this.dataGridView1.TabIndex = 45;
             // 
@@ -126,16 +114,6 @@
             this.BuscarPor.TabIndex = 44;
             this.BuscarPor.Text = "Buscar por:";
             // 
-            // BTeliminar
-            // 
-            this.BTeliminar.Location = new System.Drawing.Point(238, 227);
-            this.BTeliminar.Name = "BTeliminar";
-            this.BTeliminar.Size = new System.Drawing.Size(85, 27);
-            this.BTeliminar.TabIndex = 43;
-            this.BTeliminar.Text = "Eliminar";
-            this.BTeliminar.UseVisualStyleBackColor = true;
-            this.BTeliminar.Click += new System.EventHandler(this.BTeliminar_Click_1);
-            // 
             // BTModificar
             // 
             this.BTModificar.Location = new System.Drawing.Point(329, 227);
@@ -144,6 +122,7 @@
             this.BTModificar.TabIndex = 42;
             this.BTModificar.Text = "Modificar";
             this.BTModificar.UseVisualStyleBackColor = true;
+            this.BTModificar.Click += new System.EventHandler(this.BTModificar_Click_1);
             // 
             // CBbuscarf
             // 
@@ -197,7 +176,6 @@
             this.ClientSize = new System.Drawing.Size(519, 262);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.BuscarPor);
-            this.Controls.Add(this.BTeliminar);
             this.Controls.Add(this.BTModificar);
             this.Controls.Add(this.CBbuscarf);
             this.Controls.Add(this.tb_obtener_filtro);
@@ -216,7 +194,6 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label BuscarPor;
-        private System.Windows.Forms.Button BTeliminar;
         private System.Windows.Forms.Button BTModificar;
         private System.Windows.Forms.ComboBox CBbuscarf;
         private System.Windows.Forms.TextBox tb_obtener_filtro;

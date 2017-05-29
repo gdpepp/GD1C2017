@@ -11,14 +11,25 @@ using System.Windows.Forms;
 using WindowsFormsApplication1;
 using UberFrba.Dao;
 
-
 namespace UberFrba.Abm_Cliente
 {
     public partial class AltaCliente : Form
     {
+        int clientId = 0;
+
         public AltaCliente()
         {
             InitializeComponent();
+        }
+
+        public AltaCliente(int id)
+        {
+            InitializeComponent();
+            this.clientId = id;
+            this.getClient(clientId);
+            this.Text = "Modifique al cliente";
+            this.saveButton.Text = "Modificar";
+     
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -28,77 +39,131 @@ namespace UberFrba.Abm_Cliente
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (this.emptyFields())
+            // al guardar se hara tanto el alta como la modificacion, de acuerdo al clientId
+
+            DAOClientes dao = new DAOClientes();
+               
+            if (this.clientId != 0)
             {
-                MessageBox.Show("Complete todos los campos");
-                return;
+                updateOrDeleteClient(dao);
             }
-            if (!this.fieldDocument.Equals("0"))
+            else 
             {
-                //primero creo la persona
-                //dsp el usuario
-                //dsp el cliente
-                //y dsp le agrego el rol
+                createClient(dao);                
+            }              
+        }
 
-                DAOClientes dao = new DAOClientes();
-                int idPersona = 0;
-                String direccion = string.Concat("Calle: " + this.fieldStreet +
-                                                 " numero: " + this.FieldStreetNumer +
-                                                 " piso: " + this.fieldFloor +
-                                                 " dto: " + this.fieldDepartment +
-                                                 " localidad: " + this.fieldLocalidad);
+        private void checkDNInot0()
+        {
+            if(!this.fieldDocument.Equals("0"))
+                MessageBox.Show("El número de documento no puede ser 0");
+        }
 
-                Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, direccion, this.birthTimePicker.Value, idPersona);
+        private void getClient(int id)
+        {
+            SqlConnection connection = DBConnection.getInstance().getConnection();
+            SqlCommand command = new SqlCommand("FSOCIETY.sp_get_cliente_by_id", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@id", id));
 
-                if (dao.crearPersona(persona) > 0)
+            connection.Open();
+            this.completarCampos(command.ExecuteReader());
+            connection.Close();
+         }
+
+        private void completarCampos(SqlDataReader reader)
+        {
+            reader.Read();
+            this.fieldName.Text = reader["Nombre"].ToString();
+            this.fieldSurname.Text = reader["Apellido"].ToString();
+            this.fieldDocument.Text = reader["DNI"].ToString();
+            this.fieldTelephone.Text= reader["Telefono"].ToString();
+            this.fieldMail.Text = reader["Email"].ToString();
+            this.birthTimePicker.Text = reader["[Fecha de Nacimiento]"].ToString();
+            this.fieldStreet.Text = reader["Direccion"].ToString();
+            this.fieldZipcode.Text = reader["Codigo_Postal"].ToString();
+            this.checkHabilitado.Checked = (bool)reader["Habilitado"];
+       }
+
+        public void CheckEmptyFields()
+        {
+            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, 
+                this.fieldTelephone, this.fieldZipcode, this.fieldStreet};
+            if (inputs.Any((t) => t.Text == ""))
+            {
+                MessageBox.Show("Complete todos los campos");              
+            }
+        }
+
+        public bool createClient(DAOClientes dao)
+        {
+            int idPersona = 0;
+            Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, idPersona);
+            Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona, this.checkHabilitado.Checked);
+        
+            this.CheckEmptyFields();
+            this.checkDNInot0();
+            bool success = false;
+            //primero creo la persona
+            //dsp el usuario
+            //dsp el cliente
+            //y dsp le agrego el rol
+                        
+            if (dao.crearPersona(persona) > 0)
+            {
+                persona.setIdPersona(dao.getIdPersona(persona));
+
+                if (dao.crearUsuario(persona.idPerson) > 0)
                 {
-                    persona.setIdPersona(dao.getIdPersona(persona));
-                 
-                    if (dao.crearUsuario(persona.idPerson) > 0)
+                    //usuario.id es fk de cliente
+                    //ver si queda asi o si se cambia
+
+                    if (dao.crearCliente(cliente) > 0)
                     {
-                        //usuario.id es fk de cliente
-                        //ver si queda asi o si se cambia
-                        int idCliente = 0;
-
-                        Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona);
-
-                        if (dao.crearCliente(cliente) > 0)
-                        {
-                            MessageBox.Show("El cliente fue creado exitosamente");
-                            cliente.setIdCliente(dao.getIdcliente(cliente));
-                            dao.closeConnections();
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error al guardar los datos del cliente.\nIntente nuevamente", "Error Cliente");
-                            return;
-                        }
+                        success = true;
+                        MessageBox.Show("El cliente fue creado exitosamente");
+                        cliente.setIdCliente(dao.getIdcliente(cliente));
+                        dao.closeConnections();
+                        this.Close();
                     }
                     else
                     {
-                        MessageBox.Show("Error al guardar los datos del usuario.\nIntente nuevamente", "Error Usuario");
-                        return;
+                        MessageBox.Show("Error al guardar los datos del cliente.\nIntente nuevamente", "Error Cliente");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Error al guardar los datos de la persona.\nIntente nuevamente", "Error Persona");
-                    return;
+                    MessageBox.Show("Error al guardar los datos del usuario.\nIntente nuevamente", "Error Usuario");
                 }
             }
             else
             {
-                MessageBox.Show("El número de documento no puede ser 0");
-                return;
+                MessageBox.Show("Error al guardar los datos de la persona.\nIntente nuevamente", "Error Persona");
             }
+    
+            return success;
         }
 
-        public bool emptyFields()
+        private void updateOrDeleteClient(DAOClientes dao)
         {
-            List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, 
-                this.fieldTelephone, this.fieldZipcode, this.fieldStreet, this.FieldStreetNumer, this.fieldLocalidad};
-            return inputs.Any((t) => t.Text == "");
+            Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, this.clientId);
+            Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, this.clientId, this.checkHabilitado.Checked);
+
+            verifyFields(dao, persona, cliente);
+            dao.modificarPersona(persona);
+            dao.modificarCliente(cliente);
+        }
+
+        private void verifyFields(DAOClientes dao, Persona persona, Cliente cliente)
+        {
+            if (dao.getDNIById(persona) != 0)
+            {
+                MessageBox.Show("El numero de DNI ya existe para otra persona", "DNI ya existe");
+            }
+            if (dao.getMailById(cliente) != 0)
+            {
+                MessageBox.Show("La direccion de mail ya existe para otra persona", "Mail ya existe");
+            }
         }
     }
 }

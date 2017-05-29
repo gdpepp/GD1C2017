@@ -29,6 +29,7 @@ namespace UberFrba.Dao
         SqlConnection personConnection = DBConnection.getInstance().getConnection();
         SqlConnection userConnection = DBConnection.getInstance().getConnection();
         SqlConnection clientConnection = DBConnection.getInstance().getConnection();
+        SqlConnection updateConnection = DBConnection.getInstance().getConnection();
         
         public int crearPersona(Persona persona) 
         {        
@@ -87,11 +88,72 @@ namespace UberFrba.Dao
             return dt.Rows[1].Field<int>(1);
         }
 
+       public int modificarPersona(Persona persona)
+       {
+           SqlCommand updatePerson = new SqlCommand("FSOCIETY.sp_modificar_persona", personConnection);
+           updatePerson.Parameters.Add(new SqlParameter("@nombre", persona.nombre));
+           updatePerson.Parameters.Add(new SqlParameter("@apellido", persona.apellido));
+           updatePerson.Parameters.Add(new SqlParameter("@dni", persona.dni));
+           updatePerson.Parameters.Add(new SqlParameter("@direccion", persona.direccion));
+           updatePerson.Parameters.Add(new SqlParameter("@fecha_nacimiento", persona.nacimiento));
+           updatePerson.Parameters.Add(new SqlParameter("@id", persona.idPerson));
+           updatePerson.CommandType = CommandType.StoredProcedure;
+           personConnection.Open();
+
+           return updatePerson.ExecuteNonQuery();
+       }
+
+       public int modificarCliente(Cliente cliente)
+       {
+           SqlCommand updateClient = new SqlCommand("FSOCIETY.sp_modificar_cliente", clientConnection);
+           updateClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
+           updateClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
+           updateClient.Parameters.Add(new SqlParameter("@codigoPostal", cliente.zipcode));
+           updateClient.Parameters.Add(new SqlParameter("@idCliente", cliente.idCliente));
+           updateClient.CommandType = CommandType.StoredProcedure;
+           clientConnection.Open();
+
+           return updateClient.ExecuteNonQuery();
+       }
+
+       public int getDNIById(Persona persona)
+       {
+           DataBaseConnector db;
+           db = DataBaseConnector.getInstance();
+           DataTable dt = db.select_query("Select DNI from FSOCIETY.Personas where DNI = '" 
+                                            + persona.dni + "and Id <> " + persona.idPerson + "'");
+
+           return dt.Rows[1].Field<int>(1);
+       }
+
+       public int getMailById(Cliente cliente)
+       {
+           DataBaseConnector db;
+           db = DataBaseConnector.getInstance();
+           DataTable dt = db.select_query("Select TOP 1 Email from FSOCIETY.Cliente where Email= '"
+                                            + cliente.mail + "and Id <> " + cliente.idCliente + "'");
+
+           return dt.Rows[1].Field<int>(1);
+       }
+
         public void closeConnections()
         {
-            personConnection.Close();
-            userConnection.Close();
-            clientConnection.Close();
+            if (personConnection != null && personConnection.State == ConnectionState.Open)
+            {
+                personConnection.Close();
+            }
+            if (userConnection != null && userConnection.State == ConnectionState.Open)
+            {
+                userConnection.Close();
+            }
+            if (clientConnection != null && clientConnection.State == ConnectionState.Open)
+            {
+                clientConnection.Close();
+            }
+            if (updateConnection != null && updateConnection.State == ConnectionState.Open)
+            {
+                updateConnection.Close();
+            }
         }
     }
 }
