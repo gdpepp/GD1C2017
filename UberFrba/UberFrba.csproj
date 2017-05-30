@@ -57,7 +57,7 @@
     <Compile Include="Abm Automovil\AltaModificacion.Designer.cs">
       <DependentUpon>AltaModificacion.cs</DependentUpon>
     </Compile>
-   <Compile Include="Abm Chofer\ABMChofer.cs">
+    <Compile Include="Abm Chofer\ABMChofer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Chofer\ABMChofer.Designer.cs">
@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
     <Compile Include="Conectores\DBConnection.cs" />
+    <Compile Include="Dao\DAOAutomovil.cs" />
     <Compile Include="Dao\DAORoles.cs" />
     <Compile Include="Dao\DAOUsers.cs" />
     <Compile Include="Facturacion\Form1.cs">
@@ -122,6 +123,7 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\Automovil.cs" />
     <Compile Include="Mapping\Rol.cs" />
     <Compile Include="Mapping\Usuario.cs" />
     <Compile Include="Menu\MainMenu.cs">
@@ -145,7 +147,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\SHA256.cs" />
-   <EmbeddedResource Include="Abm Chofer\ABMChofer.resx">
+    <EmbeddedResource Include="Abm Chofer\ABMChofer.resx">
       <DependentUpon>ABMChofer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Chofer\Alta_Chofer.resx">
@@ -153,8 +155,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Chofer\ModificarChofer.resx">
       <DependentUpon>ModificarChofer.cs</DependentUpon>
-    </EmbeddedResource> 
- <EmbeddedResource Include="Abm Automovil\Automovil.resx">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Automovil\Automovil.resx">
       <DependentUpon>Automovil.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Automovil\AltaModificacion.resx">
