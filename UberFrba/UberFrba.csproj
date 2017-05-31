@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
     <Compile Include="Conectores\DBConnection.cs" />
+    <Compile Include="Dao\DaoFuncionalidades.cs" />
     <Compile Include="Dao\DAORoles.cs" />
     <Compile Include="Dao\DAOUsers.cs" />
     <Compile Include="Facturacion\Form1.cs">
@@ -104,6 +105,7 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\Funcionalidades.cs" />
     <Compile Include="Mapping\Rol.cs" />
     <Compile Include="Mapping\Usuario.cs" />
     <Compile Include="Menu\MainMenu.cs">

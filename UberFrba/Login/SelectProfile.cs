@@ -52,8 +52,8 @@ namespace UberFrba.Login
 
         private void showMainMenu() {
             UberFrba.Menu.MainMenu menu = new UberFrba.Menu.MainMenu(user);
-            //this.Hide();//reimplementar con un close.
-            menu.ShowDialog();
+            this.Hide();//reimplementar con un close.
+            menu.Show();
             //this.Close();
             
         }
