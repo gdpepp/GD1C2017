@@ -33,7 +33,7 @@ namespace UberFrba
             {
                 validateFields();
                 DAOUsers dao = new DAOUsers();
-                Usuario usuario = dao.getUser(username);
+                Usuario usuario = dao.getUser(username.ToString());
                 if (!usuario.isBloqued())
                 {
                     if (usuario.passwordEquals(SHA256.encriptar(password)))

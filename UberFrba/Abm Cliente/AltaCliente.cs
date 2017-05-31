@@ -37,7 +37,7 @@ namespace UberFrba.Abm_Cliente
             this.Close();
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        public void saveButton_Click(object sender, EventArgs e)
         {
             // al guardar se hara tanto el alta como la modificacion, de acuerdo al clientId
 
@@ -95,7 +95,7 @@ namespace UberFrba.Abm_Cliente
             }
         }
 
-        public bool createClient(DAOClientes dao)
+        private bool createClient(DAOClientes dao)
         {
             int idPersona = 0;
             Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, idPersona);
