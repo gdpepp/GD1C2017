@@ -53,30 +53,15 @@ namespace UberFrba.Menu
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            setupFunctions();
-            setupMenu();
+            /*setupFunctions();
+            setupMenu();*/
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            AbmRol form = new AbmRol(this,user.getUsername());
-            this.Hide();
-            form.ShowDialog();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ABMCliente form = new ABMCliente(this);
-            this.Hide();
-            form.ShowDialog();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Automovil form = new Automovil(this);
-            this.Hide();
-            form.ShowDialog();
+            Automovil a = new Automovil(this);
+            a.ShowDialog();
         }
     }
 }

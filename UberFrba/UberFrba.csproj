@@ -172,8 +172,6 @@
     <EmbeddedResource Include="Abm Automovil\AltaModificacion.resx">
       <DependentUpon>AltaModificacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     <EmbeddedResource Include="Abm Cliente\AbmCliente.resx">
       <DependentUpon>AbmCliente.cs</DependentUpon>
     </EmbeddedResource>

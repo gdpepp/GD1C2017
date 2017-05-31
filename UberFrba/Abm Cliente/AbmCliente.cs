@@ -18,7 +18,6 @@ namespace UberFrba.Abm_Cliente
         private String condicionWhere;
         SqlDataAdapter adapter;
         Form parent;
-        int clientIdForUpdate = 0;
 
         public ABMCliente(Form parent)
 
