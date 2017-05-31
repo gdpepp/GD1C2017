@@ -75,18 +75,25 @@
     <Compile Include="Abm Chofer\ModificarChofer.Designer.cs">
       <DependentUpon>ModificarChofer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Cliente\Form1.cs">
+    <Compile Include="Abm Cliente\AbmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Cliente\AbmCliente.Designer.cs">
+      <DependentUpon>AbmCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Cliente\AltaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Cliente\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Cliente\Persona.cs" />
     <Compile Include="Abm Rol\Funcionalidad.cs" />
-    <Compile Include="Abm Rol\Form1.cs">
+    <Compile Include="Abm Rol\abmRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\abmRol.Designer.cs">
+      <DependentUpon>abmRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\modif_rol.cs">
       <SubType>Form</SubType>
@@ -97,6 +104,8 @@
     <Compile Include="Conectores\DataBaseConnector.cs" />
     <Compile Include="Conectores\DBConnection.cs" />
     <Compile Include="Dao\DAOAutomovil.cs" />
+    <Compile Include="Dao\DaoFuncionalidades.cs" />
+    <Compile Include="Dao\DAOClientes.cs" />
     <Compile Include="Dao\DAORoles.cs" />
     <Compile Include="Dao\DAOUsers.cs" />
     <Compile Include="Facturacion\Form1.cs">
@@ -123,6 +132,8 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\Funcionalidades.cs" />
+    <Compile Include="Mapping\Cliente.cs" />
     <Compile Include="Mapping\Rol.cs" />
     <Compile Include="Mapping\Usuario.cs" />
     <Compile Include="Menu\MainMenu.cs">
@@ -163,6 +174,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Cliente\AbmCliente.resx">
+      <DependentUpon>AbmCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Cliente\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\abmRol.resx">
+      <DependentUpon>abmRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\modif_rol.resx">
       <DependentUpon>modif_rol.cs</DependentUpon>

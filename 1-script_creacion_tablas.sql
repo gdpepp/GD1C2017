@@ -56,6 +56,27 @@ DEALLOCATE tables
 
 GO
 
+/*DROP PROCEDURES*/
+DECLARE @procedureDrop AS nvarchar(400)
+DECLARE proceduress CURSOR FOR select 
+'DROP PROCEDURE [' + s.name +
+	'].[' + o.name + ']'
+from sys.objects o
+inner join sys.schemas s on o.schema_id = s.schema_id
+where o.schema_id=@schemaId and type = 'P'
+
+OPEN proceduress
+
+FETCH NEXT FROM proceduress INTO @procedureDrop
+WHILE @@fetch_status = 0
+
+BEGIN
+	exec (@procedureDrop)
+    FETCH NEXT FROM proceduress INTO @procedureDrop
+END
+CLOSE proceduress
+DEALLOCATE proceduress
+
 /* DROP SCHEMA*/
 /*
 IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'FSOCIETY')

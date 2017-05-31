@@ -1,9 +1,3 @@
-INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-VALUES (1, 'Administrador', 1),
-       (2, 'Chofer', 1),
-       (3, 'Cliente', 1);
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_modif_roles')
 DROP PROCEDURE FSOCIETY.sp_get_modif_roles
 GO
@@ -15,7 +9,7 @@ BEGIN TRANSACTION T1
   SELECT * FROM FSOCIETY.Roles
   WHERE (ID <> 1) 
   OR 1 = (SELECT ID
-	  FROM FSOCIETY.Usuarios u, FSOCIETY.UsuariosRoles r
+			FROM FSOCIETY.Usuarios u, FSOCIETY.UsuariosRoles r
             WHERE u.Username = @username
             AND r.IdRol = u.IdPersona);
 COMMIT TRANSACTION T1
@@ -25,9 +19,9 @@ IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_usua
 DROP PROCEDURE FSOCIETY.sp_delete_usuarios_roles
 GO
 
-CREATE PROCEDURE FSOCIETY.sp_delete_usuarios_roles(@id int) AS
+CREATE PROCEDURE FSOCIETY.sp_delete_usuarios_roles(@id int) AS 
 BEGIN TRANSACTION T1
-    DELETE FSOCIETY.UsuariosRoles where IdRol = @id
+	DELETE FSOCIETY.Usuarios where Id = @id 
 COMMIT TRANSACTION T1
 GO
 
