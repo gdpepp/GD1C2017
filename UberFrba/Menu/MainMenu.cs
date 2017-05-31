@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Mapping;
 using UberFrba.Dao;
+using UberFrba.Abm_Rol;
+using UberFrba.Abm_Cliente;
 
 namespace UberFrba.Menu
 {
@@ -53,6 +55,20 @@ namespace UberFrba.Menu
             setupFunctions();
             setupMenu();
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AbmRol form = new AbmRol(this,user.getUsername());
+            this.Hide();
+            form.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ABMCliente form = new ABMCliente(this);
+            this.Hide();
+            form.ShowDialog();
         }
     }
 }
