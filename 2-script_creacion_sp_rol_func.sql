@@ -1,11 +1,3 @@
-SET IDENTITY_INSERT FSOCIETY.Roles ON
-INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-VALUES (1, 'Administrador', 1),
-       (2, 'Chofer', 1),
-       (3, 'Cliente', 1);
-GO
-SET IDENTITY_INSERT FSOCIETY.Roles OFF
-
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_modif_roles')
 DROP PROCEDURE FSOCIETY.sp_get_modif_roles
 GO

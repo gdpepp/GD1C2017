@@ -52,9 +52,9 @@ namespace UberFrba.Login
 
         private void showMainMenu() {
             UberFrba.Menu.MainMenu menu = new UberFrba.Menu.MainMenu(user);
-            this.Hide();//reimplementar con un close.
+            //this.Hide();//reimplementar con un close.
             menu.ShowDialog();
-            this.Close();
+            //this.Close();
             
         }
 
@@ -68,7 +68,6 @@ namespace UberFrba.Login
             {
                 user.setRol(roles[0]);
                 showMainMenu();
-                //throw new Exception("No existe otra pantalla");
             }
         }
 
