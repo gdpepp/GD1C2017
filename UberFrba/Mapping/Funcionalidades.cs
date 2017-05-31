@@ -23,7 +23,7 @@ namespace UberFrba.Mapping
         {
             this.id = Convert.ToInt32(row["id"]);
             this.description = Convert.ToString(row["Descripcion"]);
-            this.parent = Convert.ToString(row["Padre"]);
+            //this.parent = Convert.ToString(row["Padre"]);
         }
 
 
