@@ -25,7 +25,7 @@ namespace UberFrba.Menu
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Automovil form = new Automovil();
+            Automovil form = new Automovil(this);
             this.Hide();
             form.ShowDialog();
         }

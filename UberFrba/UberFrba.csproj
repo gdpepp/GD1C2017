@@ -123,7 +123,6 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mapping\Automovil.cs" />
     <Compile Include="Mapping\Rol.cs" />
     <Compile Include="Mapping\Usuario.cs" />
     <Compile Include="Menu\MainMenu.cs">
