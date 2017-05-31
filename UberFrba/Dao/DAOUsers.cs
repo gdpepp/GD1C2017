@@ -18,9 +18,9 @@ namespace UberFrba.Dao
             this.db = DataBaseConnector.getInstance();
         }
 
-        public Usuario getUser(Persona persona)
+        public Usuario getUser(String username)
         {       
-               DataTable dt = db.select_query("Select Id,Username,Password,IdPersona,Reintentos from FSOCIETY.Usuarios where Username = '" + persona + "'");
+               DataTable dt = db.select_query("Select Id,Username,Password,IdPersona,Reintentos from FSOCIETY.Usuarios where Username = '" + username + "'");
 
                 if (dt.Rows.Count == 1)
                 {

@@ -1,3 +1,19 @@
+IF (OBJECT_ID ('FSOCIETY.sp_set_rol_cliente') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_set_rol_cliente
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_set_rol_cliente (@idCliente int)
+AS BEGIN
+BEGIN TRANSACTION
+	INSERT INTO FSOCIETY.UsuariosRoles (IdUsuario, IdRol)
+	values(@idCliente, 3)
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+COMMIT TRANSACTION
+END
+GO
+
 IF (OBJECT_ID ('FSOCIETY.sp_crear_persona') IS NOT NULL)
   DROP PROCEDURE FSOCIETY.sp_crear_persona
 GO
@@ -46,22 +62,6 @@ AS BEGIN
         ROLLBACK TRANSACTION T1;
 	COMMIT TRANSACTION T1;
 	
-END
-GO
-
-IF (OBJECT_ID ('FSOCIETY.sp_set_rol_cliente') IS NOT NULL)
-	DROP PROCEDURE FSOCIETY.sp_set_rol_cliente
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_set_rol_cliente (@idCliente int)
-AS BEGIN
-BEGIN TRANSACTION
-	INSERT INTO FSOCIETY.UsuariosRoles (IdUsuario, IdRol)
-	values(@idCliente, 3)
-
-	if (@@ERROR !=0)
-        ROLLBACK TRANSACTION T1;
-COMMIT TRANSACTION
 END
 GO
 
