@@ -15,7 +15,6 @@ namespace UberFrba.Dao
         public List<Rol> getRolesByUserId(Int32 userId)
         {
 
-            
                 List<Rol> roles = new List<Rol>();
                 DataBaseConnector db = DataBaseConnector.getInstance();
                 DataTable dt = db.select_query("Select r.id,r.Descripcion from FSOCIETY.Roles as r join FSOCIETY.UsuariosRoles as ur on r.Id = ur.IdRol where r.Habilitado = 1 and ur.IdUsuario = '" + userId + "'");
