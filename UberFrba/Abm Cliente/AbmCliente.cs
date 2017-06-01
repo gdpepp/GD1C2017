@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-//using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,13 +16,10 @@ namespace UberFrba.Abm_Cliente
         private String inicialCB = "";
         private String condicionWhere;
         SqlDataAdapter adapter;
-        Form parent;
-        int clientIdForUpdate = 0;
 
-        public ABMCliente(Form parent)
+        public ABMCliente()
 
         {
-            this.parent = parent;
              InitializeComponent();
              tb_obtener_filtro.Text = inicialTB;
              CBbuscarf.Items.Insert(0, "DNI");
@@ -35,6 +31,7 @@ namespace UberFrba.Abm_Cliente
              CBbuscarf.Items.Insert(6, "Codigo_Postal");
              CBbuscarf.Items.Insert(7, "Fecha_de_Nacimiento");
              BTModificar.Visible = false;
+            
         }
 
         private void bt_nuevo_cliente_Click(object sender, EventArgs e)
@@ -52,7 +49,6 @@ namespace UberFrba.Abm_Cliente
             tb_obtener_filtro.Visible = true;
             BuscarPor.Visible = true;
             this.Close();
-            parent.Show();
         }
 
         private void bt_buscar_Click(object sender, EventArgs e)
