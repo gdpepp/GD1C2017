@@ -281,6 +281,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Name = "AltaCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AltaCliente";
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

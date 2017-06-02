@@ -16,32 +16,33 @@ namespace UberFrba.Abm_Cliente
     public partial class AltaCliente : Form
     {
         int clientId = 0;
-
+        private DAOClientes dao;
+        
         public AltaCliente()
         {
             InitializeComponent();
+            this.dao = new DAOClientes();
         }
 
         public AltaCliente(int id)
         {
             InitializeComponent();
+            this.dao = new DAOClientes();
             this.clientId = id;
             this.getClient(clientId);
             this.Text = "Modifique al cliente";
             this.saveButton.Text = "Modificar";
-     
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            
             this.Close();
         }
 
         public void saveButton_Click(object sender, EventArgs e)
         {
             // al guardar se hara tanto el alta como la modificacion, de acuerdo al clientId
-
-            DAOClientes dao = new DAOClientes();
                
             if (this.clientId != 0)
             {
@@ -49,26 +50,28 @@ namespace UberFrba.Abm_Cliente
             }
             else 
             {
-                createClient(dao);                
+                createClient(dao);
+              
+                
             }              
         }
 
         private void checkDNInot0()
         {
-            if(!this.fieldDocument.Equals("0"))
+            if(this.fieldDocument.Equals("0"))
                 MessageBox.Show("El número de documento no puede ser 0");
         }
 
         private void getClient(int id)
         {
-            SqlConnection connection = DBConnection.getInstance().getConnection();
+            /*SqlConnection connection = DBConnection.getInstance().getConnection();
             SqlCommand command = new SqlCommand("FSOCIETY.sp_get_cliente_by_id", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@id", id));
 
             connection.Open();
             this.completarCampos(command.ExecuteReader());
-            connection.Close();
+            connection.Close();*/
          }
 
         private void completarCampos(SqlDataReader reader)
@@ -100,16 +103,24 @@ namespace UberFrba.Abm_Cliente
             int idPersona = 0;
             Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, idPersona);
             Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona, this.checkHabilitado.Checked);
-        
+            
             this.CheckEmptyFields();
             this.checkDNInot0();
-            bool success = false;
+            bool success = true;
+            try
+            {
+                dao.crearPersona(persona);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message.ToString());
+            }
+
             //primero creo la persona
             //dsp el usuario
             //dsp el cliente
             //y dsp le agrego el rol
-                        
-            if (dao.crearPersona(persona) > 0)
+                
+            /*if (dao.crearPersona(persona) > 0)
             {
                 persona.setIdPersona(dao.getIdPersona(persona));
 
@@ -123,7 +134,6 @@ namespace UberFrba.Abm_Cliente
                         success = true;
                         MessageBox.Show("El cliente fue creado exitosamente");
                         cliente.setIdCliente(dao.getIdcliente(cliente));
-                        dao.closeConnections();
                         this.Close();
                     }
                     else
@@ -139,7 +149,7 @@ namespace UberFrba.Abm_Cliente
             else
             {
                 MessageBox.Show("Error al guardar los datos de la persona.\nIntente nuevamente", "Error Persona");
-            }
+            }*/
     
             return success;
         }

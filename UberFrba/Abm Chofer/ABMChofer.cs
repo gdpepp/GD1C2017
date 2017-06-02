@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UberFrba.Utils;
 
 
 
@@ -37,19 +38,15 @@ namespace UberFrba.Abm_Chofer
             //   esta mierda queda asi
         {
             if ((tb_obtener_filtro.Text == inicialTB) || (CBbuscarf.Text == inicialCB)) 
-            { MessageBox.Show("No se puede realizar una busqueda, por fabor complete la informacion adecuada"); }
+            { MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada"); }
             else
             {
-                var conection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
-
                 BTModificar.Visible = true;
                 BTeliminar.Visible = true;
                 bt_nuevo_chofer.Visible = false;
                 CBbuscarf.Visible = false;
                 tb_obtener_filtro.Visible = false;
                 BuscarPor.Visible = false;
-
-
             }
            
 
@@ -154,14 +151,14 @@ namespace UberFrba.Abm_Chofer
                 MessageBox.Show("ERROR no se puede realizar la busqueda"); 
             }
             
-        var connection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
+        /*var connection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
         SqlCommand get_Choferes = new SqlCommand("FSOCIETY.sp_get_Choferes", connection);
         get_Choferes.Parameters.Add(new SqlParameter("@NombreTabla",this.condicionWhere));
         get_Choferes.Parameters.Add(new SqlParameter("@itemABuscar", this.tb_obtener_filtro.Text));
         get_Choferes.CommandType = CommandType.StoredProcedure;
         connection.Open();
         SqlDataReader reader = get_Choferes.ExecuteReader();
-        
+        */
 
         }
     }

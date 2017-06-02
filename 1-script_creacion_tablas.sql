@@ -54,8 +54,6 @@ END
 CLOSE tables
 DEALLOCATE tables
 
-GO
-
 /*DROP PROCEDURES*/
 DECLARE @procedureDrop AS nvarchar(400)
 DECLARE proceduress CURSOR FOR select 
