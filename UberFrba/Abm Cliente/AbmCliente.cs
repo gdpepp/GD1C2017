@@ -110,7 +110,7 @@ namespace UberFrba.Abm_Cliente
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersVisible = false;
+            this.dataGridView1.ColumnHeadersVisible = true;
         }
 
     }
