@@ -70,6 +70,20 @@ namespace UberFrba.Utils
             closeConnection();
         }
 
+        public void executeProcedureWithParameters(String query, Dictionary<String, Object> dictionary)
+        {
+            openConnection();
+            SqlCommand command = new SqlCommand(query, getConnectionString());
+            foreach (String key in dictionary.Keys)
+            {
+                command.Parameters.AddWithValue(key, dictionary[key]);
+            }
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            closeConnection();
+        }
+
+
         public DataTable select_query(String query)
         {
 
@@ -78,9 +92,7 @@ namespace UberFrba.Utils
                 openConnection();
                 SqlCommand queryCommand = new SqlCommand(query, getConnectionString());
                 SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
-                //SqlDataAdapter adapter = new SqlDataAdapter(queryCommand);
                 DataTable dataTable = new DataTable();
-                //adapter.Fill(dataTable);
                 dataTable.Load(queryCommandReader);
                 closeConnection();
                 return dataTable;

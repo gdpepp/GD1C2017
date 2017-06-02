@@ -102,7 +102,6 @@
       <DependentUpon>modif_rol.cs</DependentUpon>
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
-    <Compile Include="Conectores\DBConnection.cs" />
     <Compile Include="Dao\DAOAutomovil.cs" />
     <Compile Include="Dao\DaoFuncionalidades.cs" />
     <Compile Include="Dao\DAOClientes.cs" />

@@ -13,20 +13,51 @@ using System.Drawing;
 using System.Windows.Forms;
 using UberFrba.Dao;
 using UberFrba.Abm_Cliente;
+using UberFrba.Utils;
 
 
 namespace UberFrba.Dao
 {
     class DAOClientes
     {
-        SqlConnection personConnection = DBConnection.getInstance().getConnection();
-        SqlConnection userConnection = DBConnection.getInstance().getConnection();
-        SqlConnection clientConnection = DBConnection.getInstance().getConnection();
-        SqlConnection updateConnection = DBConnection.getInstance().getConnection();
-        
+        private DataBaseConnector connector;
+
+
+        public DAOClientes() {
+            this.connector = DataBaseConnector.getInstance();
+        }
+
+
+        public DataTable buscarCliente(String filtro, String valor) {
+            if (filtro != "" && valor != "")
+            {
+                return connector.select_query("select per.Id, per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and " + filtro + " = '" + valor + "'");
+            }
+            else {
+                return buscarTodosLosClientes();
+            }
+                        
+        }
+
+        public DataTable buscarTodosLosClientes() {
+            return connector.select_query("select per.Id, per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id");
+        }
+
         public int crearPersona(Persona persona) 
-        {        
-            SqlCommand createPerson = new SqlCommand("FSOCIETY.sp_crear_persona", personConnection);
+        {
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@nombre",persona.nombre);
+            dic.Add("@apellido", persona.apellido);
+            dic.Add("@dni", persona.dni);
+            dic.Add("@direccion", persona.direccion);
+            dic.Add("@fecha_nacimiento", persona.nacimiento);
+            dic.Add("@id", persona.idPerson);
+
+            connector.executeProcedureWithParameters("FSOCIETY.sp_crear_persona", dic);
+            
+            
+            
+            /*SqlCommand createPerson = new SqlCommand("FSOCIETY.sp_crear_persona", personConnection);
             createPerson.Parameters.Add(new SqlParameter("@nombre", persona.nombre));
             createPerson.Parameters.Add(new SqlParameter("@apellido", persona.apellido));
             createPerson.Parameters.Add(new SqlParameter("@dni", persona.dni));
@@ -37,6 +68,8 @@ namespace UberFrba.Dao
             personConnection.Open();
             
             return createPerson.ExecuteNonQuery();
+             * */
+            return 0;
         }
 
         public int getIdPersona(Persona persona)
@@ -50,17 +83,19 @@ namespace UberFrba.Dao
 
         public int crearUsuario(int id)
         {
-            SqlCommand createUser = new SqlCommand("FSOCIETY.sp_create_user", userConnection);
+            /*SqlCommand createUser = new SqlCommand("FSOCIETY.sp_create_user", userConnection);
             createUser.Parameters.Add(new SqlParameter("@idPersona", id));
             createUser.CommandType = CommandType.StoredProcedure;
             userConnection.Open();
 
             return createUser.ExecuteNonQuery();
+             */
+            return 0;
         }
 
         public int crearCliente(Cliente cliente)
         {
-            SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", clientConnection);
+            /*SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", clientConnection);
             createClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             createClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
             createClient.Parameters.Add(new SqlParameter("@codigoPostal", cliente.zipcode));
@@ -68,7 +103,8 @@ namespace UberFrba.Dao
             createClient.CommandType = CommandType.StoredProcedure;
             clientConnection.Open();
 
-            return createClient.ExecuteNonQuery();
+            return createClient.ExecuteNonQuery();*/
+            return 0;
         }
 
        public int getIdcliente(Cliente cliente)
@@ -83,7 +119,7 @@ namespace UberFrba.Dao
 
        public int modificarPersona(Persona persona)
        {
-           SqlCommand updatePerson = new SqlCommand("FSOCIETY.sp_modificar_persona", personConnection);
+           /*SqlCommand updatePerson = new SqlCommand("FSOCIETY.sp_modificar_persona", personConnection);
            updatePerson.Parameters.Add(new SqlParameter("@nombre", persona.nombre));
            updatePerson.Parameters.Add(new SqlParameter("@apellido", persona.apellido));
            updatePerson.Parameters.Add(new SqlParameter("@dni", persona.dni));
@@ -94,19 +130,22 @@ namespace UberFrba.Dao
            personConnection.Open();
 
            return updatePerson.ExecuteNonQuery();
+            * */
+           return 0;
        }
 
        public int modificarCliente(Cliente cliente)
-       {
+       {/*
            SqlCommand updateClient = new SqlCommand("FSOCIETY.sp_modificar_cliente", clientConnection);
            updateClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
            updateClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
            updateClient.Parameters.Add(new SqlParameter("@codigoPostal", cliente.zipcode));
            updateClient.Parameters.Add(new SqlParameter("@idCliente", cliente.idCliente));
            updateClient.CommandType = CommandType.StoredProcedure;
-           clientConnection.Open();
 
            return updateClient.ExecuteNonQuery();
+         * */
+           return 0;
        }
 
        public int getDNIById(Persona persona)
@@ -129,24 +168,5 @@ namespace UberFrba.Dao
            return dt.Rows[1].Field<int>(1);
        }
 
-        public void closeConnections()
-        {
-            if (personConnection != null && personConnection.State == ConnectionState.Open)
-            {
-                personConnection.Close();
-            }
-            if (userConnection != null && userConnection.State == ConnectionState.Open)
-            {
-                userConnection.Close();
-            }
-            if (clientConnection != null && clientConnection.State == ConnectionState.Open)
-            {
-                clientConnection.Close();
-            }
-            if (updateConnection != null && updateConnection.State == ConnectionState.Open)
-            {
-                updateConnection.Close();
-            }
-        }
     }
 }
