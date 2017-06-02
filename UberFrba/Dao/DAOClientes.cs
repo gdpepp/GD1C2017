@@ -26,12 +26,12 @@ namespace UberFrba.Dao
         public DAOClientes() {
             this.connector = DataBaseConnector.getInstance();
         }
-
+       
 
         public DataTable buscarCliente(String filtro, String valor) {
             if (filtro != "" && valor != "")
             {
-                return connector.select_query("select per.Id, per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and " + filtro + " = '" + valor + "'");
+                return connector.select_query(getSelectClientQuery(filtro,valor));
             }
             else {
                 return buscarTodosLosClientes();
@@ -40,7 +40,7 @@ namespace UberFrba.Dao
         }
 
         public DataTable buscarTodosLosClientes() {
-            return connector.select_query("select per.Id, per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id");
+            return connector.select_query(getAllClientQuery());
         }
 
         public int crearPersona(Persona persona) 
@@ -69,7 +69,7 @@ namespace UberFrba.Dao
             
             return createPerson.ExecuteNonQuery();
              * */
-            return 0;
+            return persona.idPerson;
         }
 
         public int getIdPersona(Persona persona)
@@ -166,6 +166,14 @@ namespace UberFrba.Dao
                                             + cliente.mail + "and Id <> " + cliente.idCliente + "'");
 
            return dt.Rows[1].Field<int>(1);
+       }
+
+       private String getAllClientQuery() {
+           return "select per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id";
+       }
+
+       private String getSelectClientQuery(String filtro, String valor) {
+           return getAllClientQuery() + " and " + filtro + " = '" + valor + "'";
        }
 
     }
