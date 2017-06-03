@@ -13,10 +13,7 @@ namespace UberFrba.Abm_Cliente
 {
     public partial class ABMCliente : Form
     {
-        private String inicialTB = "Ingrese criterio de Busqueda";
-        private String inicialCB = "";
-        private String condicionWhere;
-        private DAOClientes dao;
+       private DAOClientes dao;
 
 
         public ABMCliente()
@@ -24,14 +21,6 @@ namespace UberFrba.Abm_Cliente
             this.dao = new DAOClientes();
             InitializeComponent();
             setupTableView();
-            CBbuscarf.Items.Insert(0, "DNI");
-            CBbuscarf.Items.Insert(1, "Apellido");
-            CBbuscarf.Items.Insert(2, "Nombre");
-            CBbuscarf.Items.Insert(3, "Email");
-            CBbuscarf.Items.Insert(4, "Telefono");
-            CBbuscarf.Items.Insert(5, "Direccion");
-            CBbuscarf.Items.Insert(6, "Codigo_Postal");
-            CBbuscarf.Items.Insert(7, "Fecha_de_Nacimiento");
             BTModificar.Visible = false;
 
         }
@@ -48,10 +37,11 @@ namespace UberFrba.Abm_Cliente
             
             try
             {   
-                validateSearchOK();
-                BTModificar.Visible = true;
-                DataTable clientes = dao.buscarCliente(CBbuscarf.Text,tb_obtener_filtro.Text);
+                //validateSearchOK();
+                
+                DataTable clientes = dao.buscarCliente(fieldName.Text, fieldSurname.Text, fieldDocument.Text);
                 this.llenarClientes(clientes);
+                BTModificar.Visible = true;
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message.ToString(), "Error");
@@ -97,12 +87,12 @@ namespace UberFrba.Abm_Cliente
             return textfieldText == initial && textfieldText == string.Empty;
         }
 
-        private void validateSearchOK() {
-            if ((tb_obtener_filtro.Text == string.Empty && CBbuscarf.Text != string.Empty) || (tb_obtener_filtro.Text != string.Empty && CBbuscarf.Text == string.Empty))
-            { 
-                throw new Exception("Complete ambos campos para filtrar");
-            }
-        }
+        //private void validateSearchOK() {
+        //    if ((fieldName.Text == string.Empty && CBbuscarf.Text != string.Empty) || (fieldName.Text != string.Empty && CBbuscarf.Text == string.Empty))
+        //    { 
+        //        throw new Exception("Complete ambos campos para filtrar");
+        //    }
+        //}
 
         private void setupTableView() {
             this.dataGridView1.ReadOnly = true;
@@ -112,6 +102,5 @@ namespace UberFrba.Abm_Cliente
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersVisible = true;
         }
-
     }
 }

@@ -13,7 +13,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using UberFrba.Dao;
 using UberFrba.Abm_Cliente;
-using UberFrba.Utils;
 
 
 namespace UberFrba.Dao
@@ -28,10 +27,10 @@ namespace UberFrba.Dao
         }
        
 
-        public DataTable buscarCliente(String filtro, String valor) {
-            if (filtro != "" && valor != "")
+        public DataTable buscarCliente(String nombre, String apellido, String dni) {
+            if (nombre != "" || apellido != "" || dni != "")
             {
-                return connector.select_query(getSelectClientQuery(filtro,valor));
+                return connector.select_query(getSelectClientQuery(nombre,apellido,dni));
             }
             else {
                 return buscarTodosLosClientes();
@@ -172,8 +171,10 @@ namespace UberFrba.Dao
            return "select per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id";
        }
 
-       private String getSelectClientQuery(String filtro, String valor) {
-           return getAllClientQuery() + " and " + filtro + " = '" + valor + "'";
+       private String getSelectClientQuery(String nombre, String apellido, String dni) {
+           return getAllClientQuery() + " and Nombre like '%" + nombre + 
+                                      "%' and Apellido like '%" + apellido + 
+                                      "%' and DNI like '%" + dni + "%'";
        }
 
     }
