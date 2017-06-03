@@ -151,16 +151,12 @@ namespace UberFrba.Abm_Chofer
             }
             
         /*var connection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
->>>>>>> master
         SqlCommand get_Choferes = new SqlCommand("FSOCIETY.sp_get_Choferes", connection);
         get_Choferes.Parameters.Add(new SqlParameter("@NombreTabla",this.condicionWhere));
         get_Choferes.Parameters.Add(new SqlParameter("@itemABuscar", this.tb_obtener_filtro.Text));
         get_Choferes.CommandType = CommandType.StoredProcedure;
         connection.Open();
         SqlDataReader reader = get_Choferes.ExecuteReader();
-<<<<<<< HEAD
-        
-=======
         */
 
         }
