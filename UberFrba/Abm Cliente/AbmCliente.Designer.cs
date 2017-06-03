@@ -41,7 +41,6 @@
             this.BTModificar = new System.Windows.Forms.Button();
             this.CBbuscarf = new System.Windows.Forms.ComboBox();
             this.tb_obtener_filtro = new System.Windows.Forms.TextBox();
-            this.bt_Volver = new System.Windows.Forms.Button();
             this.bt_buscar = new System.Windows.Forms.Button();
             this.bt_nuevo_cliente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -51,10 +50,15 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 34);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(493, 183);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(798, 183);
             this.dataGridView1.TabIndex = 45;
             // 
             // DNI
@@ -116,7 +120,8 @@
             // 
             // BTModificar
             // 
-            this.BTModificar.Location = new System.Drawing.Point(329, 227);
+            this.BTModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTModificar.Location = new System.Drawing.Point(634, 223);
             this.BTModificar.Name = "BTModificar";
             this.BTModificar.Size = new System.Drawing.Size(85, 27);
             this.BTModificar.TabIndex = 42;
@@ -139,19 +144,10 @@
             this.tb_obtener_filtro.Size = new System.Drawing.Size(246, 20);
             this.tb_obtener_filtro.TabIndex = 40;
             // 
-            // bt_Volver
-            // 
-            this.bt_Volver.Location = new System.Drawing.Point(13, 227);
-            this.bt_Volver.Name = "bt_Volver";
-            this.bt_Volver.Size = new System.Drawing.Size(85, 27);
-            this.bt_Volver.TabIndex = 39;
-            this.bt_Volver.Text = "Volver";
-            this.bt_Volver.UseVisualStyleBackColor = true;
-            this.bt_Volver.Click += new System.EventHandler(this.bt_Volver_Click_1);
-            // 
             // bt_buscar
             // 
-            this.bt_buscar.Location = new System.Drawing.Point(418, 5);
+            this.bt_buscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_buscar.Location = new System.Drawing.Point(725, 1);
             this.bt_buscar.Name = "bt_buscar";
             this.bt_buscar.Size = new System.Drawing.Size(85, 27);
             this.bt_buscar.TabIndex = 38;
@@ -161,7 +157,8 @@
             // 
             // bt_nuevo_cliente
             // 
-            this.bt_nuevo_cliente.Location = new System.Drawing.Point(420, 227);
+            this.bt_nuevo_cliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_nuevo_cliente.Location = new System.Drawing.Point(725, 223);
             this.bt_nuevo_cliente.Name = "bt_nuevo_cliente";
             this.bt_nuevo_cliente.Size = new System.Drawing.Size(85, 27);
             this.bt_nuevo_cliente.TabIndex = 37;
@@ -173,16 +170,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(519, 262);
+            this.ClientSize = new System.Drawing.Size(822, 281);
+            this.ControlBox = false;
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.BuscarPor);
             this.Controls.Add(this.BTModificar);
             this.Controls.Add(this.CBbuscarf);
             this.Controls.Add(this.tb_obtener_filtro);
-            this.Controls.Add(this.bt_Volver);
             this.Controls.Add(this.bt_buscar);
             this.Controls.Add(this.bt_nuevo_cliente);
             this.Name = "ABMCliente";
+            this.ShowIcon = false;
             this.Text = "ABM de Clientes";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -197,7 +195,6 @@
         private System.Windows.Forms.Button BTModificar;
         private System.Windows.Forms.ComboBox CBbuscarf;
         private System.Windows.Forms.TextBox tb_obtener_filtro;
-        private System.Windows.Forms.Button bt_Volver;
         private System.Windows.Forms.Button bt_buscar;
         private System.Windows.Forms.Button bt_nuevo_cliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn DNI;

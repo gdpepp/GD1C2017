@@ -103,7 +103,6 @@
       <DependentUpon>modif_rol.cs</DependentUpon>
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
-    <Compile Include="Conectores\DBConnection.cs" />
     <Compile Include="Dao\DAOAutomovil.cs" />
     <Compile Include="Dao\DaoFuncionalidades.cs" />
     <Compile Include="Dao\DAOClientes.cs" />
@@ -144,6 +143,7 @@
     <Compile Include="Menu\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu\MenuItemFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registro Viajes\Form1.cs">
@@ -218,6 +218,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

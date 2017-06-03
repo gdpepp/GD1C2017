@@ -222,7 +222,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAutomoviles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

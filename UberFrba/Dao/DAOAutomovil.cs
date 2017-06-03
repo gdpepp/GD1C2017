@@ -12,7 +12,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using UberFrba.Dao;
+<<<<<<< HEAD
 using UberFrba.Mapping;
+=======
+>>>>>>> master
 
 namespace UberFrba.Dao
 {

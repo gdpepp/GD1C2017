@@ -17,12 +17,8 @@ namespace UberFrba.Abm_Automovil
 {
     public partial class Automovil : Form
     {
-        Form parent;
-        DAOAutomovil dao;
-
-        public Automovil(Form parent)
+        public Automovil()
         {
-            this.parent = parent;
             this.dao = new DAOAutomovil();
             InitializeComponent();
             setupComboMarcas();
@@ -46,7 +42,5 @@ namespace UberFrba.Abm_Automovil
             this.comboMarca.DisplayMember = "description";
             this.comboMarca.DataSource = dao.getAllBrands();
         }
-
-
     }
 }

@@ -11,11 +11,13 @@ namespace UberFrba.Mapping
     {
         private Int32 id;
         private String description;
+        private String formName;
         private String parent;
 
-        public Funcionalidades(Int32 id, String description, String parent) {
+        public Funcionalidades(Int32 id, String description,String form, String parent) {
             this.id = id;
             this.description = description;
+            this.formName = form;
             this.parent = parent;
         }
 
@@ -23,7 +25,8 @@ namespace UberFrba.Mapping
         {
             this.id = Convert.ToInt32(row["id"]);
             this.description = Convert.ToString(row["Descripcion"]);
-            //this.parent = Convert.ToString(row["Padre"]);
+            this.formName = Convert.ToString(row["FormName"]);
+            this.parent = Convert.ToString(row["Padre"]);
         }
 
 
@@ -37,6 +40,11 @@ namespace UberFrba.Mapping
 
         public String getParent() {
             return this.parent;
+        }
+
+        public String getFormName()
+        {
+            return this.formName;
         }
 
     }
