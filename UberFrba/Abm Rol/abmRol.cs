@@ -27,7 +27,7 @@ namespace UberFrba.Abm_Rol
 
         public void fill_data_set()
         {
-            using (var connection = DBConnection.getInstance().getConnection())
+            /*using (var connection = DBConnection.getInstance().getConnection())
             {
                 //ejecuto sp para traer roles modificables
                 SqlCommand query = new SqlCommand("FSOCIETY.sp_get_modif_roles", connection);
@@ -47,7 +47,7 @@ namespace UberFrba.Abm_Rol
                 this.dataGridView1.AllowUserToAddRows = false;
                 //Oculto pk
                 this.dataGridView1.Columns[0].Visible = false;
-            }
+            }*/
         }
 
         private void Form1_Load(object sender, EventArgs e) 

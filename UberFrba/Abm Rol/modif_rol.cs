@@ -38,7 +38,7 @@ namespace UberFrba.Abm_Rol
 
         private void update(object sender, EventArgs e)
         {
-            var connection = DBConnection.getInstance().getConnection();
+            /*var connection = DBConnection.getInstance().getConnection();
             SqlCommand update_command = new SqlCommand("FSOCIETY.sp_update_roles", connection);
             update_command.CommandType = CommandType.StoredProcedure;
             update_command.Parameters.Add(new SqlParameter("@idRol", this.idRol));
@@ -56,14 +56,14 @@ namespace UberFrba.Abm_Rol
             }
             else
                 MessageBox.Show("No se pudo modificar el rol. Intente nuevamente");
-            connection.Close();
+            connection.Close();*/
         }
 
         private void insert(object sender, EventArgs e)
         {
             if (this.textBox1.Text != "")
             {
-                var connection = DBConnection.getInstance().getConnection();
+                /*var connection = DBConnection.getInstance().getConnection();
                 SqlCommand insert_command = new SqlCommand("FSOCIETY.sp_insert_rol", connection);
                 insert_command.CommandType = CommandType.StoredProcedure;
                 insert_command.Parameters.Add(new SqlParameter("@descripcion", this.textBox1.Text));
@@ -85,14 +85,14 @@ namespace UberFrba.Abm_Rol
                     mensaje = "No se pudo crear el rol. Intente nuevamente";
                 }
                 connection.Close();
-                MessageBox.Show(mensaje);
+                MessageBox.Show(mensaje);*/
             }
             else MessageBox.Show("Debe proveer un nombre para el rol ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void LlenarListaFuncionalidades()
         {
-            var connection = DBConnection.getInstance().getConnection();
+            /*var connection = DBConnection.getInstance().getConnection();
             List<Funcionalidad> funcionalidadesActuales = new List<Funcionalidad>();
             List<Funcionalidad> funcionalidadesTodas = new List<Funcionalidad>();
 
@@ -119,12 +119,12 @@ namespace UberFrba.Abm_Rol
             }
 
             foreach (Funcionalidad funcionalidad in funcionalidadesTodas)
-                this.checkedListBox1.Items.Add(funcionalidad, funcionalidadesActuales.Exists(f => funcionalidad.Equals(f)));
+                this.checkedListBox1.Items.Add(funcionalidad, funcionalidadesActuales.Exists(f => funcionalidad.Equals(f)));*/
         }
 
         private void aplicarSpAlistasFuncionalidades(List<Funcionalidad> list, string sp)
         {
-            var connection = DBConnection.getInstance().getConnection();
+            /*var connection = DBConnection.getInstance().getConnection();
             SqlCommand command;
             foreach (Funcionalidad funcionalidad in list)
             {
@@ -136,7 +136,7 @@ namespace UberFrba.Abm_Rol
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
-            }
+            }*/
 
         }
 

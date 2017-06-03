@@ -29,8 +29,8 @@ AS BEGIN
 
 	set @id = (SELECT MAX(id)+1 from FSOCIETY.Personas);
 
-	insert into FSOCIETY.Personas (id, Nombre, Apellido, DNI, Direccion, [Fecha de Nacimiento])
-	values (@id, @nombre, @apellido, @dni, @direccion, @fecha_nacimiento)
+	insert into FSOCIETY.Personas (Nombre, Apellido, DNI, Direccion, [Fecha de Nacimiento])
+	values (@nombre, @apellido, @dni, @direccion, @fecha_nacimiento)
 
 	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;

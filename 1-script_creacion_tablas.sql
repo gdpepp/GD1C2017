@@ -54,8 +54,6 @@ END
 CLOSE tables
 DEALLOCATE tables
 
-GO
-
 /*DROP PROCEDURES*/
 DECLARE @procedureDrop AS nvarchar(400)
 DECLARE proceduress CURSOR FOR select 
@@ -118,12 +116,22 @@ CREATE TABLE [FSOCIETY].[Roles](
 CREATE TABLE [FSOCIETY].[Funcionalidades](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Descripcion] [varchar](50) NOT NULL,
+	[FormName] [varchar](50) NULL,
+	[IdFuncionalidadPadre] [int] NULL
  CONSTRAINT [PK_Funcionalidades] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [FSOCIETY].[Funcionalidades]  WITH CHECK ADD  CONSTRAINT [FK_Funcionalidades_Funcionalidades] FOREIGN KEY([IdFuncionalidadPadre])
+REFERENCES [FSOCIETY].[Funcionalidades] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[Funcionalidades] CHECK CONSTRAINT [FK_Funcionalidades_Funcionalidades]
+GO
 ----------------------------------------
 --RolFuncionalidades
 ----------------------------------------
@@ -283,8 +291,8 @@ GO
 ----------------------------------------
 CREATE TABLE [FSOCIETY].[Turnos](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Hora_De_Inicio] [time](0) NOT NULL,
-	[Hora_De_Finalizacion] [time](0) NOT NULL,
+	[Hora_De_Inicio] [int] NOT NULL,
+	[Hora_De_Finalizacion] [int] NOT NULL,
 	[Descripcion] [varchar](100) NOT NULL,
 	[Valor_Km] [smallmoney] NOT NULL,
 	[Precio_Base] [smallmoney] NOT NULL,
@@ -483,9 +491,21 @@ VALUES ('Administrador', 1),
 GO
 
 INSERT INTO FSOCIETY.UsuariosRoles
-VALUES(1,1)
-INSERT INTO FSOCIETY.UsuariosRoles
-VALUES(1,2)
+VALUES(1,1),(1,2);
+
+GO
+
+INSERT INTO FSOCIETY.Funcionalidades(Descripcion,FormName,IdFuncionalidadPadre)
+VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
+	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer',NULL,2),
+	  ('Consultas Autos','Automovil',3);
+
+GO
+
+INSERT INTO FSOCIETY.RolFuncionalidades(IdRol,IdFuncionalidad)
+SELECT 1, Id FROM FSOCIETY.Funcionalidades
+
+GO
 
 SET ANSI_PADDING OFF
 GO
