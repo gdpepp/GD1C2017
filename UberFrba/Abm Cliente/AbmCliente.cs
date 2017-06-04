@@ -49,23 +49,6 @@ namespace UberFrba.Abm_Cliente
                
         }
 
-
-        private void BTModificar_Click(object sender, EventArgs e)
-        {
-            //Alta_Cliente mod = new Alta_Cliente();
-            //mod.ShowDialog();
-
-            // hacer que se cargue con la informacion que se selecciono
-        }
-
-        private void BTeliminar_Click_1(object sender, EventArgs e)
-        {
-            //baja logica
-            //llamar a un SP que inhabilite al usuario
-        }
-
-
-
         private void llenarClientes(DataTable table)
         {
             this.dataGridView1.DataSource = table;
@@ -86,13 +69,6 @@ namespace UberFrba.Abm_Cliente
         private Boolean validateFields(String textfieldText, String initial){
             return textfieldText == initial && textfieldText == string.Empty;
         }
-
-        //private void validateSearchOK() {
-        //    if ((fieldName.Text == string.Empty && CBbuscarf.Text != string.Empty) || (fieldName.Text != string.Empty && CBbuscarf.Text == string.Empty))
-        //    { 
-        //        throw new Exception("Complete ambos campos para filtrar");
-        //    }
-        //}
 
         private void setupTableView() {
             this.dataGridView1.ReadOnly = true;

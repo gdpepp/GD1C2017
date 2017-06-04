@@ -51,9 +51,7 @@ namespace UberFrba.Abm_Cliente
             else
             {
                 createClient(dao);
-
-
-            }
+           }
         }
 
         private bool checkDNInot0()
@@ -119,12 +117,18 @@ namespace UberFrba.Abm_Cliente
                     try
                     {
                         dao.crearPersona(persona);
+                        cliente.setIdCliente(dao.getIdPersona(persona));                 
+                        dao.crearCliente(cliente);
                         success = true;
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message.ToString());
                     }
+
+                    MessageBox.Show("El cliente fue creado exitosamente");
+                    this.Close();
+
                 }
             }
 

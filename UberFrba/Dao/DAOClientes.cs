@@ -54,46 +54,42 @@ namespace UberFrba.Dao
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_crear_persona", dic);
             
-            
-            
-            /*SqlCommand createPerson = new SqlCommand("FSOCIETY.sp_crear_persona", personConnection);
-            createPerson.Parameters.Add(new SqlParameter("@nombre", persona.nombre));
-            createPerson.Parameters.Add(new SqlParameter("@apellido", persona.apellido));
-            createPerson.Parameters.Add(new SqlParameter("@dni", persona.dni));
-            createPerson.Parameters.Add(new SqlParameter("@direccion", persona.direccion));
-            createPerson.Parameters.Add(new SqlParameter("@fecha_nacimiento", persona.nacimiento));
-            createPerson.Parameters.Add(new SqlParameter("@id", persona.idPerson));
-            createPerson.CommandType = CommandType.StoredProcedure;
-            personConnection.Open();
-            
-            return createPerson.ExecuteNonQuery();
-             * */
-            return persona.idPerson;
+            return this.getIdPersona(persona);
         }
 
         public int getIdPersona(Persona persona)
         {
             DataBaseConnector db;
             db = DataBaseConnector.getInstance();
-            DataTable dt = db.select_query("Select Id from FSOCIETY.Usuarios where Username = '" + persona.idPerson + "'");
-            
-            return dt.Rows[1].Field<int>(1);
+            DataTable dt = db.select_query("Select Id from FSOCIETY.Personas where Nombre = '" + persona.nombre + "' and Apellido = '" + persona.apellido + "' and DNI = '" + persona.dni + "' and Direccion = '" + persona.direccion + "'");
+
+            int idpersona = (int)dt.Rows[0][0];
+            return idpersona;
         }
 
-        public int crearUsuario(int id)
+        public int crearUsuario(int idPersona)
         {
-            /*SqlCommand createUser = new SqlCommand("FSOCIETY.sp_create_user", userConnection);
-            createUser.Parameters.Add(new SqlParameter("@idPersona", id));
-            createUser.CommandType = CommandType.StoredProcedure;
-            userConnection.Open();
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@id", idPersona);
+            connector.executeProcedureWithParameters("FSOCIETY.sp_create_user", dic);
 
-            return createUser.ExecuteNonQuery();
-             */
             return 0;
         }
 
         public int crearCliente(Cliente cliente)
         {
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@telefono", cliente.telefono);
+            dic.Add("@mail", cliente.mail);
+            dic.Add("@codigoPostal", cliente.zipcode);
+            dic.Add("@idCliente", cliente.idCliente);
+            dic.Add("@habilitado", cliente.habilitado);
+
+            connector.executeProcedureWithParameters("FSOCIETY.sp_crear_cliente", dic);
+            
+                       return 0;
+      
+            
             /*SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", clientConnection);
             createClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
             createClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
@@ -103,7 +99,7 @@ namespace UberFrba.Dao
             clientConnection.Open();
 
             return createClient.ExecuteNonQuery();*/
-            return 0;
+
         }
 
        public int getIdcliente(Cliente cliente)
