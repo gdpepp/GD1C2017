@@ -194,6 +194,7 @@
             this.buttonBuscar.TabIndex = 12;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
+            this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
             // Automovil
             // 
@@ -222,6 +223,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAutomoviles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

@@ -107,5 +107,11 @@ namespace UberFrba.Menu
                 }
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Automovil a = new Automovil();
+            a.ShowDialog();
+        }
     }
 }
