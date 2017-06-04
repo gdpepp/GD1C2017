@@ -43,17 +43,39 @@ namespace UberFrba.Abm_Automovil
             this.comboMarca.ValueMember = "id";
             this.comboMarca.DisplayMember = "description";
             this.comboMarca.DataSource = dao.getAllBrands();
+            this.comboMarca.SelectedItem = null;
         }
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
             DataTable dt = dao.getAllCars();
-            string fieldName = string.Concat("[", dt.Columns[0].ColumnName,"]");
-            dt.DefaultView.Sort = fieldName;
             DataView view = dt.DefaultView;
             view.RowFilter = string.Empty;
+
+            if (textChofer.Text != string.Empty)
+            {
+                string filtroChofer = string.Concat("[", dt.Columns[0].ColumnName, "]");
+                view.RowFilter = filtroChofer + " LIKE '%" + textChofer.Text + "%'";
+            }
+
             if (textPatente.Text != string.Empty)
-                view.RowFilter = fieldName + " LIKE '%" + textPatente.Text + "%'";
+            {
+                string filtroPatente = string.Concat("[", dt.Columns[1].ColumnName, "]");
+                view.RowFilter = filtroPatente + " LIKE '%" + textPatente.Text + "%'";
+            }
+
+            if (comboMarca.SelectedItem != null) 
+            {
+                string filtroMarca = string.Concat("[", dt.Columns[2].ColumnName, "]");
+                view.RowFilter = filtroMarca + " LIKE '%" + comboMarca.SelectedItem + "%'";
+            }
+
+            if (textModelo.Text != string.Empty)
+            {
+                string filtroModelo = string.Concat("[", dt.Columns[3].ColumnName, "]");
+                view.RowFilter = filtroModelo + " LIKE '%" + textModelo.Text + "%'";
+            }
+            this.comboMarca.SelectedItem = null;
             this.dataGridViewAutomoviles.DataSource = view;
         }
     }
