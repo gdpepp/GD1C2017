@@ -32,6 +32,8 @@ AS BEGIN
 	insert into FSOCIETY.Personas (Nombre, Apellido, DNI, Direccion, [Fecha de Nacimiento])
 	values (@nombre, @apellido, @dni, @direccion, @fecha_nacimiento)
 
+  	Execute FSOCIETY.sp_create_user @id
+
 	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;
 	COMMIT TRANSACTION T1;
@@ -49,8 +51,6 @@ CREATE PROCEDURE FSOCIETY.sp_crear_cliente (@telefono varchar(50),
 											@habilitado int)
 AS BEGIN
     BEGIN TRANSACTION T1
-
-	set @idCliente = (SELECT MAX(id)+1 from FSOCIETY.Cliente);
 
 	insert into FSOCIETY.Cliente(id, Telefono, Email, Codigo_Postal, Habilitado)
 	values (@idCliente, @telefono, @mail, @codigoPostal, @habilitado);
@@ -72,7 +72,7 @@ GO
 CREATE PROCEDURE FSOCIETY.sp_get_clientes (@fieldName varchar(50), @fieldValue varchar(40))
 AS BEGIN
 	select per.Id, per.Nombre, per.Apellido, per.DNI, cli.Telefono, cli.Email, 
-		   per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado
+per.[Fecha de Nacimiento], per.Direccion, cli.Codigo_Postal, cli.Habilitado
 	from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us
 	where per.Id = us.IdPersona and us.Id = cli.Id
 		   and @fieldName = @fieldValue

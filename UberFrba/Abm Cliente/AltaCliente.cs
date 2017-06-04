@@ -17,7 +17,7 @@ namespace UberFrba.Abm_Cliente
     {
         int clientId = 0;
         private DAOClientes dao;
-        
+
         public AltaCliente()
         {
             InitializeComponent();
@@ -36,30 +36,32 @@ namespace UberFrba.Abm_Cliente
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            
+
             this.Close();
         }
 
         public void saveButton_Click(object sender, EventArgs e)
         {
             // al guardar se hara tanto el alta como la modificacion, de acuerdo al clientId
-               
+
             if (this.clientId != 0)
             {
                 updateOrDeleteClient(dao);
             }
-            else 
+            else
             {
                 createClient(dao);
-              
-                
-            }              
+           }
         }
 
-        private void checkDNInot0()
+        private bool checkDNInot0()
         {
-            if(this.fieldDocument.Equals("0"))
-                MessageBox.Show("El número de documento no puede ser 0");
+            if (this.fieldDocument.Text.Equals("0"))
+            {
+                MessageBox.Show("El número de documento no puede ser 0 ni vacio");
+                return false;
+            }
+            else return true;
         }
 
         private void getClient(int id)
@@ -72,7 +74,7 @@ namespace UberFrba.Abm_Cliente
             connection.Open();
             this.completarCampos(command.ExecuteReader());
             connection.Close();*/
-         }
+        }
 
         private void completarCampos(SqlDataReader reader)
         {
@@ -80,46 +82,62 @@ namespace UberFrba.Abm_Cliente
             this.fieldName.Text = reader["Nombre"].ToString();
             this.fieldSurname.Text = reader["Apellido"].ToString();
             this.fieldDocument.Text = reader["DNI"].ToString();
-            this.fieldTelephone.Text= reader["Telefono"].ToString();
+            this.fieldTelephone.Text = reader["Telefono"].ToString();
             this.fieldMail.Text = reader["Email"].ToString();
             this.birthTimePicker.Text = reader["[Fecha de Nacimiento]"].ToString();
             this.fieldStreet.Text = reader["Direccion"].ToString();
             this.fieldZipcode.Text = reader["Codigo_Postal"].ToString();
             this.checkHabilitado.Checked = (bool)reader["Habilitado"];
-       }
+        }
 
-        public void CheckEmptyFields()
+        public bool CheckEmptyFields()
         {
             List<TextBox> inputs = new List<TextBox> {this.fieldName, this.fieldSurname, this.fieldDocument, this.fieldMail, 
                 this.fieldTelephone, this.fieldZipcode, this.fieldStreet};
             if (inputs.Any((t) => t.Text == ""))
             {
-                MessageBox.Show("Complete todos los campos");              
+                MessageBox.Show("Complete todos los campos");
+                return false;
             }
+            else return true;
+
         }
 
         private bool createClient(DAOClientes dao)
         {
-            int idPersona = 0;
-            Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, idPersona);
-            Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona, this.checkHabilitado.Checked);
-            
-            this.CheckEmptyFields();
-            this.checkDNInot0();
-            bool success = true;
-            try
+            bool success = false;
+            if (this.CheckEmptyFields())
             {
-                dao.crearPersona(persona);
+                if (this.checkDNInot0())
+                {
+                    int idPersona = 0;
+                    Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, idPersona);
+                    Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, idPersona, this.checkHabilitado.Checked);
+
+                    try
+                    {
+                        dao.crearPersona(persona);
+                        cliente.setIdCliente(dao.getIdPersona(persona));                 
+                        dao.crearCliente(cliente);
+                        success = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+
+                    MessageBox.Show("El cliente fue creado exitosamente");
+                    this.Close();
+
+                }
             }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message.ToString());
-            }
+
 
             //primero creo la persona
             //dsp el usuario
             //dsp el cliente
             //y dsp le agrego el rol
-                
+
             /*if (dao.crearPersona(persona) > 0)
             {
                 persona.setIdPersona(dao.getIdPersona(persona));
@@ -150,7 +168,7 @@ namespace UberFrba.Abm_Cliente
             {
                 MessageBox.Show("Error al guardar los datos de la persona.\nIntente nuevamente", "Error Persona");
             }*/
-    
+
             return success;
         }
 
@@ -164,16 +182,19 @@ namespace UberFrba.Abm_Cliente
             dao.modificarCliente(cliente);
         }
 
-        private void verifyFields(DAOClientes dao, Persona persona, Cliente cliente)
+        private bool verifyFields(DAOClientes dao, Persona persona, Cliente cliente)
         {
             if (dao.getDNIById(persona) != 0)
             {
                 MessageBox.Show("El numero de DNI ya existe para otra persona", "DNI ya existe");
+                return false;
             }
             if (dao.getMailById(cliente) != 0)
             {
                 MessageBox.Show("La direccion de mail ya existe para otra persona", "Mail ya existe");
+                return false;
             }
+            return true;
         }
     }
 }
