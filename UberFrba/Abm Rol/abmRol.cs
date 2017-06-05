@@ -14,15 +14,11 @@ namespace UberFrba.Abm_Rol
 {
     public partial class AbmRol : Form
     {
-        Form parent;
-        string userName;
-
-        public AbmRol(Form parent, string userName)
+       
+        public AbmRol()
         {
-            this.parent = parent;
-            this.userName = userName;
             InitializeComponent();
-            this.fill_data_set();
+            //this.fill_data_set();
         }
 
         public void fill_data_set()
@@ -72,8 +68,6 @@ namespace UberFrba.Abm_Rol
         private void button5_Click(object sender, EventArgs e) 
         {
             //Volver
-            this.Close();
-            this.parent.Show();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
