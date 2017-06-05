@@ -108,6 +108,7 @@
             this.buttonAlta.TabIndex = 1;
             this.buttonAlta.Text = "Alta";
             this.buttonAlta.UseVisualStyleBackColor = true;
+            this.buttonAlta.Click += new System.EventHandler(this.buttonAlta_Click);
             // 
             // buttonModificar
             // 
@@ -118,6 +119,7 @@
             this.buttonModificar.TabIndex = 2;
             this.buttonModificar.Text = "Modificar";
             this.buttonModificar.UseVisualStyleBackColor = true;
+            this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
             // 
             // labelMarca
             // 

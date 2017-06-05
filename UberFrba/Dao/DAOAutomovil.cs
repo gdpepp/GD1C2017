@@ -37,5 +37,19 @@ namespace UberFrba.Dao
 
             return marcas;
         }
+
+        public List<Turno> getAllTurn()
+        {
+            List<Turno> turnos = new List<Turno>();
+            DataBaseConnector db = DataBaseConnector.getInstance();
+            DataTable dt = db.select_query("SELECT * FROM FSOCIETY.Turnos;");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                turnos.Add(new Turno(row));
+            }
+
+            return turnos;
+        }   
     }
 }

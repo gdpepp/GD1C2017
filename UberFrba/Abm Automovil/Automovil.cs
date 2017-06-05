@@ -78,5 +78,23 @@ namespace UberFrba.Abm_Automovil
             this.comboMarca.SelectedItem = null;
             this.dataGridViewAutomoviles.DataSource = view;
         }
+
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridViewAutomoviles.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un auto del listado para modificar");
+                return;
+            }
+
+            int idAuto = Int32.Parse(dataGridViewAutomoviles.SelectedRows[0].Cells[""].Value.ToString());
+            new AltaModificacionAutomoviles(idAuto).Show();
+        }
+
+        private void buttonAlta_Click(object sender, EventArgs e)
+        {
+            AltaModificacionAutomoviles a = new AltaModificacionAutomoviles();
+            a.ShowDialog();
+        }
     }
 }
