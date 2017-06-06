@@ -36,9 +36,6 @@
             this.BTModificar = new System.Windows.Forms.Button();
             this.BTeliminar = new System.Windows.Forms.Button();
             this.BuscarPor = new System.Windows.Forms.Label();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -55,7 +52,7 @@
             // 
             // bt_buscar
             // 
-            this.bt_buscar.Location = new System.Drawing.Point(319, 240);
+            this.bt_buscar.Location = new System.Drawing.Point(364, 15);
             this.bt_buscar.Name = "bt_buscar";
             this.bt_buscar.Size = new System.Drawing.Size(85, 27);
             this.bt_buscar.TabIndex = 1;
@@ -92,7 +89,7 @@
             // 
             // BTModificar
             // 
-            this.BTModificar.Location = new System.Drawing.Point(419, 207);
+            this.BTModificar.Location = new System.Drawing.Point(521, 240);
             this.BTModificar.Name = "BTModificar";
             this.BTModificar.Size = new System.Drawing.Size(85, 27);
             this.BTModificar.TabIndex = 6;
@@ -102,7 +99,7 @@
             // 
             // BTeliminar
             // 
-            this.BTeliminar.Location = new System.Drawing.Point(419, 174);
+            this.BTeliminar.Location = new System.Drawing.Point(612, 240);
             this.BTeliminar.Name = "BTeliminar";
             this.BTeliminar.Size = new System.Drawing.Size(85, 27);
             this.BTeliminar.TabIndex = 7;
@@ -120,46 +117,26 @@
             this.BuscarPor.Text = "Buscar por:";
             this.BuscarPor.Click += new System.EventHandler(this.label1_Click);
             // 
-            // Apellido
-            // 
-            this.Apellido.HeaderText = "Apellido";
-            this.Apellido.Name = "Apellido";
-            this.Apellido.ReadOnly = true;
-            // 
-            // Nombre
-            // 
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            this.Nombre.ReadOnly = true;
-            // 
-            // DNI
-            // 
-            this.DNI.HeaderText = "DNI";
-            this.DNI.Name = "DNI";
-            this.DNI.ReadOnly = true;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DNI,
-            this.Nombre,
-            this.Apellido});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 62);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 48);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
-            this.dataGridView1.Size = new System.Drawing.Size(343, 139);
-            this.dataGridView1.TabIndex = 9;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(753, 154);
+            this.dataGridView1.TabIndex = 46;
             // 
             // ABMChofer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 279);
+            this.ClientSize = new System.Drawing.Size(877, 279);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.BuscarPor);
             this.Controls.Add(this.BTeliminar);
@@ -188,9 +165,6 @@
         private System.Windows.Forms.Button BTModificar;
         private System.Windows.Forms.Button BTeliminar;
         private System.Windows.Forms.Label BuscarPor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Apellido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

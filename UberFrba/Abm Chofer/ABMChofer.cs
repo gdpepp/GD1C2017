@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Utils;
+using UberFrba.Dao;
 
 
 
@@ -19,11 +20,12 @@ namespace UberFrba.Abm_Chofer
         private String inicialTB = "Ingrese criterio de Busqueda";
         private String inicialCB = "";
         private String condicionWhere;
-
+        private DAOChofer dao;
        
         public ABMChofer()
         {
               InitializeComponent();
+              this.dao = new DAOChofer();
               tb_obtener_filtro.Text = inicialTB;
               CBbuscarf.Items.Insert(0, "DNI");
               CBbuscarf.Items.Insert(1, "Apellido");
@@ -47,6 +49,8 @@ namespace UberFrba.Abm_Chofer
                 CBbuscarf.Visible = false;
                 tb_obtener_filtro.Visible = false;
                 BuscarPor.Visible = false;
+                this.dataGridView1.DataSource = dao.buscarChofer(CBbuscarf.Text, tb_obtener_filtro.Text);
+                //todo error loco            
             }
            
 
@@ -55,7 +59,7 @@ namespace UberFrba.Abm_Chofer
         private void bt_nuevo_chofer_Click(object sender, EventArgs e)
         {
             Alta_Chofer alta1 = new Alta_Chofer();
-            alta1.ShowDialog();
+            alta1.Show();
            
         }
 
@@ -106,7 +110,13 @@ namespace UberFrba.Abm_Chofer
 
         private void BTModificar_Click(object sender, EventArgs e)
         {
-            ModificarChofer mod = new ModificarChofer();
+            if (this.dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("seleccione un cliente del listado para modificar");
+                return;
+            }
+            DataGridViewRow row = this.dataGridView1.SelectedRows[0];
+            Alta_Chofer mod = new Alta_Chofer(row);
             mod.ShowDialog();
         }
 
@@ -116,11 +126,6 @@ namespace UberFrba.Abm_Chofer
         }
 
         private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
