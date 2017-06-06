@@ -26,10 +26,13 @@ namespace UberFrba.Abm_Chofer
         {
               InitializeComponent();
               this.dao = new DAOChofer();
-              tb_obtener_filtro.Text = inicialTB;
+              bt_nuevo_chofer.Visible = true;
+              BTModificar.Visible = true;
+            tb_obtener_filtro.Text = inicialTB;
               CBbuscarf.Items.Insert(0, "DNI");
               CBbuscarf.Items.Insert(1, "Apellido");
               CBbuscarf.Items.Insert(2, "Nombre");
+            
 
               
               

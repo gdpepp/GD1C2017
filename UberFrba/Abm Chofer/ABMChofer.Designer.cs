@@ -41,6 +41,7 @@
             // 
             // bt_nuevo_chofer
             // 
+            this.bt_nuevo_chofer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_nuevo_chofer.Location = new System.Drawing.Point(725, 363);
             this.bt_nuevo_chofer.Name = "bt_nuevo_chofer";
             this.bt_nuevo_chofer.Size = new System.Drawing.Size(85, 27);
@@ -51,6 +52,7 @@
             // 
             // bt_buscar
             // 
+            this.bt_buscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_buscar.Location = new System.Drawing.Point(707, 15);
             this.bt_buscar.Name = "bt_buscar";
             this.bt_buscar.Size = new System.Drawing.Size(85, 27);
@@ -78,6 +80,7 @@
             // 
             // BTModificar
             // 
+            this.BTModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTModificar.Location = new System.Drawing.Point(634, 363);
             this.BTModificar.Name = "BTModificar";
             this.BTModificar.Size = new System.Drawing.Size(85, 27);

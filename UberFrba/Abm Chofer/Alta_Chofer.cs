@@ -18,7 +18,6 @@ namespace UberFrba.Abm_Chofer
         private DAOChofer dao;
         private int id;
         private DAOClientes pers;
-        private DataGridViewRow row;
         public Alta_Chofer()
         {
             InitializeComponent();
