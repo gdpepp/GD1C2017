@@ -92,5 +92,8 @@ BEGIN TRANSACTION T1
   DELETE FROM FSOCIETY.RolFuncionalidades
    WHERE IdRol = @idrol
      AND IdFuncionalidad = @idfun
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
 COMMIT TRANSACTION T1
 GO
