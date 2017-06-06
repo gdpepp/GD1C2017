@@ -14,7 +14,7 @@ namespace UberFrba.Abm_Automovil
     public partial class AltaModificacionAutomoviles : Form
     {
         private DAOAutomovil dao;
-        int idAuto = 0;
+        int flagAuto = 0;
 
         public AltaModificacionAutomoviles()
         {
@@ -27,23 +27,79 @@ namespace UberFrba.Abm_Automovil
 
         public AltaModificacionAutomoviles(DataGridViewRow row)
         {
-            InitializeComponent();
-            /*
             this.dao = new DAOAutomovil();
-            this.idAuto = id;
-            this.getCar(idAuto);
-            this.Text = "Modifique al cliente";
+            InitializeComponent();
+            setupComboMarcas();
+            setupComboTurnos();
+            setupComboChoferes();
+            this.Text = "Modifique al Auto";
             this.buttonGuardar.Text = "Modificar";
-            */
+            this.flagAuto = 1;
             this.completarCampos(row);
         }
 
         private void completarCampos(DataGridViewRow row)
         {
-            this.comboMarca.SelectedItem = row.Cells["Chofer"].Value;
+            /*
+            this.comboMarca.SelectedIndex = ;
+            this.textModelo.Text = row.Cells["Modelo"].Value.ToString();
+            this.textPatente.Text = row.Cells["Patente"].Value.ToString();
+            this.comboTurno.SelectedItem = row.Cells["Turno"].Value.ToString();
+            this.comboChofer.SelectedItem = row.Cells["Chofer"].Value.ToString();
+            this.checkHabilitado.Checked = (bool)row.Cells["Habilitado"].Value;
+            */
         }
-        private void getCar(int id)
+
+        public bool CheckEmptyFields()
         {
+            List<TextBox> inputs = new List<TextBox> {this.textModelo, this.textPatente};
+            if (inputs.Any((t) => t.Text == ""))
+            {
+                MessageBox.Show("Complete todos los campos");
+                return false;
+            }
+            else return true;
+        }
+
+        private bool createCar(DAOAutomovil dao)
+        {
+            bool success = false;
+            if (this.CheckEmptyFields())
+            {
+                Auto auto = new Auto(Convert.ToInt32(this.comboMarca.SelectedValue), this.textModelo.Text, this.textPatente.Text, Convert.ToInt32(this.comboTurno.SelectedValue), Convert.ToInt32(this.comboChofer.SelectedValue), this.checkHabilitado.Checked);
+                verifyFields(dao, auto);
+                try
+                {
+                    dao.crearAuto(auto);
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+
+                MessageBox.Show("El auto fue creado exitosamente");
+                this.Close();
+            }
+            return success;
+        }
+
+        private void updateOrDeleteCar(DAOAutomovil dao)
+        {
+            Auto auto = new Auto(Convert.ToInt32(this.comboMarca.SelectedValue), this.textModelo.Text, this.textPatente.Text, Convert.ToInt32(this.comboTurno.SelectedValue), Convert.ToInt32(this.comboChofer.SelectedValue), this.checkHabilitado.Checked);
+            dao.modificarAuto(auto);
+            verifyFields(dao, auto);
+            MessageBox.Show("Cambios guardados");
+        }
+
+        private bool verifyFields(DAOAutomovil dao, Auto auto)
+        {
+            if (dao.getPatente(auto) != 0)
+            {
+                MessageBox.Show("La direccion de mail ya existe para otra persona", "Mail ya existe");
+                return false;
+            }
+            return true;
         }
 
         private void setupComboMarcas()
@@ -51,21 +107,37 @@ namespace UberFrba.Abm_Automovil
             this.comboMarca.ValueMember = "id";
             this.comboMarca.DisplayMember = "description";
             this.comboMarca.DataSource = dao.getAllBrands();
-            this.comboMarca.SelectedItem = null;
         }
 
         private void setupComboTurnos()
         {
             this.comboTurno.ValueMember = "id";
-            this.comboTurno.DisplayMember = "id";
+            this.comboTurno.DisplayMember = "descripcion";
             this.comboTurno.DataSource = dao.getAllTurn();
         }
 
         private void setupComboChoferes()
         {
             this.comboChofer.ValueMember = "id";
-            this.comboChofer.DisplayMember = "Id";
+            this.comboChofer.DisplayMember = "chofer";
             this.comboChofer.DataSource = dao.getAllDriver();
+        }
+
+        private void buttonGuardar_Click(object sender, EventArgs e)
+        {
+            if (this.flagAuto != 0)
+            {
+                updateOrDeleteCar(dao);
+            }
+            else
+            {
+                createCar(dao);
+            }
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

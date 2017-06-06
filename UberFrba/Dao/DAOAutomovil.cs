@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using UberFrba.Dao;
 using UberFrba.Mapping;
+using UberFrba.Abm_Automovil;
 
 namespace UberFrba.Dao
 {
@@ -22,7 +23,7 @@ namespace UberFrba.Dao
 
         public DataTable getAllCars()
         {
-            return db.select_query("SELECT CONCAT(PERSONAS.Apellido,' ',PERSONAS.Nombre) AS Chofer, AUTOS.Patente AS Patente, MARCAS.Description AS Marcas, MODELOS.Description AS Modelo, TURNOS.Descripcion AS Turno FROM FSOCIETY.Autos AUTOS LEFT JOIN FSOCIETY.Modelos MODELOS ON AUTOS.IdModelo = MODELOS.Id LEFT JOIN FSOCIETY.Turnos TURNOS ON AUTOS.IdTurno = TURNOS.Id LEFT JOIN FSOCIETY.Personas PERSONAS ON AUTOS.IdChofer = PERSONAS.Id LEFT JOIN FSOCIETY.Marcas MARCAS ON MODELOS.IdMarca = MARCAS.Id"); 
+            return db.select_query("SELECT AUTOS.Id AS Id, CONCAT(PERSONAS.Apellido,' ',PERSONAS.Nombre) AS Chofer, AUTOS.Patente AS Patente, MARCAS.Description AS Marca, MODELOS.Description AS Modelo, TURNOS.Descripcion AS Turno, AUTOS.Habilitado AS Habilitado FROM FSOCIETY.Autos AUTOS LEFT JOIN FSOCIETY.Modelos MODELOS ON AUTOS.IdModelo = MODELOS.Id LEFT JOIN FSOCIETY.Turnos TURNOS ON AUTOS.IdTurno = TURNOS.Id LEFT JOIN FSOCIETY.Personas PERSONAS ON AUTOS.IdChofer = PERSONAS.Id LEFT JOIN FSOCIETY.Marcas MARCAS ON MODELOS.IdMarca = MARCAS.Id"); 
         }
 
         public DataTable searchCar(String marca, String patente, String modelo, String chofer) {
@@ -52,7 +53,7 @@ namespace UberFrba.Dao
         public List<Turno> getAllTurn()
         {
             List<Turno> turnos = new List<Turno>();
-            DataTable dt = db.select_query("SELECT * FROM FSOCIETY.Turnos");
+            DataTable dt = db.select_query("SELECT TURNOS.Id AS Id, TURNOS.Descripcion AS Descripcion FROM FSOCIETY.Turnos TURNOS;");
 
             foreach (DataRow row in dt.Rows)
             {
@@ -85,5 +86,24 @@ namespace UberFrba.Dao
                                       "%' and Modelo like '%" + modelo +
                                       "%' and Chofer like '%" + chofer + "%'";
        }
+
+        internal void crearAuto(Abm_Automovil.Auto auto)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void modificarAuto(Abm_Automovil.Auto auto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getPatente(Abm_Automovil.Auto auto)
+        {
+            DataBaseConnector db = DataBaseConnector.getInstance();
+            DataTable dt = db.select_query("SELECT AUTOS.Id FROM FSOCIETY.Autos AUTOS WHERE AUTOS.Patente = '" + auto.patente + "';");
+
+            int idauto = (int)dt.Rows[0][0];
+            return idauto;
+        }
     }
 }

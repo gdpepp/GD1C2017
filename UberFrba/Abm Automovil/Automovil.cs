@@ -72,6 +72,7 @@ namespace UberFrba.Abm_Automovil
                 return;
             }
             DataGridViewRow row = this.dataGridViewAutomoviles.SelectedRows[0];
+
             new AltaModificacionAutomoviles(row).Show();
         }
 
