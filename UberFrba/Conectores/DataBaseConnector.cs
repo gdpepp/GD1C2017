@@ -92,15 +92,14 @@ namespace UberFrba.Utils
                 openConnection();
                 SqlCommand queryCommand = new SqlCommand(query, getConnectionString());
                 SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
-                //SqlDataAdapter adapter = new SqlDataAdapter(queryCommand);
                 DataTable dataTable = new DataTable();
-                //adapter.Fill(dataTable);
                 dataTable.Load(queryCommandReader);
                 closeConnection();
                 return dataTable;
             }
             catch (Exception ex)
             {
+                closeConnection();
                 throw new Exception(ex.Message + " Query: " + query);
             }
 

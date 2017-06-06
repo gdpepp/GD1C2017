@@ -19,7 +19,11 @@ namespace UberFrba.Dao
 {
     class DAOAutomovil
     {
-        private DataBaseConnector db = DataBaseConnector.getInstance();
+        private DataBaseConnector db;
+
+        public DAOAutomovil() {
+            this.db = DataBaseConnector.getInstance();
+        }
 
         public DataTable getAllCars()
         {
@@ -119,11 +123,12 @@ namespace UberFrba.Dao
 
         public int getIdAuto(Auto auto)
         {
-            DataBaseConnector db = DataBaseConnector.getInstance();
-            DataTable dt = db.select_query("SELECT AUTOS.Id FROM FSOCIETY.Autos AUTOS WHERE AUTOS.Patente = '" + auto.patente + "';");
 
-            int idAuto = (int)dt.Rows[0][0];
-            return idAuto;
+            DataTable dt = db.select_query("SELECT AUTOS.Id FROM FSOCIETY.Autos AUTOS WHERE AUTOS.Patente = '" + auto.patente + "'");
+            if (dt.Rows.Count > 0) {
+                return (int)dt.Rows[0][0];
+            }
+            return 0;
         }
 
     }
