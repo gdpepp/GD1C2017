@@ -87,19 +87,7 @@ namespace UberFrba.Dao
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_crear_cliente", dic);
             
-                       return 0;
-      
-            
-            /*SqlCommand createClient = new SqlCommand("FSOCIETY.sp_crear_cliente", clientConnection);
-            createClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
-            createClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
-            createClient.Parameters.Add(new SqlParameter("@codigoPostal", cliente.zipcode));
-            createClient.Parameters.Add(new SqlParameter("@idCliente", cliente.idCliente));
-            createClient.CommandType = CommandType.StoredProcedure;
-            clientConnection.Open();
-
-            return createClient.ExecuteNonQuery();*/
-
+            return 0;
         }
 
        public int getIdcliente(Cliente cliente)
@@ -114,32 +102,30 @@ namespace UberFrba.Dao
 
        public int modificarPersona(Persona persona)
        {
-           /*SqlCommand updatePerson = new SqlCommand("FSOCIETY.sp_modificar_persona", personConnection);
-           updatePerson.Parameters.Add(new SqlParameter("@nombre", persona.nombre));
-           updatePerson.Parameters.Add(new SqlParameter("@apellido", persona.apellido));
-           updatePerson.Parameters.Add(new SqlParameter("@dni", persona.dni));
-           updatePerson.Parameters.Add(new SqlParameter("@direccion", persona.direccion));
-           updatePerson.Parameters.Add(new SqlParameter("@fecha_nacimiento", persona.nacimiento));
-           updatePerson.Parameters.Add(new SqlParameter("@id", persona.idPerson));
-           updatePerson.CommandType = CommandType.StoredProcedure;
-           personConnection.Open();
+           Dictionary<String, Object> dic = new Dictionary<String, Object>();
+           dic.Add("@nombre", persona.nombre);
+           dic.Add("@apellido", persona.apellido);
+           dic.Add("@dni", persona.dni);
+           dic.Add("@direccion", persona.direccion);
+           dic.Add("@fecha_nacimiento", persona.nacimiento);
+           dic.Add("@id", persona.idPerson);
 
-           return updatePerson.ExecuteNonQuery();
-            * */
+           connector.executeProcedureWithParameters("FSOCIETY.sp_modificar_persona", dic);
+                      
            return 0;
        }
 
        public int modificarCliente(Cliente cliente)
-       {/*
-           SqlCommand updateClient = new SqlCommand("FSOCIETY.sp_modificar_cliente", clientConnection);
-           updateClient.Parameters.Add(new SqlParameter("@telefono", cliente.telefono));
-           updateClient.Parameters.Add(new SqlParameter("@mail", cliente.mail));
-           updateClient.Parameters.Add(new SqlParameter("@codigoPostal", cliente.zipcode));
-           updateClient.Parameters.Add(new SqlParameter("@idCliente", cliente.idCliente));
-           updateClient.CommandType = CommandType.StoredProcedure;
+       { 
+           Dictionary<String, Object> dic = new Dictionary<String, Object>();
+           dic.Add("@telefono", cliente.telefono);
+           dic.Add("@mail", cliente.mail);
+           dic.Add("@codigoPostal", cliente.zipcode);
+           dic.Add("@idCliente", cliente.idCliente);
+           dic.Add("@habilitado", cliente.habilitado);
 
-           return updateClient.ExecuteNonQuery();
-         * */
+           connector.executeProcedureWithParameters("FSOCIETY.sp_modificar_cliente", dic);
+    
            return 0;
        }
 
@@ -150,7 +136,9 @@ namespace UberFrba.Dao
            DataTable dt = db.select_query("Select DNI from FSOCIETY.Personas where DNI = '" 
                                             + persona.dni + "and Id <> " + persona.idPerson + "'");
 
-           return dt.Rows[1].Field<int>(1);
+           if (dt.Rows.Count > 0)
+               return dt.Rows[0].Field<int>(1);
+           else return 0;
        }
 
        public int getMailById(Cliente cliente)
@@ -160,7 +148,9 @@ namespace UberFrba.Dao
            DataTable dt = db.select_query("Select TOP 1 Email from FSOCIETY.Cliente where Email= '"
                                             + cliente.mail + "and Id <> " + cliente.idCliente + "'");
 
-           return dt.Rows[1].Field<int>(1);
+           if (dt.Rows.Count > 0)
+               return dt.Rows[0].Field<int>(1);
+           else return 0;
        }
 
        private String getAllClientQuery() {
@@ -173,5 +163,10 @@ namespace UberFrba.Dao
                                       "%' and DNI like '%" + dni + "%'";
        }
 
+       internal DataTable getClientById(int id)
+       {
+          String query = getAllClientQuery() + "and cli.Id = '" + id + "'";
+          return connector.select_query(query);
+       }
     }
 }

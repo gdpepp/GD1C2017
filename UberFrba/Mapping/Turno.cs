@@ -13,8 +13,8 @@ namespace UberFrba.Mapping
         private int horaInicio;
         private int horaFinal;
         private string descripcion;
-        private int valorKm;
-        private int valorBase;
+        private decimal valorKm;
+        private decimal valorBase;
         private bool habilitado;
 
         public Turno(DataRow row) 
@@ -23,9 +23,14 @@ namespace UberFrba.Mapping
             this.horaInicio = Convert.ToInt32(row["Hora_De_Inicio"]);
             this.horaFinal = Convert.ToInt32(row["Hora_De_Finalizacion"]);
             this.descripcion = Convert.ToString(row["Descripcion"]);
-            this.valorKm = Convert.ToInt32(row["Valor_Km"]);
-            this.valorBase = Convert.ToInt32(row["Precio_Base"]);
+            this.valorKm = Convert.ToDecimal(row["Valor_Km"]);
+            this.valorBase = Convert.ToDecimal(row["Precio_Base"]);
             this.habilitado = Convert.ToBoolean(row["Habilitado"]);
+        }
+
+        public override string ToString()
+        {
+            return this.descripcion;
         }
 
     }

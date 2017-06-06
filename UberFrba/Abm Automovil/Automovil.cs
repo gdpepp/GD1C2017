@@ -48,35 +48,20 @@ namespace UberFrba.Abm_Automovil
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
-            DataTable dt = dao.getAllCars();
-            DataView view = dt.DefaultView;
-            view.RowFilter = string.Empty;
-
-            if (textChofer.Text != string.Empty)
-            {
-                string filtroChofer = string.Concat("[", dt.Columns[0].ColumnName, "]");
-                view.RowFilter = filtroChofer + " LIKE '%" + textChofer.Text + "%'";
+            try
+            {   
+                DataTable autos = dao.searchCar(comboMarca.SelectedText, textPatente.Text, textModelo.Text, textChofer.Text);
+                this.llenarAutos(autos);
             }
-
-            if (textPatente.Text != string.Empty)
-            {
-                string filtroPatente = string.Concat("[", dt.Columns[1].ColumnName, "]");
-                view.RowFilter = filtroPatente + " LIKE '%" + textPatente.Text + "%'";
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message.ToString(), "Error");
             }
+               
+        }
 
-            if (comboMarca.SelectedItem != null) 
-            {
-                string filtroMarca = string.Concat("[", dt.Columns[2].ColumnName, "]");
-                view.RowFilter = filtroMarca + " LIKE '%" + comboMarca.SelectedItem + "%'";
-            }
-
-            if (textModelo.Text != string.Empty)
-            {
-                string filtroModelo = string.Concat("[", dt.Columns[3].ColumnName, "]");
-                view.RowFilter = filtroModelo + " LIKE '%" + textModelo.Text + "%'";
-            }
-            this.comboMarca.SelectedItem = null;
-            this.dataGridViewAutomoviles.DataSource = view;
+        private void llenarAutos(DataTable table)
+        {
+            this.dataGridViewAutomoviles.DataSource = table;
         }
 
         private void buttonModificar_Click(object sender, EventArgs e)
@@ -86,9 +71,8 @@ namespace UberFrba.Abm_Automovil
                 MessageBox.Show("Seleccione un auto del listado para modificar");
                 return;
             }
-
-            int idAuto = Int32.Parse(dataGridViewAutomoviles.SelectedRows[0].Cells[""].Value.ToString());
-            new AltaModificacionAutomoviles(idAuto).Show();
+            DataGridViewRow row = this.dataGridViewAutomoviles.SelectedRows[0];
+            new AltaModificacionAutomoviles(row).Show();
         }
 
         private void buttonAlta_Click(object sender, EventArgs e)

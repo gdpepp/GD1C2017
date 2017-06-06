@@ -53,6 +53,9 @@
             // 
             this.dataGridViewAutomoviles.AllowUserToAddRows = false;
             this.dataGridViewAutomoviles.AllowUserToDeleteRows = false;
+            this.dataGridViewAutomoviles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewAutomoviles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewAutomoviles.ColumnHeadersVisible = false;
             this.dataGridViewAutomoviles.Location = new System.Drawing.Point(15, 129);
@@ -60,6 +63,7 @@
             this.dataGridViewAutomoviles.Name = "dataGridViewAutomoviles";
             this.dataGridViewAutomoviles.RowHeadersVisible = false;
             this.dataGridViewAutomoviles.RowTemplate.Height = 24;
+            this.dataGridViewAutomoviles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewAutomoviles.Size = new System.Drawing.Size(459, 264);
             this.dataGridViewAutomoviles.TabIndex = 0;
             // 

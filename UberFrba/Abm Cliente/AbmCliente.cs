@@ -13,7 +13,7 @@ namespace UberFrba.Abm_Cliente
 {
     public partial class ABMCliente : Form
     {
-       private DAOClientes dao;
+        private DAOClientes dao;
 
         public ABMCliente()
         {
@@ -53,16 +53,16 @@ namespace UberFrba.Abm_Cliente
             this.dataGridView1.DataSource = table;
         }
 
-        private void BTModificar_Click_1(object sender, EventArgs e)
+        public void BTModificar_Click_1(object sender, EventArgs e)
         {
             if (this.dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("seleccione un cliente del listado para modificar");
                 return;
             }
+            DataGridViewRow row = this.dataGridView1.SelectedRows[0];
 
-            int clientId = Int32.Parse(dataGridView1.SelectedRows[0].Cells[""].Value.ToString());
-            new AltaCliente(clientId).Show();
+            new AltaCliente(row).Show();
         }
 
         private Boolean validateFields(String textfieldText, String initial){
@@ -71,7 +71,7 @@ namespace UberFrba.Abm_Cliente
 
         private void setupTableView() {
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;

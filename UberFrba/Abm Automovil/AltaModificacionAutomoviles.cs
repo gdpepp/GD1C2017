@@ -22,18 +22,26 @@ namespace UberFrba.Abm_Automovil
             InitializeComponent();
             setupComboMarcas();
             setupComboTurnos();
+            setupComboChoferes();
         }
 
-        public AltaModificacionAutomoviles(int id)
+        public AltaModificacionAutomoviles(DataGridViewRow row)
         {
             InitializeComponent();
+            /*
             this.dao = new DAOAutomovil();
             this.idAuto = id;
             this.getCar(idAuto);
             this.Text = "Modifique al cliente";
             this.buttonGuardar.Text = "Modificar";
+            */
+            this.completarCampos(row);
         }
 
+        private void completarCampos(DataGridViewRow row)
+        {
+            this.comboMarca.SelectedItem = row.Cells["Chofer"].Value;
+        }
         private void getCar(int id)
         {
         }
@@ -49,10 +57,16 @@ namespace UberFrba.Abm_Automovil
         private void setupComboTurnos()
         {
             this.comboTurno.ValueMember = "id";
-            this.comboTurno.DisplayMember = "descripcion";
+            this.comboTurno.DisplayMember = "id";
             this.comboTurno.DataSource = dao.getAllTurn();
         }
 
+        private void setupComboChoferes()
+        {
+            this.comboChofer.ValueMember = "id";
+            this.comboChofer.DisplayMember = "Id";
+            this.comboChofer.DataSource = dao.getAllDriver();
+        }
 
     }
 }

@@ -113,5 +113,11 @@ namespace UberFrba.Menu
             Automovil a = new Automovil();
             a.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ABMCliente b = new ABMCliente();
+            b.ShowDialog();
+        }
     }
 }

@@ -132,6 +132,7 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\Chofer.cs" />
     <Compile Include="Mapping\Funcionalidades.cs" />
     <Compile Include="Mapping\Cliente.cs" />
     <Compile Include="Mapping\Marca.cs" />

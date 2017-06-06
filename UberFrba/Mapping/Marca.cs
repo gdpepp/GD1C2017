@@ -12,16 +12,18 @@ namespace UberFrba.Mapping
         private Int32 id;
         private String description;
 
-        public Marca(Int32 id, String description) {
+        public Marca(Int32 id, String description)
+        {
             this.id = id;
             this.description = description;
         }
 
-        public Marca(DataRow row) {
+        public Marca(DataRow row)
+        {
             this.id = Convert.ToInt32(row["id"]);
             this.description = Convert.ToString(row["Description"]);
         }
-
+        
         public Int32 getId()
         {
             return id;

@@ -18,16 +18,27 @@ namespace UberFrba.Dao
 {
     class DAOAutomovil
     {
+        private DataBaseConnector db = DataBaseConnector.getInstance();
+
         public DataTable getAllCars()
         {
-            DataBaseConnector db = DataBaseConnector.getInstance();
             return db.select_query("SELECT CONCAT(PERSONAS.Apellido,' ',PERSONAS.Nombre) AS Chofer, AUTOS.Patente AS Patente, MARCAS.Description AS Marcas, MODELOS.Description AS Modelo, TURNOS.Descripcion AS Turno FROM FSOCIETY.Autos AUTOS LEFT JOIN FSOCIETY.Modelos MODELOS ON AUTOS.IdModelo = MODELOS.Id LEFT JOIN FSOCIETY.Turnos TURNOS ON AUTOS.IdTurno = TURNOS.Id LEFT JOIN FSOCIETY.Personas PERSONAS ON AUTOS.IdChofer = PERSONAS.Id LEFT JOIN FSOCIETY.Marcas MARCAS ON MODELOS.IdMarca = MARCAS.Id"); 
         }
+
+        public DataTable searchCar(String marca, String patente, String modelo, String chofer) {
+            if (marca != "" || patente != "" || modelo != "" || chofer != "")
+            {
+                return db.select_query(getSelectCarQuery(marca, patente, modelo, chofer));
+            }
+            else {
+                return getAllCars();
+            }
+                        
+        }        
 
         public List<Marca> getAllBrands()
         {
             List<Marca> marcas = new List<Marca>();
-            DataBaseConnector db = DataBaseConnector.getInstance();
             DataTable dt = db.select_query("SELECT MARCAS.id,MARCAS.Description FROM FSOCIETY.Marcas MARCAS");
 
             foreach (DataRow row in dt.Rows)
@@ -41,8 +52,7 @@ namespace UberFrba.Dao
         public List<Turno> getAllTurn()
         {
             List<Turno> turnos = new List<Turno>();
-            DataBaseConnector db = DataBaseConnector.getInstance();
-            DataTable dt = db.select_query("SELECT * FROM FSOCIETY.Turnos;");
+            DataTable dt = db.select_query("SELECT * FROM FSOCIETY.Turnos");
 
             foreach (DataRow row in dt.Rows)
             {
@@ -50,6 +60,30 @@ namespace UberFrba.Dao
             }
 
             return turnos;
-        }   
+        }
+
+        public List<Chofer> getAllDriver()
+        {
+            List<Chofer> choferes = new List<Chofer>();
+            DataTable dt = db.select_query("SELECT CHOFER.Id AS Id, CONCAT(PERSONAS.Apellido,' ',PERSONAS.Nombre) AS Chofer FROM FSOCIETY.Chofer CHOFER LEFT JOIN FSOCIETY.Personas PERSONAS on CHOFER.Id = PERSONAS.Id");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                choferes.Add(new Chofer(row));
+            }
+
+            return choferes;
+        }
+
+        private String getAllCarQuery() {
+            return "SELECT CONCAT(PERSONAS.Apellido,' ',PERSONAS.Nombre) AS Chofer, AUTOS.Patente AS Patente, MARCAS.Description AS Marcas, MODELOS.Description AS Modelo, TURNOS.Descripcion AS Turno FROM FSOCIETY.Autos AUTOS LEFT JOIN FSOCIETY.Modelos MODELOS ON AUTOS.IdModelo = MODELOS.Id LEFT JOIN FSOCIETY.Turnos TURNOS ON AUTOS.IdTurno = TURNOS.Id LEFT JOIN FSOCIETY.Personas PERSONAS ON AUTOS.IdChofer = PERSONAS.Id LEFT JOIN FSOCIETY.Marcas MARCAS ON MODELOS.IdMarca = MARCAS.Id WHERE";
+        }
+
+        private String getSelectCarQuery(String marca, String patente, String modelo, String chofer) {
+            return getAllCarQuery() + " and Marcas like '%" + marca + 
+                                      "%' and Patente like '%" + patente + 
+                                      "%' and Modelo like '%" + modelo +
+                                      "%' and Chofer like '%" + chofer + "%'";
+       }
     }
 }
