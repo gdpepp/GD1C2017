@@ -24,6 +24,5 @@ namespace UberFrba.Abm_Automovil
             this.chofer = chofer;
             this.habilitado = habilitado;
         }
-
     }
 }

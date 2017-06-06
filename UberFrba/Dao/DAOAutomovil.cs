@@ -87,23 +87,44 @@ namespace UberFrba.Dao
                                       "%' and Chofer like '%" + chofer + "%'";
        }
 
-        internal void crearAuto(Abm_Automovil.Auto auto)
+        public int crearAuto(Auto auto)
         {
-            throw new NotImplementedException();
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@marca", auto.marca);
+            dic.Add("@modelo", auto.modelo);
+            dic.Add("@patente", auto.patente);
+            dic.Add("@turno", auto.turno);
+            dic.Add("@chofer", auto.chofer);
+            dic.Add("@habilitado", auto.habilitado);
+
+            db.executeProcedureWithParameters("FSOCIETY.sp_crear_auto", dic);
+
+            return this.getIdAuto(auto);
         }
 
-        internal void modificarAuto(Abm_Automovil.Auto auto)
+        public int modificarAuto(Auto auto)
         {
-            throw new NotImplementedException();
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@marca", auto.marca);
+            dic.Add("@modelo", auto.modelo);
+            dic.Add("@patente", auto.patente);
+            dic.Add("@turno", auto.turno);
+            dic.Add("@chofer", auto.chofer);
+            dic.Add("@habilitado", auto.habilitado);
+
+            db.executeProcedureWithParameters("FSOCIETY.sp_modificar_auto", dic);
+
+            return 0;
         }
 
-        public int getPatente(Abm_Automovil.Auto auto)
+        public int getIdAuto(Auto auto)
         {
             DataBaseConnector db = DataBaseConnector.getInstance();
             DataTable dt = db.select_query("SELECT AUTOS.Id FROM FSOCIETY.Autos AUTOS WHERE AUTOS.Patente = '" + auto.patente + "';");
 
-            int idauto = (int)dt.Rows[0][0];
-            return idauto;
+            int idAuto = (int)dt.Rows[0][0];
+            return idAuto;
         }
+
     }
 }

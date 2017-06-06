@@ -15,6 +15,7 @@ namespace UberFrba.Abm_Automovil
     {
         private DAOAutomovil dao;
         int flagAuto = 0;
+        int idAuto;
 
         public AltaModificacionAutomoviles()
         {
@@ -36,6 +37,9 @@ namespace UberFrba.Abm_Automovil
             this.buttonGuardar.Text = "Modificar";
             this.flagAuto = 1;
             this.completarCampos(row);
+
+            Auto auto = new Auto(Convert.ToInt32(this.comboMarca.SelectedValue), this.textModelo.Text, this.textPatente.Text, Convert.ToInt32(this.comboTurno.SelectedValue), Convert.ToInt32(this.comboChofer.SelectedValue), this.checkHabilitado.Checked);
+            this.idAuto = dao.getIdAuto(auto);
         }
 
         private void completarCampos(DataGridViewRow row)
@@ -94,9 +98,9 @@ namespace UberFrba.Abm_Automovil
 
         private bool verifyFields(DAOAutomovil dao, Auto auto)
         {
-            if (dao.getPatente(auto) != 0)
+            if (dao.getIdAuto(auto) != 0)
             {
-                MessageBox.Show("La direccion de mail ya existe para otra persona", "Mail ya existe");
+                MessageBox.Show("La patente ingresada ya existe.", "La patente ya existe");
                 return false;
             }
             return true;
