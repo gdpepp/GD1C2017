@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Dao;
+using UberFrba.Mapping;
 
 namespace UberFrba.Abm_Automovil
 {
@@ -70,7 +71,14 @@ namespace UberFrba.Abm_Automovil
             bool success = false;
             if (this.CheckEmptyFields())
             {
-                Auto auto = new Auto(Convert.ToInt32(this.comboMarca.SelectedValue), this.textModelo.Text, this.textPatente.Text, Convert.ToInt32(this.comboTurno.SelectedValue), Convert.ToInt32(this.comboChofer.SelectedValue), this.checkHabilitado.Checked);
+                
+                Marca m = this.comboMarca.SelectedItem as Marca;
+                Turno t = this.comboTurno.SelectedItem as Turno;
+                Chofer c = this.comboChofer.SelectedItem as Chofer;
+
+                MessageBox.Show(this.comboChofer.SelectedValue.ToString());
+
+                Auto auto = new Auto(m.getId(), this.textModelo.Text, this.textPatente.Text, t.getId(), c.getId(), this.checkHabilitado.Checked);
                 verifyFields(dao, auto);
                 try
                 {

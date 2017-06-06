@@ -9,7 +9,7 @@ namespace UberFrba.Mapping
 {
     class Turno
     {
-        private int id;
+        private Int32 id;
         private string descripcion;
 
         public Turno(DataRow row) 
@@ -22,6 +22,10 @@ namespace UberFrba.Mapping
         {
             return this.descripcion;
         }
+
+        public Int32 getId() {
+            return this.id;
+        } 
 
     }
 }

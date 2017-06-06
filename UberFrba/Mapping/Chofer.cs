@@ -9,7 +9,7 @@ namespace UberFrba.Mapping
 {
     class Chofer
     {
-        private int id;
+        private Int32 id;
         private string chofer;
 
         public Chofer(DataRow row)
@@ -21,6 +21,10 @@ namespace UberFrba.Mapping
         public override string ToString()
         {
             return this.chofer;
+        }
+
+        public Int32 getId() {
+            return this.id;
         }
 
     }
