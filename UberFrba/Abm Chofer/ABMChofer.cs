@@ -17,7 +17,7 @@ namespace UberFrba.Abm_Chofer
 {
     public partial class ABMChofer : Form
     {
-        private String inicialTB = "Ingrese criterio de Busqueda";
+        private String inicialTB = "";
         private String inicialCB = "";
         private String condicionWhere;
         private DAOChofer dao;
@@ -30,8 +30,7 @@ namespace UberFrba.Abm_Chofer
               CBbuscarf.Items.Insert(0, "DNI");
               CBbuscarf.Items.Insert(1, "Apellido");
               CBbuscarf.Items.Insert(2, "Nombre");
-              BTeliminar.Visible = false;
-              BTModificar.Visible = false;
+
               
               
         }
@@ -43,12 +42,8 @@ namespace UberFrba.Abm_Chofer
             { MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada"); }
             else
             {
-                BTModificar.Visible = true;
-                BTeliminar.Visible = true;
-                bt_nuevo_chofer.Visible = false;
-                CBbuscarf.Visible = false;
-                tb_obtener_filtro.Visible = false;
-                BuscarPor.Visible = false;
+      
+        
                 this.dataGridView1.DataSource = dao.buscarChofer(CBbuscarf.Text, tb_obtener_filtro.Text);
                 //todo error loco            
             }
@@ -65,12 +60,7 @@ namespace UberFrba.Abm_Chofer
 
         private void bt_Volver_Click(object sender, EventArgs e)
         {
-            BTeliminar.Visible = false;
-            BTModificar.Visible = false;
-            bt_nuevo_chofer.Visible = true;
-            CBbuscarf.Visible = true;
-            tb_obtener_filtro.Visible = true;
-            BuscarPor.Visible = true;
+            
            // aca hay q ver si esta lleno cb
        
  
