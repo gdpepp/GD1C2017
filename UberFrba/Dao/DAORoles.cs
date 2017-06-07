@@ -76,19 +76,23 @@ namespace UberFrba.Dao
             return connector.select_query(GetAllFunctionalitiesQuery());
         }
 
-        internal void update(List<String> add, List<String> del, int idRol, String rolDesc, bool habilitado)
+        internal bool update(List<String> add, int idRol, String rolDesc, bool habilitado) //List<String> del
         {
             Dictionary<String, Object> dic = new Dictionary<String, Object>();
             dic.Add("@id", idRol);
             dic.Add("@nombre", rolDesc);
             dic.Add("@habilitado",habilitado);
 
-            this.deleteActualFunctionalities(del, idRol);
-            this.insertNewFunctionalities(ref add, idRol);
+            if (add.Count > 0)
+            this.deleteActualFunctionalities(idRol);
+            this.insertNewFunctionalities(add, idRol); //ref
+
             connector.executeProcedureWithParameters("FSOCIETY.sp_update_roles", dic);
+
+            return true;
         }
 
-        internal void insert(ref List<String> add, String rol, bool habilitado)
+        internal bool insert(List<String> add, String rol, bool habilitado) //ref
         {
             //int idRol = this.getRolIdByDescription(rol);
             Dictionary<String, Object> dic = new Dictionary<String, Object>();
@@ -98,7 +102,9 @@ namespace UberFrba.Dao
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_insert_rol", dic);
             int idRol = this.getRolIdByDescription(rol);
-            this.insertNewFunctionalities(ref add, idRol);
+            this.insertNewFunctionalities(add, idRol); //ref 
+            
+            return true;
         }
 
         public int getRolIdByDescription(String rol)
@@ -108,21 +114,21 @@ namespace UberFrba.Dao
             return (Int32)row["Id"];
         }
 
-        private void deleteActualFunctionalities(List<string> del, int idRol)
+        private void deleteActualFunctionalities(int idRol) //List<string> del,
         {
-            foreach (String funcionalidad in del)
-            {
+            //foreach (String funcionalidad in del)
+            //{
                 Dictionary<String, Object> dicSacadas = new Dictionary<String, Object>();
                 dicSacadas.Add("@idrol", idRol);
 
-                DataTable result = connector.select_query(this.getfunctionalityByDescQuery(funcionalidad));
-                dicSacadas.Add("@idfun", result.Rows[0]["Id"].ToString());
+                //DataTable result = connector.select_query(this.getfunctionalityByDescQuery(funcionalidad));
+                //dicSacadas.Add("@idfun", result.Rows[0]["Id"].ToString());
 
-                connector.executeProcedureWithParameters("FSOCIETY.sp_delete_funcionalidad", dicSacadas);
-            }
+                connector.executeProcedureWithParameters("FSOCIETY.sp_delete_all_funcionalidades", dicSacadas);
+            //}
         }
 
-        private void insertNewFunctionalities(ref List<String> add, int idRol)
+        private void insertNewFunctionalities(List<String> add, int idRol)
         {
             int count = add.Count; 
 

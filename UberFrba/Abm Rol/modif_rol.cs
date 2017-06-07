@@ -14,15 +14,15 @@ namespace UberFrba.Abm_Rol
         int idRol = 0;
         private DAORoles dao;
         List<String> funcionalidadesAgregadas;
-        List<String> funcionalidadesBorradas;
-        List<String> funcionalidadesTodas;
+        //List<String> funcionalidadesBorradas;
+        //List<String> funcionalidadesPrevias;
 
 
         public DefinicionRol(DataGridViewRow row)
         {
             this.funcionalidadesAgregadas = new List<String>();
-            this.funcionalidadesBorradas = new List<String>();
-            this.funcionalidadesTodas = new List<String>();
+            //this.funcionalidadesBorradas = new List<String>();
+            //this.funcionalidadesPrevias = new List<String>();
 
             dao = new DAORoles();
             this.idRol = (Int32)row.Cells["Id"].Value;
@@ -31,13 +31,14 @@ namespace UberFrba.Abm_Rol
             this.checkBox1.Checked = (bool)row.Cells["Habilitado"].Value;
             this.button1.Text = "Modificar";
             this.LlenarListaFuncionalidades();
+            //this.funcionalidadesPreviasTildadas();
         }
 
         public DefinicionRol()
         {
             this.funcionalidadesAgregadas = new List<String>();
-            this.funcionalidadesBorradas = new List<String>();
-            this.funcionalidadesTodas = new List<String>();
+            //this.funcionalidadesBorradas = new List<String>();
+            //this.funcionalidadesPrevias = new List<String>();
             
             InitializeComponent();
             //this.label1.Text = "Cree un nuevo rol";
@@ -88,15 +89,26 @@ namespace UberFrba.Abm_Rol
                     if (this.nombreNoExiste())
                     {
                         this.agregarFuncionalidadesTildadas();
-                        this.agregarFuncionalidadesDestildadas();
+                        //this.agregarFuncionalidadesDestildadas();
+                        bool modificado = false;
 
                         try
                         {
-                            dao.update(this.funcionalidadesAgregadas, this.funcionalidadesBorradas, this.idRol, this.textBox1.Text, this.checkBox1.Checked);
+                            modificado = dao.update(this.funcionalidadesAgregadas, this.idRol, this.textBox1.Text, this.checkBox1.Checked);
+                            //this.funcionalidadesBorradas
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message.ToString());
+                            MessageBox.Show(ex.Message.ToString(), "Error en la modificacion");
+                        }
+                        finally
+                        {
+                            if (modificado)
+                            {
+                                MessageBox.Show("El rol fue modificado correctamente", "Rol modificado");
+                                this.Close();
+                            }
+
                         }
                     }
                     else MessageBox.Show("El nombre de rol ya existe. Elija otro", "Error");
@@ -106,19 +118,22 @@ namespace UberFrba.Abm_Rol
                     if (this.nombreValido())
                     {
                         this.agregarFuncionalidadesTildadas();
-
+                        bool insertado = false; 
                         try
                         {
-                            dao.insert(ref funcionalidadesAgregadas, this.textBox1.Text, this.checkBox1.Checked);
+                            insertado = dao.insert(this.funcionalidadesAgregadas, this.textBox1.Text, (bool)this.checkBox1.Checked);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message.ToString());
+                            MessageBox.Show(ex.Message.ToString(), "Error en el alta");
                         }
                         finally
                         {
-                            MessageBox.Show("Rol creado correctamente");
-                            this.Close();
+                            if (insertado)
+                            {
+                                MessageBox.Show("Rol creado correctamente");
+                                this.Close();
+                            }
                         }
                     }
                 }
@@ -149,17 +164,17 @@ namespace UberFrba.Abm_Rol
             return true;
         }
 
-        private void agregarFuncionalidadesDestildadas()
-        {
-            //int count =  this.checkedListBox1.Items.Count
-            foreach (object item in checkedListBox1.Items)
-            {
-                if (!checkedListBox1.CheckedItems.Contains(item))
-                {
-                    this.funcionalidadesBorradas.Add(item.ToString());
-                }
-            }
-        }
+        //private void agregarFuncionalidadesDestildadas()
+        //{
+        //    //int count =  this.checkedListBox1.Items.Count
+        //    foreach (object item in checkedListBox1.Items)
+        //    {
+        //        if (!checkedListBox1.CheckedItems.Contains(item))
+        //        {
+        //            this.funcionalidadesBorradas.Add(item.ToString());
+        //        }
+        //    }
+        //}
 
         private void agregarFuncionalidadesTildadas()
         {
@@ -171,5 +186,16 @@ namespace UberFrba.Abm_Rol
                 this.funcionalidadesAgregadas.Add(item);
             }
         }
+
+        //private void funcionalidadesPreviasTildadas()
+        //{
+        //    int sCount = checkedListBox1.CheckedItems.Count;
+
+        //    for (int i = 0; i < sCount; i++)
+        //    {
+        //        String item = checkedListBox1.CheckedItems[i].ToString();
+        //        this.funcionalidadesPrevias.Add(item);
+        //    };
+        //}
     }
 }

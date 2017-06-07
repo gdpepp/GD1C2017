@@ -100,3 +100,17 @@ BEGIN TRANSACTION T1
         ROLLBACK TRANSACTION T1;
 COMMIT TRANSACTION T1
 GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_all_funcionalidades')
+DROP PROCEDURE FSOCIETY.sp_delete_all_funcionalidades
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_delete_all_funcionalidades (@idrol INT) AS 
+BEGIN TRANSACTION T1
+  DELETE FROM FSOCIETY.RolFuncionalidades
+   WHERE IdRol = @idrol
+     
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+COMMIT TRANSACTION T1
+GO
