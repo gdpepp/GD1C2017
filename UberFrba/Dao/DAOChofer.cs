@@ -95,6 +95,8 @@ namespace UberFrba.Dao
                         return dt.Rows[0].Field<int>(1);
                     else return 0;
                 }
+
+                public int valorverdad { get; set; }
     }
     }
 
