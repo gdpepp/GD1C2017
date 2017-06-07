@@ -21,7 +21,6 @@ namespace UberFrba.Abm_Rol
         {
             InitializeComponent();
             this.dao = new DAORoles();
-             //this.fill_data_set();
         }
 
         private void bt_buscar_Click_1(object sender, EventArgs e)
@@ -29,11 +28,8 @@ namespace UberFrba.Abm_Rol
 
             try
             {
-                //validateSearchOK();
-
                 DataTable roles = dao.buscarRol(this.textBox1.Text);
                 this.fill_data_set(roles);
-                //BTModificar.Visible = true;
             }
             catch (Exception ex)
             {
@@ -48,7 +44,6 @@ namespace UberFrba.Abm_Rol
 
         private void button3_Click(object sender, EventArgs e) 
         {
-            //Modificadion Rol
             if (this.dataGridView1.SelectedRows.Count == 0)
                 MessageBox.Show("Debe seleccionar el rol a seleccionar");
             else
@@ -60,13 +55,11 @@ namespace UberFrba.Abm_Rol
 
         private void button1_Click(object sender, EventArgs e) 
         {
-            //Alta Rol
             (new DefinicionRol()).Show();
         }
 
         private void button5_Click(object sender, EventArgs e) 
         {
-            //Volver
             this.Close();
         }
     }

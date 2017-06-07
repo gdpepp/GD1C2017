@@ -76,33 +76,30 @@ namespace UberFrba.Dao
             return connector.select_query(GetAllFunctionalitiesQuery());
         }
 
-        internal bool update(List<String> add, int idRol, String rolDesc, bool habilitado) //List<String> del
+        internal bool update(List<String> add, int idRol, String rolDesc, bool habilitado)
         {
             Dictionary<String, Object> dic = new Dictionary<String, Object>();
             dic.Add("@id", idRol);
             dic.Add("@nombre", rolDesc);
             dic.Add("@habilitado",habilitado);
 
-            if (add.Count > 0)
             this.deleteActualFunctionalities(idRol);
-            this.insertNewFunctionalities(add, idRol); //ref
+            this.insertNewFunctionalities(add, idRol);
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_update_roles", dic);
 
             return true;
         }
 
-        internal bool insert(List<String> add, String rol, bool habilitado) //ref
+        internal bool insert(List<String> add, String rol, bool habilitado)
         {
-            //int idRol = this.getRolIdByDescription(rol);
             Dictionary<String, Object> dic = new Dictionary<String, Object>();
-            //dic.Add("@id", idRol);
             dic.Add("@nombre", rol);
             dic.Add("@habilitado", habilitado);
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_insert_rol", dic);
             int idRol = this.getRolIdByDescription(rol);
-            this.insertNewFunctionalities(add, idRol); //ref 
+            this.insertNewFunctionalities(add, idRol);
             
             return true;
         }
@@ -114,18 +111,11 @@ namespace UberFrba.Dao
             return (Int32)row["Id"];
         }
 
-        private void deleteActualFunctionalities(int idRol) //List<string> del,
+        private void deleteActualFunctionalities(int idRol)
         {
-            //foreach (String funcionalidad in del)
-            //{
                 Dictionary<String, Object> dicSacadas = new Dictionary<String, Object>();
                 dicSacadas.Add("@idrol", idRol);
-
-                //DataTable result = connector.select_query(this.getfunctionalityByDescQuery(funcionalidad));
-                //dicSacadas.Add("@idfun", result.Rows[0]["Id"].ToString());
-
                 connector.executeProcedureWithParameters("FSOCIETY.sp_delete_all_funcionalidades", dicSacadas);
-            //}
         }
 
         private void insertNewFunctionalities(List<String> add, int idRol)
@@ -138,7 +128,6 @@ namespace UberFrba.Dao
                 dicAgregadas.Add("@idrol", idRol);
                 DataTable result = connector.select_query(this.getfunctionalityByDescQuery(add[index]));
                 dicAgregadas.Add("@idfun", result.Rows[0]["Id"].ToString());
-
                 connector.executeProcedureWithParameters("FSOCIETY.sp_insert_funcionalidad", dicAgregadas);
             }
         }
