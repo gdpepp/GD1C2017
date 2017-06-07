@@ -219,6 +219,7 @@
             this.cbHabilitado.Size = new System.Drawing.Size(15, 14);
             this.cbHabilitado.TabIndex = 30;
             this.cbHabilitado.UseVisualStyleBackColor = true;
+            this.cbHabilitado.CheckedChanged += new System.EventHandler(this.cbHabilitado_CheckedChanged);
             // 
             // Alta_Chofer
             // 

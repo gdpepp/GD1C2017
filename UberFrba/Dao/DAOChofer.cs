@@ -44,8 +44,8 @@ namespace UberFrba.Dao
         {
             Dictionary<String, Object> dic = new Dictionary<String, Object>();
             dic.Add("@telefono", chofer.telefono);
-            dic.Add("@idChofer", chofer.id);
             dic.Add("@mail", chofer.email);
+            dic.Add("@idChofer", chofer.id);
             dic.Add("@habilitado", chofer.habilitado);
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_modificar_chofer", dic);//todo sp
@@ -95,6 +95,8 @@ namespace UberFrba.Dao
                         return dt.Rows[0].Field<int>(1);
                     else return 0;
                 }
+
+                public int valorverdad { get; set; }
     }
     }
 
