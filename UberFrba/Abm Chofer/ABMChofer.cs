@@ -9,26 +9,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Utils;
+using UberFrba.Dao;
 
 
 namespace UberFrba.Abm_Chofer
 {
     public partial class ABMChofer : Form
     {
-        private String inicialTB = "Ingrese criterio de Busqueda";
+        private String inicialTB = "";
         private String inicialCB = "";
         private String condicionWhere;
-
+        private DAOChofer dao;
        
         public ABMChofer()
         {
               InitializeComponent();
-              tb_obtener_filtro.Text = inicialTB;
+              this.dao = new DAOChofer();
+              bt_nuevo_chofer.Visible = true;
+              BTModificar.Visible = true;
+            tb_obtener_filtro.Text = inicialTB;
               CBbuscarf.Items.Insert(0, "DNI");
               CBbuscarf.Items.Insert(1, "Apellido");
               CBbuscarf.Items.Insert(2, "Nombre");
-              BTeliminar.Visible = false;
-              BTModificar.Visible = false;
+            
+
               
               
         }
@@ -40,12 +44,10 @@ namespace UberFrba.Abm_Chofer
             { MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada"); }
             else
             {
-                BTModificar.Visible = true;
-                BTeliminar.Visible = true;
-                bt_nuevo_chofer.Visible = false;
-                CBbuscarf.Visible = false;
-                tb_obtener_filtro.Visible = false;
-                BuscarPor.Visible = false;
+      
+        
+                this.dataGridView1.DataSource = dao.buscarChofer(CBbuscarf.Text, tb_obtener_filtro.Text);
+                //todo error loco            
             }
            
 
@@ -54,18 +56,13 @@ namespace UberFrba.Abm_Chofer
         private void bt_nuevo_chofer_Click(object sender, EventArgs e)
         {
             Alta_Chofer alta1 = new Alta_Chofer();
-            alta1.ShowDialog();
+            alta1.Show();
            
         }
 
         private void bt_Volver_Click(object sender, EventArgs e)
         {
-            BTeliminar.Visible = false;
-            BTModificar.Visible = false;
-            bt_nuevo_chofer.Visible = true;
-            CBbuscarf.Visible = true;
-            tb_obtener_filtro.Visible = true;
-            BuscarPor.Visible = true;
+            
            // aca hay q ver si esta lleno cb
        
  
@@ -105,7 +102,13 @@ namespace UberFrba.Abm_Chofer
 
         private void BTModificar_Click(object sender, EventArgs e)
         {
-            ModificarChofer mod = new ModificarChofer();
+            if (this.dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("seleccione un cliente del listado para modificar");
+                return;
+            }
+            DataGridViewRow row = this.dataGridView1.SelectedRows[0];
+            Alta_Chofer mod = new Alta_Chofer(row);
             mod.ShowDialog();
         }
 
@@ -115,11 +118,6 @@ namespace UberFrba.Abm_Chofer
         }
 
         private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
