@@ -73,7 +73,7 @@ namespace UberFrba.Abm_Chofer
                 {
 
                     Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
-                    Chofer chofer = new Chofer(this.tb_telefono.Text, this.tb_mail.Text, this.checkHabilitado.Checked);
+                    Chofer chofer = new Chofer(this.id ,this.tb_telefono.Text, this.tb_mail.Text, this.checkHabilitado.Checked);
 
                     try
                     {
@@ -114,7 +114,7 @@ namespace UberFrba.Abm_Chofer
         private void updateOrDeleteChofer(DAOChofer dao)
         {
             Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
-            Chofer chofer = new Chofer(this.tb_telefono.Text, this.tb_mail.Text, this.checkHabilitado.Checked);
+            Chofer chofer = new Chofer(this.id,this.tb_telefono.Text, this.tb_mail.Text, this.checkHabilitado.Checked);
 
             verifyFields(pers,dao, persona, chofer);
             pers.modificarPersona(persona);
@@ -181,10 +181,7 @@ namespace UberFrba.Abm_Chofer
             this.tb_mail.Text = row.Cells["Email"].Value.ToString();
             this.birthTimePicker.Text = row.Cells["Fecha de Nacimiento"].Value.ToString();
             this.tb_calle.Text = row.Cells["Direccion"].Value.ToString();
-            if (row.Cells["Habilitado"].ToString() == "si")
-                this.checkHabilitado.Checked = true;
-            else
-                this.checkHabilitado.Checked = false;
+            this.checkHabilitado.Checked = (bool)row.Cells["Habilitado"].Value;
         }
 
 

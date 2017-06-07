@@ -64,7 +64,7 @@ AS BEGIN
 								from FSOCIETY.Chofer 
 								where Id = @idChofer)
 
-	UPDATE FSOCIETY.Cliente
+	UPDATE FSOCIETY.Chofer
 	set Telefono = @telefono, 
 	Email = @mail, 
 	Habilitado = @habilitado
