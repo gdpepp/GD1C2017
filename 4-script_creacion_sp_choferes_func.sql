@@ -10,7 +10,7 @@ CREATE PROCEDURE FSOCIETY.sp_crear_chofer (@telefono varchar(50),
 AS BEGIN
     BEGIN TRANSACTION T1
 
-	insert into FSOCIETY.Cliente(id, Telefono, Email, Habilitado)
+	insert into FSOCIETY.Chofer(id, Telefono, Email, Habilitado)
 	values (@idChofer, @telefono, @mail, @habilitado);
 	
 	if (@@ERROR !=0)
