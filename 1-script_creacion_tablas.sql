@@ -498,7 +498,7 @@ GO
 INSERT INTO FSOCIETY.Funcionalidades(Descripcion,FormName,IdFuncionalidadPadre)
 VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
 	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer',NULL,2),
-	  ('Consultas Autos','Automovil',3);
+	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8);
 
 GO
 
@@ -560,4 +560,3 @@ EXECUTE FSOCIETY.sp_insert_user @USER,@idPersona
 
 
 GO
-
