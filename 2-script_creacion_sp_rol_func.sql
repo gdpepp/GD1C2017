@@ -49,9 +49,12 @@ GO
 
 CREATE PROCEDURE FSOCIETY.sp_insert_rol (@nombre VARCHAR(50), @habilitado BIT) AS 
 BEGIN TRANSACTION T1
-	INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-	VALUES (NEXT VALUE FOR Id, @nombre, @habilitado)
-COMMIT TRANSACTION T1
+	INSERT INTO FSOCIETY.Roles (Descripcion, Habilitado)
+	VALUES (@nombre, @habilitado)
+	
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_rol_funcionalidades')
