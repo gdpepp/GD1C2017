@@ -59,6 +59,10 @@
     <Compile Include="Abm Automovil\AltaModificacionAutomoviles.Designer.cs">
       <DependentUpon>AltaModificacionAutomoviles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Automovil\Chofer.cs" />
+    <Compile Include="Abm Automovil\Marca.cs" />
+    <Compile Include="Abm Automovil\Modelo.cs" />
+    <Compile Include="Abm Automovil\Turno.cs" />
     <Compile Include="Abm Chofer\ABMChofer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,12 +137,9 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mapping\Chofer.cs" />
     <Compile Include="Mapping\Funcionalidades.cs" />
     <Compile Include="Mapping\Cliente.cs" />
-    <Compile Include="Mapping\Marca.cs" />
     <Compile Include="Mapping\Rol.cs" />
-    <Compile Include="Mapping\Turno.cs" />
     <Compile Include="Mapping\Usuario.cs" />
     <Compile Include="Menu\MainMenu.cs">
       <SubType>Form</SubType>

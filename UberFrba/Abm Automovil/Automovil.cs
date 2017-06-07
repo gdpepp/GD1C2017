@@ -29,13 +29,7 @@ namespace UberFrba.Abm_Automovil
 
         private void setupGrid() 
         {
-            this.dataGridViewAutomoviles.DataSource = dao.getAllCars();
-            this.dataGridViewAutomoviles.ReadOnly = true;
-            this.dataGridViewAutomoviles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewAutomoviles.MultiSelect = false;
-            this.dataGridViewAutomoviles.AllowUserToAddRows = false;
-            this.dataGridViewAutomoviles.AllowUserToDeleteRows = false;
-            this.dataGridViewAutomoviles.ColumnHeadersVisible = true;
+            this.dgvAutos.DataSource = dao.getAllCars();
         }
 
         private void setupComboMarcas()
@@ -50,8 +44,8 @@ namespace UberFrba.Abm_Automovil
         {
             try
             {   
-                DataTable autos = dao.searchCar(comboMarca.SelectedText, textPatente.Text, textModelo.Text, textChofer.Text);
-                this.llenarAutos(autos);
+                //DataTable autos = dao.searchCar(comboMarca.SelectedText, textPatente.Text, textModelo.Text, textChofer.Text);
+                //this.llenarAutos(autos);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message.ToString(), "Error");
@@ -61,11 +55,11 @@ namespace UberFrba.Abm_Automovil
 
         private void llenarAutos(DataTable table)
         {
-            this.dataGridViewAutomoviles.DataSource = table;
+            //this.dataGridViewAutomoviles.DataSource = table;
         }
 
         private void buttonModificar_Click(object sender, EventArgs e)
-        {
+        {/*
             if (this.dataGridViewAutomoviles.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Seleccione un auto del listado para modificar");
@@ -73,13 +67,19 @@ namespace UberFrba.Abm_Automovil
             }
             DataGridViewRow row = this.dataGridViewAutomoviles.SelectedRows[0];
 
-            new AltaModificacionAutomoviles(row).Show();
+            new AltaModificacionAutomoviles(row).Show();*/
         }
 
         private void buttonAlta_Click(object sender, EventArgs e)
         {
             AltaModificacionAutomoviles a = new AltaModificacionAutomoviles();
             a.ShowDialog();
+        }
+
+        private void dgvAutos_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewRow unAuto = this.dgvAutos.SelectedRows[0];
+            new AltaModificacionAutomoviles(unAuto).Show();
         }
     }
 }

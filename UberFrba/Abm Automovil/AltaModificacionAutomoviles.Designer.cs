@@ -38,6 +38,7 @@
             this.checkHabilitado = new System.Windows.Forms.CheckBox();
             this.buttonGuardar = new System.Windows.Forms.Button();
             this.buttonCancelar = new System.Windows.Forms.Button();
+            this.buttonEliminar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboMarca
@@ -130,11 +131,23 @@
             this.buttonCancelar.UseVisualStyleBackColor = true;
             this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
+            // buttonEliminar
+            // 
+            this.buttonEliminar.Enabled = false;
+            this.buttonEliminar.Location = new System.Drawing.Point(256, 81);
+            this.buttonEliminar.Name = "buttonEliminar";
+            this.buttonEliminar.Size = new System.Drawing.Size(100, 28);
+            this.buttonEliminar.TabIndex = 10;
+            this.buttonEliminar.Text = "Eliminar";
+            this.buttonEliminar.UseVisualStyleBackColor = true;
+            this.buttonEliminar.Click += new System.EventHandler(this.buttonEliminar_Click);
+            // 
             // AltaModificacionAutomoviles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 195);
+            this.Controls.Add(this.buttonEliminar);
             this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.checkHabilitado);
@@ -164,5 +177,6 @@
         private System.Windows.Forms.CheckBox checkHabilitado;
         private System.Windows.Forms.Button buttonGuardar;
         private System.Windows.Forms.Button buttonCancelar;
+        private System.Windows.Forms.Button buttonEliminar;
     }
 }

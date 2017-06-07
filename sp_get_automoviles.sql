@@ -1,18 +1,24 @@
-IF (OBJECT_ID ('FSOCIETY.sp_get_automoviles') IS NOT NULL)
-	DROP PROCEDURE FSOCIETY.sp_get_automoviles
+IF (OBJECT_ID ('FSOCIETY.sp_crear_auto') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_crear_auto
 GO
 
+CREATE PROCEDURE FSOCIETY.sp_crear_auto(@idMarca INT, @modelo NVARCHAR(255), @patente NVARCHAR(255), @idTurno INT, @idChofer INT, @habilitado BIT)
 
-CREATE PROCEDURE FSOCIETY.sp_get_automoviles
 AS BEGIN
-SELECT
-	AUTOS.Patente,
-	MODELOS.Description,
-	TURNOS.Descripcion,
-	PERSONAS.Apellido,
-	PERSONAS.Nombre
-	FROM FSOCIETY.Autos AUTOS
-		LEFT JOIN FSOCIETY.Modelos MODELOS ON AUTOS.IdModelo = MODELOS.Id
-		LEFT JOIN FSOCIETY.Turnos TURNOS ON AUTOS.IdTurno = TURNOS.Id
-		LEFT JOIN FSOCIETY.Personas PERSONAS ON AUTOS.IdChofer = PERSONAS.Id
+
+DECLARE @idModelo INT
+
+    BEGIN TRANSACTION T1
+
+	INSERT INTO FSOCIETY.Modelos(IdMarca, Description)
+	VALUES (@idMarca, @modelo)
+
+	SELECT @idModelo = MODELOS.Id FROM FSOCIETY.Modelos MODELOS WHERE MODELOS.Description = @modelo
+	INSERT INTO FSOCIETY.Autos(Patente, IdModelo, IdTurno, IdChofer, Habilitado)
+	VALUES (@patente, @idModelo, @idTurno, @idChofer, @habilitado)
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
 END
+GO

@@ -28,15 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridViewAutomoviles = new System.Windows.Forms.DataGridView();
-            this.Chofer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Patente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Turno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Habilitado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonAlta = new System.Windows.Forms.Button();
-            this.buttonModificar = new System.Windows.Forms.Button();
             this.labelMarca = new System.Windows.Forms.Label();
             this.comboMarca = new System.Windows.Forms.ComboBox();
             this.labelPatente = new System.Windows.Forms.Label();
@@ -46,62 +38,20 @@
             this.labelChofer = new System.Windows.Forms.Label();
             this.textChofer = new System.Windows.Forms.TextBox();
             this.buttonBuscar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAutomoviles)).BeginInit();
+            this.dgvAutos = new System.Windows.Forms.DataGridView();
+            this.IdAutos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdChofer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Chofer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Patente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdModelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdTurno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Turno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Habilitado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAutos)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridViewAutomoviles
-            // 
-            this.dataGridViewAutomoviles.AllowUserToAddRows = false;
-            this.dataGridViewAutomoviles.AllowUserToDeleteRows = false;
-            this.dataGridViewAutomoviles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewAutomoviles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAutomoviles.ColumnHeadersVisible = false;
-            this.dataGridViewAutomoviles.Location = new System.Drawing.Point(15, 129);
-            this.dataGridViewAutomoviles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridViewAutomoviles.Name = "dataGridViewAutomoviles";
-            this.dataGridViewAutomoviles.RowHeadersVisible = false;
-            this.dataGridViewAutomoviles.RowTemplate.Height = 24;
-            this.dataGridViewAutomoviles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewAutomoviles.Size = new System.Drawing.Size(459, 264);
-            this.dataGridViewAutomoviles.TabIndex = 0;
-            // 
-            // Nombre
-            // 
-            this.Chofer.HeaderText = "Chofer";
-            this.Chofer.Name = "Chofer";
-            this.Chofer.ReadOnly = true;
-            // 
-            // Apellido
-            // 
-            this.Marca.HeaderText = "Marca";
-            this.Marca.Name = "Marca";
-            this.Marca.ReadOnly = true;
-            // 
-            // Patente
-            // 
-            this.Patente.HeaderText = "Patente";
-            this.Patente.Name = "Patente";
-            this.Patente.ReadOnly = true;
-            // 
-            // Modelo
-            // 
-            this.Modelo.HeaderText = "Modelo";
-            this.Modelo.Name = "Modelo";
-            this.Modelo.ReadOnly = true;
-            // 
-            // Turno
-            // 
-            this.Turno.HeaderText = "Modelo";
-            this.Turno.Name = "Turno";
-            this.Turno.ReadOnly = true;
-            // 
-            // Habilitado
-            // 
-            this.Habilitado.HeaderText = "Habilitado";
-            this.Habilitado.Name = "Habilitado";
-            this.Habilitado.ReadOnly = true;
             // 
             // buttonAlta
             // 
@@ -113,17 +63,6 @@
             this.buttonAlta.Text = "Alta";
             this.buttonAlta.UseVisualStyleBackColor = true;
             this.buttonAlta.Click += new System.EventHandler(this.buttonAlta_Click);
-            // 
-            // buttonModificar
-            // 
-            this.buttonModificar.Location = new System.Drawing.Point(354, 91);
-            this.buttonModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonModificar.Name = "buttonModificar";
-            this.buttonModificar.Size = new System.Drawing.Size(100, 28);
-            this.buttonModificar.TabIndex = 2;
-            this.buttonModificar.Text = "Modificar";
-            this.buttonModificar.UseVisualStyleBackColor = true;
-            this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
             // 
             // labelMarca
             // 
@@ -202,11 +141,123 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
+            // dgvAutos
+            // 
+            this.dgvAutos.AllowUserToAddRows = false;
+            this.dgvAutos.AllowUserToDeleteRows = false;
+            this.dgvAutos.AllowUserToResizeRows = false;
+            this.dgvAutos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dgvAutos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAutos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.IdAutos,
+            this.IdChofer,
+            this.Chofer,
+            this.Patente,
+            this.IdMarca,
+            this.Marca,
+            this.IdModelo,
+            this.Modelo,
+            this.IdTurno,
+            this.Turno,
+            this.Habilitado});
+            this.dgvAutos.Location = new System.Drawing.Point(12, 124);
+            this.dgvAutos.MultiSelect = false;
+            this.dgvAutos.Name = "dgvAutos";
+            this.dgvAutos.ReadOnly = true;
+            this.dgvAutos.RowTemplate.Height = 24;
+            this.dgvAutos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAutos.Size = new System.Drawing.Size(462, 268);
+            this.dgvAutos.TabIndex = 13;
+            this.dgvAutos.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAutos_CellMouseDoubleClick);
+            // 
+            // IdAutos
+            // 
+            this.IdAutos.DataPropertyName = "IdAutos";
+            this.IdAutos.HeaderText = "IdAutos";
+            this.IdAutos.Name = "IdAutos";
+            this.IdAutos.ReadOnly = true;
+            this.IdAutos.Visible = false;
+            // 
+            // IdChofer
+            // 
+            this.IdChofer.DataPropertyName = "IdChofer";
+            this.IdChofer.HeaderText = "IdChofer";
+            this.IdChofer.Name = "IdChofer";
+            this.IdChofer.ReadOnly = true;
+            this.IdChofer.Visible = false;
+            // 
+            // Chofer
+            // 
+            this.Chofer.DataPropertyName = "Chofer";
+            this.Chofer.HeaderText = "Chofer";
+            this.Chofer.Name = "Chofer";
+            this.Chofer.ReadOnly = true;
+            // 
+            // Patente
+            // 
+            this.Patente.DataPropertyName = "Patente";
+            this.Patente.HeaderText = "Patente";
+            this.Patente.Name = "Patente";
+            this.Patente.ReadOnly = true;
+            // 
+            // IdMarca
+            // 
+            this.IdMarca.DataPropertyName = "IdMarca";
+            this.IdMarca.HeaderText = "IdMarca";
+            this.IdMarca.Name = "IdMarca";
+            this.IdMarca.ReadOnly = true;
+            this.IdMarca.Visible = false;
+            // 
+            // Marca
+            // 
+            this.Marca.DataPropertyName = "Marca";
+            this.Marca.HeaderText = "Marca";
+            this.Marca.Name = "Marca";
+            this.Marca.ReadOnly = true;
+            // 
+            // IdModelo
+            // 
+            this.IdModelo.DataPropertyName = "IdModelo";
+            this.IdModelo.HeaderText = "IdModelo";
+            this.IdModelo.Name = "IdModelo";
+            this.IdModelo.ReadOnly = true;
+            this.IdModelo.Visible = false;
+            // 
+            // Modelo
+            // 
+            this.Modelo.DataPropertyName = "Modelo";
+            this.Modelo.HeaderText = "Modelo";
+            this.Modelo.Name = "Modelo";
+            this.Modelo.ReadOnly = true;
+            // 
+            // IdTurno
+            // 
+            this.IdTurno.DataPropertyName = "IdTurno";
+            this.IdTurno.HeaderText = "IdTurno";
+            this.IdTurno.Name = "IdTurno";
+            this.IdTurno.ReadOnly = true;
+            this.IdTurno.Visible = false;
+            // 
+            // Turno
+            // 
+            this.Turno.DataPropertyName = "Turno";
+            this.Turno.HeaderText = "Turno";
+            this.Turno.Name = "Turno";
+            this.Turno.ReadOnly = true;
+            // 
+            // Habilitado
+            // 
+            this.Habilitado.DataPropertyName = "Habilitado";
+            this.Habilitado.HeaderText = "Habilitado";
+            this.Habilitado.Name = "Habilitado";
+            this.Habilitado.ReadOnly = true;
+            // 
             // Automovil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 404);
+            this.Controls.Add(this.dgvAutos);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.textChofer);
             this.Controls.Add(this.labelChofer);
@@ -216,9 +267,7 @@
             this.Controls.Add(this.labelPatente);
             this.Controls.Add(this.comboMarca);
             this.Controls.Add(this.labelMarca);
-            this.Controls.Add(this.buttonModificar);
             this.Controls.Add(this.buttonAlta);
-            this.Controls.Add(this.dataGridViewAutomoviles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
@@ -226,7 +275,7 @@
             this.Name = "Automovil";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Automovil";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAutomoviles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAutos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,16 +284,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonAlta;
-        private System.Windows.Forms.Button buttonModificar;
-
-        private System.Windows.Forms.DataGridView dataGridViewAutomoviles;
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn Chofer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Marca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Patente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Modelo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Turno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Habilitado;
         private System.Windows.Forms.Label labelMarca;
         private System.Windows.Forms.ComboBox comboMarca;
         private System.Windows.Forms.Label labelPatente;
@@ -254,5 +293,17 @@
         private System.Windows.Forms.Label labelChofer;
         private System.Windows.Forms.TextBox textChofer;
         private System.Windows.Forms.Button buttonBuscar;
+        private System.Windows.Forms.DataGridView dgvAutos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdAutos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdChofer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Chofer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Patente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdMarca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Marca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdModelo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Modelo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdTurno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Turno;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Habilitado;
     }
 }
