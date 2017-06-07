@@ -42,7 +42,7 @@ namespace UberFrba.Abm_Rol
             this.dataGridView1.Columns[0].Visible = false;
         }
 
-        private void button3_Click(object sender, EventArgs e) 
+        private void button3_Click(object sender, EventArgs e)
         {
             if (this.dataGridView1.SelectedRows.Count == 0)
                 MessageBox.Show("Debe seleccionar el rol a seleccionar");
@@ -53,7 +53,7 @@ namespace UberFrba.Abm_Rol
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) 
+        private void button1_Click(object sender, EventArgs e)
         {
             (new DefinicionRol()).Show();
         }
