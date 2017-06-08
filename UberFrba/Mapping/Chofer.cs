@@ -21,8 +21,6 @@ namespace UberFrba.Mapping
        
         }
 
-
-
         internal void setIdChofer(int p)
         {
             this.id = p;
