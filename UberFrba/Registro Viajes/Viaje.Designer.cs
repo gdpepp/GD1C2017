@@ -28,43 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.fieldDocument = new System.Windows.Forms.TextBox();
-            this.birthTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.fieldMail = new System.Windows.Forms.TextBox();
-            this.fieldTelephone = new System.Windows.Forms.TextBox();
-            this.fieldSurname = new System.Windows.Forms.TextBox();
-            this.fieldName = new System.Windows.Forms.TextBox();
+            this.grupoCliente = new System.Windows.Forms.GroupBox();
+            this.txtClDoc = new System.Windows.Forms.TextBox();
+            this.dtClDate = new System.Windows.Forms.DateTimePicker();
+            this.txtClMail = new System.Windows.Forms.TextBox();
+            this.txtClTel = new System.Windows.Forms.TextBox();
+            this.txtClApellido = new System.Windows.Forms.TextBox();
+            this.txtClNombre = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.grupoAuto = new System.Windows.Forms.GroupBox();
+            this.txtModelo = new System.Windows.Forms.TextBox();
+            this.txtMarca = new System.Windows.Forms.TextBox();
+            this.txtPatente = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboChofer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtkm = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtInicio = new System.Windows.Forms.DateTimePicker();
+            this.dtFin = new System.Windows.Forms.DateTimePicker();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.comboCliente = new System.Windows.Forms.ComboBox();
+            this.grupoChofer = new System.Windows.Forms.GroupBox();
+            this.txtCDoc = new System.Windows.Forms.TextBox();
+            this.dtCFecha = new System.Windows.Forms.DateTimePicker();
+            this.txtCMail = new System.Windows.Forms.TextBox();
+            this.txtCTel = new System.Windows.Forms.TextBox();
+            this.txtCApellido = new System.Windows.Forms.TextBox();
+            this.txtCNombre = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -72,74 +72,75 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grupoCliente.SuspendLayout();
+            this.grupoAuto.SuspendLayout();
+            this.grupoChofer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // grupoCliente
             // 
-            this.groupBox1.Controls.Add(this.fieldDocument);
-            this.groupBox1.Controls.Add(this.birthTimePicker);
-            this.groupBox1.Controls.Add(this.fieldMail);
-            this.groupBox1.Controls.Add(this.fieldTelephone);
-            this.groupBox1.Controls.Add(this.fieldSurname);
-            this.groupBox1.Controls.Add(this.fieldName);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Enabled = false;
-            this.groupBox1.Location = new System.Drawing.Point(418, 169);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(364, 182);
-            this.groupBox1.TabIndex = 23;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Datos cliente";
+            this.grupoCliente.Controls.Add(this.txtClDoc);
+            this.grupoCliente.Controls.Add(this.dtClDate);
+            this.grupoCliente.Controls.Add(this.txtClMail);
+            this.grupoCliente.Controls.Add(this.txtClTel);
+            this.grupoCliente.Controls.Add(this.txtClApellido);
+            this.grupoCliente.Controls.Add(this.txtClNombre);
+            this.grupoCliente.Controls.Add(this.label13);
+            this.grupoCliente.Controls.Add(this.label1);
+            this.grupoCliente.Controls.Add(this.label6);
+            this.grupoCliente.Controls.Add(this.label2);
+            this.grupoCliente.Controls.Add(this.label5);
+            this.grupoCliente.Controls.Add(this.label3);
+            this.grupoCliente.Enabled = false;
+            this.grupoCliente.Location = new System.Drawing.Point(418, 169);
+            this.grupoCliente.Name = "grupoCliente";
+            this.grupoCliente.Size = new System.Drawing.Size(364, 182);
+            this.grupoCliente.TabIndex = 23;
+            this.grupoCliente.TabStop = false;
+            this.grupoCliente.Text = "Datos cliente";
             // 
-            // fieldDocument
+            // txtClDoc
             // 
-            this.fieldDocument.Location = new System.Drawing.Point(133, 73);
-            this.fieldDocument.Name = "fieldDocument";
-            this.fieldDocument.Size = new System.Drawing.Size(216, 20);
-            this.fieldDocument.TabIndex = 15;
+            this.txtClDoc.Location = new System.Drawing.Point(133, 73);
+            this.txtClDoc.Name = "txtClDoc";
+            this.txtClDoc.Size = new System.Drawing.Size(216, 20);
+            this.txtClDoc.TabIndex = 15;
             // 
-            // birthTimePicker
+            // dtClDate
             // 
-            this.birthTimePicker.Location = new System.Drawing.Point(133, 151);
-            this.birthTimePicker.Name = "birthTimePicker";
-            this.birthTimePicker.Size = new System.Drawing.Size(216, 20);
-            this.birthTimePicker.TabIndex = 13;
+            this.dtClDate.Location = new System.Drawing.Point(133, 151);
+            this.dtClDate.Name = "dtClDate";
+            this.dtClDate.Size = new System.Drawing.Size(216, 20);
+            this.dtClDate.TabIndex = 13;
+            this.dtClDate.ValueChanged += new System.EventHandler(this.dtClDate_ValueChanged);
             // 
-            // fieldMail
+            // txtClMail
             // 
-            this.fieldMail.Location = new System.Drawing.Point(133, 125);
-            this.fieldMail.Name = "fieldMail";
-            this.fieldMail.Size = new System.Drawing.Size(216, 20);
-            this.fieldMail.TabIndex = 12;
+            this.txtClMail.Location = new System.Drawing.Point(133, 125);
+            this.txtClMail.Name = "txtClMail";
+            this.txtClMail.Size = new System.Drawing.Size(216, 20);
+            this.txtClMail.TabIndex = 12;
             // 
-            // fieldTelephone
+            // txtClTel
             // 
-            this.fieldTelephone.Location = new System.Drawing.Point(133, 99);
-            this.fieldTelephone.Name = "fieldTelephone";
-            this.fieldTelephone.Size = new System.Drawing.Size(216, 20);
-            this.fieldTelephone.TabIndex = 11;
+            this.txtClTel.Location = new System.Drawing.Point(133, 99);
+            this.txtClTel.Name = "txtClTel";
+            this.txtClTel.Size = new System.Drawing.Size(216, 20);
+            this.txtClTel.TabIndex = 11;
             // 
-            // fieldSurname
+            // txtClApellido
             // 
-            this.fieldSurname.Location = new System.Drawing.Point(133, 48);
-            this.fieldSurname.Name = "fieldSurname";
-            this.fieldSurname.Size = new System.Drawing.Size(216, 20);
-            this.fieldSurname.TabIndex = 8;
+            this.txtClApellido.Location = new System.Drawing.Point(133, 48);
+            this.txtClApellido.Name = "txtClApellido";
+            this.txtClApellido.Size = new System.Drawing.Size(216, 20);
+            this.txtClApellido.TabIndex = 8;
             // 
-            // fieldName
+            // txtClNombre
             // 
-            this.fieldName.Location = new System.Drawing.Point(133, 22);
-            this.fieldName.Name = "fieldName";
-            this.fieldName.Size = new System.Drawing.Size(216, 20);
-            this.fieldName.TabIndex = 7;
+            this.txtClNombre.Location = new System.Drawing.Point(133, 22);
+            this.txtClNombre.Name = "txtClNombre";
+            this.txtClNombre.Size = new System.Drawing.Size(216, 20);
+            this.txtClNombre.TabIndex = 7;
             // 
             // label13
             // 
@@ -195,42 +196,42 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Número documento";
             // 
-            // groupBox2
+            // grupoAuto
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Enabled = false;
-            this.groupBox2.Location = new System.Drawing.Point(418, 42);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(364, 105);
-            this.groupBox2.TabIndex = 23;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Datos del auto";
+            this.grupoAuto.Controls.Add(this.txtModelo);
+            this.grupoAuto.Controls.Add(this.txtMarca);
+            this.grupoAuto.Controls.Add(this.txtPatente);
+            this.grupoAuto.Controls.Add(this.label7);
+            this.grupoAuto.Controls.Add(this.label9);
+            this.grupoAuto.Controls.Add(this.label11);
+            this.grupoAuto.Enabled = false;
+            this.grupoAuto.Location = new System.Drawing.Point(418, 42);
+            this.grupoAuto.Name = "grupoAuto";
+            this.grupoAuto.Size = new System.Drawing.Size(364, 105);
+            this.grupoAuto.TabIndex = 23;
+            this.grupoAuto.TabStop = false;
+            this.grupoAuto.Text = "Datos del auto";
             // 
-            // textBox1
+            // txtModelo
             // 
-            this.textBox1.Location = new System.Drawing.Point(133, 73);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(216, 20);
-            this.textBox1.TabIndex = 15;
+            this.txtModelo.Location = new System.Drawing.Point(133, 73);
+            this.txtModelo.Name = "txtModelo";
+            this.txtModelo.Size = new System.Drawing.Size(216, 20);
+            this.txtModelo.TabIndex = 15;
             // 
-            // textBox4
+            // txtMarca
             // 
-            this.textBox4.Location = new System.Drawing.Point(133, 48);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(216, 20);
-            this.textBox4.TabIndex = 8;
+            this.txtMarca.Location = new System.Drawing.Point(133, 48);
+            this.txtMarca.Name = "txtMarca";
+            this.txtMarca.Size = new System.Drawing.Size(216, 20);
+            this.txtMarca.TabIndex = 8;
             // 
-            // textBox5
+            // txtPatente
             // 
-            this.textBox5.Location = new System.Drawing.Point(133, 22);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(216, 20);
-            this.textBox5.TabIndex = 7;
+            this.txtPatente.Location = new System.Drawing.Point(133, 22);
+            this.txtPatente.Name = "txtPatente";
+            this.txtPatente.Size = new System.Drawing.Size(216, 20);
+            this.txtPatente.TabIndex = 7;
             // 
             // label7
             // 
@@ -259,18 +260,19 @@
             this.label11.TabIndex = 2;
             this.label11.Text = "Modelo";
             // 
-            // comboBox1
+            // comboChofer
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(162, 15);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(230, 21);
-            this.comboBox1.TabIndex = 24;
+            this.comboChofer.FormattingEnabled = true;
+            this.comboChofer.Location = new System.Drawing.Point(163, 15);
+            this.comboChofer.Name = "comboChofer";
+            this.comboChofer.Size = new System.Drawing.Size(230, 21);
+            this.comboChofer.TabIndex = 24;
+            this.comboChofer.SelectedIndexChanged += new System.EventHandler(this.comboChofer_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 18);
+            this.label4.Location = new System.Drawing.Point(26, 23);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 25;
@@ -279,23 +281,24 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(49, 126);
+            this.label8.Location = new System.Drawing.Point(26, 126);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 13);
             this.label8.TabIndex = 26;
             this.label8.Text = "Cantidad de Km";
             // 
-            // textBox2
+            // txtkm
             // 
-            this.textBox2.Location = new System.Drawing.Point(162, 126);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(225, 20);
-            this.textBox2.TabIndex = 27;
+            this.txtkm.Location = new System.Drawing.Point(163, 123);
+            this.txtkm.Name = "txtkm";
+            this.txtkm.Size = new System.Drawing.Size(230, 20);
+            this.txtkm.TabIndex = 27;
+            this.txtkm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtkm_KeyPress_1);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(58, 72);
+            this.label10.Location = new System.Drawing.Point(26, 71);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(73, 13);
             this.label10.TabIndex = 28;
@@ -305,106 +308,114 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(28, 101);
+            this.label12.Location = new System.Drawing.Point(26, 97);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(103, 13);
             this.label12.TabIndex = 30;
             this.label12.Text = "Hora de Finalizacion";
             // 
-            // dateTimePicker1
+            // dtInicio
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(167, 69);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(225, 20);
-            this.dateTimePicker1.TabIndex = 31;
+            this.dtInicio.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dtInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtInicio.Location = new System.Drawing.Point(163, 69);
+            this.dtInicio.MaxDate = new System.DateTime(2020, 12, 31, 0, 0, 0, 0);
+            this.dtInicio.MinDate = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
+            this.dtInicio.Name = "dtInicio";
+            this.dtInicio.Size = new System.Drawing.Size(230, 20);
+            this.dtInicio.TabIndex = 31;
             // 
-            // dateTimePicker2
+            // dtFin
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(167, 97);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(225, 20);
-            this.dateTimePicker2.TabIndex = 32;
+            this.dtFin.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dtFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtFin.Location = new System.Drawing.Point(163, 95);
+            this.dtFin.Name = "dtFin";
+            this.dtFin.Size = new System.Drawing.Size(230, 20);
+            this.dtFin.TabIndex = 32;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(25, 42);
+            this.label14.Location = new System.Drawing.Point(26, 45);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(109, 13);
             this.label14.TabIndex = 33;
             this.label14.Text = "Seleccione un cliente";
             // 
-            // comboBox2
+            // comboCliente
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(163, 42);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(230, 21);
-            this.comboBox2.TabIndex = 34;
+            this.comboCliente.FormattingEnabled = true;
+            this.comboCliente.Location = new System.Drawing.Point(163, 42);
+            this.comboCliente.Name = "comboCliente";
+            this.comboCliente.Size = new System.Drawing.Size(230, 21);
+            this.comboCliente.TabIndex = 34;
+            this.comboCliente.SelectedIndexChanged += new System.EventHandler(this.comboCliente_SelectedIndexChanged);
             // 
-            // groupBox3
+            // grupoChofer
             // 
-            this.groupBox3.Controls.Add(this.textBox3);
-            this.groupBox3.Controls.Add(this.dateTimePicker3);
-            this.groupBox3.Controls.Add(this.textBox6);
-            this.groupBox3.Controls.Add(this.textBox7);
-            this.groupBox3.Controls.Add(this.textBox8);
-            this.groupBox3.Controls.Add(this.textBox9);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(31, 169);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(364, 182);
-            this.groupBox3.TabIndex = 24;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Datos Chofer";
+            this.grupoChofer.Controls.Add(this.txtCDoc);
+            this.grupoChofer.Controls.Add(this.dtCFecha);
+            this.grupoChofer.Controls.Add(this.txtCMail);
+            this.grupoChofer.Controls.Add(this.txtCTel);
+            this.grupoChofer.Controls.Add(this.txtCApellido);
+            this.grupoChofer.Controls.Add(this.txtCNombre);
+            this.grupoChofer.Controls.Add(this.label15);
+            this.grupoChofer.Controls.Add(this.label16);
+            this.grupoChofer.Controls.Add(this.label17);
+            this.grupoChofer.Controls.Add(this.label18);
+            this.grupoChofer.Controls.Add(this.label19);
+            this.grupoChofer.Controls.Add(this.label20);
+            this.grupoChofer.Enabled = false;
+            this.grupoChofer.Location = new System.Drawing.Point(31, 169);
+            this.grupoChofer.Name = "grupoChofer";
+            this.grupoChofer.Size = new System.Drawing.Size(364, 182);
+            this.grupoChofer.TabIndex = 24;
+            this.grupoChofer.TabStop = false;
+            this.grupoChofer.Text = "Datos Chofer";
             // 
-            // textBox3
+            // txtCDoc
             // 
-            this.textBox3.Location = new System.Drawing.Point(133, 73);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(216, 20);
-            this.textBox3.TabIndex = 15;
+            this.txtCDoc.Location = new System.Drawing.Point(133, 73);
+            this.txtCDoc.Name = "txtCDoc";
+            this.txtCDoc.Size = new System.Drawing.Size(216, 20);
+            this.txtCDoc.TabIndex = 15;
             // 
-            // dateTimePicker3
+            // dtCFecha
             // 
-            this.dateTimePicker3.Location = new System.Drawing.Point(133, 151);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(216, 20);
-            this.dateTimePicker3.TabIndex = 13;
+            this.dtCFecha.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dtCFecha.Location = new System.Drawing.Point(133, 151);
+            this.dtCFecha.Name = "dtCFecha";
+            this.dtCFecha.Size = new System.Drawing.Size(216, 20);
+            this.dtCFecha.TabIndex = 13;
             // 
-            // textBox6
+            // txtCMail
             // 
-            this.textBox6.Location = new System.Drawing.Point(133, 125);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(216, 20);
-            this.textBox6.TabIndex = 12;
+            this.txtCMail.Location = new System.Drawing.Point(133, 125);
+            this.txtCMail.Name = "txtCMail";
+            this.txtCMail.Size = new System.Drawing.Size(216, 20);
+            this.txtCMail.TabIndex = 12;
             // 
-            // textBox7
+            // txtCTel
             // 
-            this.textBox7.Location = new System.Drawing.Point(133, 99);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(216, 20);
-            this.textBox7.TabIndex = 11;
+            this.txtCTel.Location = new System.Drawing.Point(133, 99);
+            this.txtCTel.Name = "txtCTel";
+            this.txtCTel.Size = new System.Drawing.Size(216, 20);
+            this.txtCTel.TabIndex = 11;
             // 
-            // textBox8
+            // txtCApellido
             // 
-            this.textBox8.Location = new System.Drawing.Point(133, 48);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(216, 20);
-            this.textBox8.TabIndex = 8;
+            this.txtCApellido.Location = new System.Drawing.Point(133, 48);
+            this.txtCApellido.Name = "txtCApellido";
+            this.txtCApellido.Size = new System.Drawing.Size(216, 20);
+            this.txtCApellido.TabIndex = 8;
             // 
-            // textBox9
+            // txtCNombre
             // 
-            this.textBox9.Location = new System.Drawing.Point(133, 22);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(216, 20);
-            this.textBox9.TabIndex = 7;
+            this.txtCNombre.Location = new System.Drawing.Point(133, 22);
+            this.txtCNombre.Name = "txtCNombre";
+            this.txtCNombre.Size = new System.Drawing.Size(216, 20);
+            this.txtCNombre.TabIndex = 7;
             // 
             // label15
             // 
@@ -468,6 +479,7 @@
             this.button1.TabIndex = 35;
             this.button1.Text = "Registrar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Viaje
             // 
@@ -476,28 +488,29 @@
             this.ClientSize = new System.Drawing.Size(822, 421);
             this.ControlBox = false;
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.grupoChofer);
+            this.Controls.Add(this.comboCliente);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtFin);
+            this.Controls.Add(this.dtInicio);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grupoCliente);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtkm);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.comboChofer);
+            this.Controls.Add(this.grupoAuto);
             this.Name = "Viaje";
             this.ShowIcon = false;
             this.Text = "Form1";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.Load += new System.EventHandler(this.Viaje_Load);
+            this.grupoCliente.ResumeLayout(false);
+            this.grupoCliente.PerformLayout();
+            this.grupoAuto.ResumeLayout(false);
+            this.grupoAuto.PerformLayout();
+            this.grupoChofer.ResumeLayout(false);
+            this.grupoChofer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -505,43 +518,42 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox fieldDocument;
-        private System.Windows.Forms.DateTimePicker birthTimePicker;
-        private System.Windows.Forms.TextBox fieldMail;
-        private System.Windows.Forms.TextBox fieldTelephone;
-        private System.Windows.Forms.TextBox fieldSurname;
-        private System.Windows.Forms.TextBox fieldName;
+        private System.Windows.Forms.GroupBox grupoCliente;
+        private System.Windows.Forms.TextBox txtClDoc;
+        private System.Windows.Forms.DateTimePicker dtClDate;
+        private System.Windows.Forms.TextBox txtClMail;
+        private System.Windows.Forms.TextBox txtClTel;
+        private System.Windows.Forms.TextBox txtClApellido;
+        private System.Windows.Forms.TextBox txtClNombre;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.GroupBox grupoAuto;
+        private System.Windows.Forms.TextBox txtModelo;
+        private System.Windows.Forms.TextBox txtMarca;
+        private System.Windows.Forms.TextBox txtPatente;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboChofer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtkm;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtInicio;
+        private System.Windows.Forms.DateTimePicker dtFin;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.ComboBox comboCliente;
+        private System.Windows.Forms.GroupBox grupoChofer;
+        private System.Windows.Forms.DateTimePicker dtCFecha;
+        private System.Windows.Forms.TextBox txtCMail;
+        private System.Windows.Forms.TextBox txtCTel;
+        private System.Windows.Forms.TextBox txtCApellido;
+        private System.Windows.Forms.TextBox txtCNombre;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
@@ -549,5 +561,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtCDoc;
     }
 }
