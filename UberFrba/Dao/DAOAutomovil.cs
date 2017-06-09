@@ -91,7 +91,11 @@ namespace UberFrba.Dao
 
                 if (unAuto != null)
                 {
-                    turnos.Add(new Turno(unAuto));
+                    Turno unTurno = new Turno(unAuto);
+                    if (!turnos.Contains(unTurno))
+                    {
+                        turnos.Add(unTurno);
+                    }
                 }
             }
             return turnos;
@@ -122,7 +126,11 @@ namespace UberFrba.Dao
 
             if (unAuto != null)
             {
-                choferesLibres.Add(new Chofer_Auto(unAuto));
+                Chofer_Auto unChofer = new Chofer_Auto(unAuto);
+                if (!choferesLibres.Contains(unChofer))
+                {
+                    choferesLibres.Add(unChofer);
+                }
             }
 
             return choferesLibres;

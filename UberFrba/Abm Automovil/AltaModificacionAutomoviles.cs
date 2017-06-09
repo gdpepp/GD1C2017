@@ -128,34 +128,6 @@ namespace UberFrba.Abm_Automovil
             
         }
 
-        private Auto getNewAuto(Auto auto)
-        {
-        /*
-            if (string.IsNullOrEmpty(auto.patente))
-            {
-                auto.patente = (string)unAuto.Cells["Patente"].Value;
-            }
-            if (auto.idChofer == null)
-            {
-                auto.idChofer = (int)unAuto.Cells["IdChofer"].Value;
-            }
-            if (auto.idMarca == null)
-            {
-                auto.idMarca = (int)unAuto.Cells["IdMarca"].Value;
-            }
-            if (string.IsNullOrEmpty(auto.modelo))
-            {
-                auto.modelo = (string)unAuto.Cells["Modelo"].Value;
-            }
-            if (auto.idTurno == null)
-            {
-                auto.idTurno = (int)unAuto.Cells["IdTurno"].Value;
-            }
-
-            */
-            return auto;
-        }
-
         private void verifyCarExisted(Auto auto)
         {
             if (dao.carExists(auto) != 0)
