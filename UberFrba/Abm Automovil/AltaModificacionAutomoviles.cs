@@ -16,29 +16,45 @@ namespace UberFrba.Abm_Automovil
     {
         private DAOAutomovil dao;
         int flagAuto = 0;
-        private DataGridViewRow unAuto;
+        public DataGridViewRow unAuto;
+        private Turno turnoViejo;
 
         public AltaModificacionAutomoviles()
         {
             this.dao = new DAOAutomovil();
             InitializeComponent();
+            this.comboTurno.Enabled = false;
             setupComboMarcas();
-            setupComboTurnos();
             setupComboChoferes();
         }
 
-        public AltaModificacionAutomoviles(DataGridViewRow unAuto)
+        public AltaModificacionAutomoviles(DataGridViewRow unAuto, bool flagAgregarTurno)
         {
             this.dao = new DAOAutomovil();
             this.unAuto = unAuto;
             InitializeComponent();
-            setupComboMarcas();
-            setupComboTurnos();
-            setupComboMarcas();
-            this.Text = "Modifique al cliente";
-            this.buttonGuardar.Text = "Modificar";
-            this.buttonEliminar.Enabled = true;
-            this.flagAuto = 1;
+            this.turnoViejo = new Turno(unAuto);
+            if (flagAgregarTurno == true)
+            {
+                this.groupDatosAuto.Enabled = false;
+                this.comboChofer.Enabled = false;
+                this.checkHabilitado.Enabled = false;
+                this.flagAuto = 1;
+
+                this.Text = "Agregar Turno";
+                Chofer_Auto unChofer = new Chofer_Auto(unAuto);
+                setupComboTurnos(unChofer);
+            }
+            else
+            {
+                this.Text = "Modifique al cliente";
+                this.buttonGuardar.Text = "Modificar";
+                this.buttonEliminar.Enabled = true;
+                this.flagAuto = 2;
+                setupComboMarcas();
+                setupComboChoferes();
+            }
+
             this.completarCampos(unAuto);
         }
 
@@ -46,7 +62,7 @@ namespace UberFrba.Abm_Automovil
         {
             Marca marca = new Marca(unAuto);
             Turno turno = new Turno(unAuto);
-            Chofer chofer = new Chofer(unAuto);
+            Chofer_Auto chofer = new Chofer_Auto(unAuto);
             this.comboMarca.Text = marca.getMarca();
             this.textModelo.Text = unAuto.Cells["Modelo"].Value.ToString();
             this.textPatente.Text = unAuto.Cells["Patente"].Value.ToString();
@@ -83,7 +99,8 @@ namespace UberFrba.Abm_Automovil
  
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());//La version final debe mostrar mensaje generico como el de abajo, Debemos manejar exceptiones propias.
+                MessageBox.Show(ex.Message.ToString());
+                //La version final debe mostrar mensaje generico como el de abajo, Debemos manejar exceptiones propias.
                 //MessageBox.Show("No se pudo registrar el auto");
             }
         }
@@ -92,25 +109,58 @@ namespace UberFrba.Abm_Automovil
         {
             try {
                 CheckEmptyFields();
-                //Auto auto = getFormData();
-                //dao.modificarAuto(auto);
+                Auto auto = getFormData();
+                auto.idAuto = (int)unAuto.Cells["IdAutos"].Value;
+                auto.idModelo = (int)unAuto.Cells["IdModelo"].Value;
+                if (auto.patente != (string)unAuto.Cells["Patente"].Value)
+                {
+                    verifyCarExisted(auto);
+                }
+                dao.updateAuto(auto, turnoViejo);
                 MessageBox.Show("Cambios guardados");
-            }catch(Exception ex){
+                this.Close();
+            }
+            catch(Exception ex)
+            {
                 MessageBox.Show(ex.Message.ToString());//La version final debe mostrar mensaje generico como el de abajo, Debemos manejar exceptiones propias.
                 //MessageBox.Show("No se pudo actualizar su auto, comuniquese con el administrador");
             }
             
         }
 
+        private Auto getNewAuto(Auto auto)
+        {
+        /*
+            if (string.IsNullOrEmpty(auto.patente))
+            {
+                auto.patente = (string)unAuto.Cells["Patente"].Value;
+            }
+            if (auto.idChofer == null)
+            {
+                auto.idChofer = (int)unAuto.Cells["IdChofer"].Value;
+            }
+            if (auto.idMarca == null)
+            {
+                auto.idMarca = (int)unAuto.Cells["IdMarca"].Value;
+            }
+            if (string.IsNullOrEmpty(auto.modelo))
+            {
+                auto.modelo = (string)unAuto.Cells["Modelo"].Value;
+            }
+            if (auto.idTurno == null)
+            {
+                auto.idTurno = (int)unAuto.Cells["IdTurno"].Value;
+            }
+
+            */
+            return auto;
+        }
+
         private void verifyCarExisted(Auto auto)
         {
-            if (dao.patenteExist(auto) != 0)
+            if (dao.carExists(auto) != 0)
             {
-                throw new Exception("La patente ingresada ya existe con ese turno.");
-            }
-            if (dao.modelOrBrandDifferent(auto) != 0)
-            {
-                throw new Exception("La patente ingresada ya existe con otro modelo u otra marca.");
+                throw new Exception("La patente ingresada ya existe.");
             }
         }
 
@@ -122,11 +172,11 @@ namespace UberFrba.Abm_Automovil
             this.comboMarca.SelectedItem = null;
         }
 
-        private void setupComboTurnos()
+        private void setupComboTurnos(Chofer_Auto unChofer)
         {
             this.comboTurno.ValueMember = "id";
             this.comboTurno.DisplayMember = "descripcion";
-            this.comboTurno.DataSource = dao.getAllTurn();
+            this.comboTurno.DataSource = dao.getAllTurnFree(unAuto, unChofer);
             this.comboTurno.SelectedItem = null;
         }
 
@@ -134,19 +184,50 @@ namespace UberFrba.Abm_Automovil
         {
             this.comboChofer.ValueMember = "id";
             this.comboChofer.DisplayMember = "chofer";
-            this.comboChofer.DataSource = dao.getAllDriverFree();
+            this.comboChofer.DataSource = dao.getAllDriverFree(unAuto);
             this.comboChofer.SelectedItem = null;
         }
 
         private void buttonGuardar_Click(object sender, EventArgs e)
         {
-            if (this.flagAuto != 0)
+            if (this.flagAuto == 0)
             {
-                updateCar();
+                createCar();
+                return;
+            }
+            if (this.flagAuto == 1)
+            {
+                createNewTurn();
+                this.Close();
             }
             else
             {
-                createCar();
+                updateCar();
+            }
+        }
+
+        private void createNewTurn()
+        {
+            try
+            {
+                if (comboTurno.SelectedIndex.Equals(-1))
+                {
+                    throw new Exception("Debe seleccionar un turno");
+                }
+                Turno turno = this.comboTurno.SelectedItem as Turno;
+                if (turno.getId() != (int)unAuto.Cells["IdTurno"].Value)
+                {
+                    dao.createTurno(unAuto, turno);
+                    MessageBox.Show("El turno fue agregado con exito");
+                }
+                else
+                {
+                    MessageBox.Show("El turno no cambio");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
             }
         }
 
@@ -155,16 +236,39 @@ namespace UberFrba.Abm_Automovil
             this.Close();
         }
         
-        private Auto getFormData() {
+        private Auto getFormData() 
+        {
             Marca m = this.comboMarca.SelectedItem as Marca;
             Turno t = this.comboTurno.SelectedItem as Turno;
-            Chofer c = this.comboChofer.SelectedItem as Chofer;
+            Chofer_Auto c = this.comboChofer.SelectedItem as Chofer_Auto;
             return new Auto(textPatente.Text, checkHabilitado.Checked, c.getId(), m.getId(), textModelo.Text, t.getId());
         }
 
         private void buttonEliminar_Click(object sender, EventArgs e)
         {
-            dao.deleteAuto(unAuto);
+            try
+            {
+                CheckEmptyFields();
+                DialogResult resul = MessageBox.Show("Seguro que quiere eliminar el Auto?", "Eliminar Registro", MessageBoxButtons.YesNo);
+                if (resul == DialogResult.Yes)
+                {
+                    dao.deleteAuto(unAuto);
+                    MessageBox.Show("El auto fue eliminado exitosamente");
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
+
+        private void comboChofer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.comboTurno.Enabled = true;
+            Chofer_Auto unChofer = this.comboChofer.SelectedItem as Chofer_Auto;
+            this.setupComboTurnos(unChofer);
+        }
+
     }
 }

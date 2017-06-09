@@ -26,6 +26,11 @@ namespace UberFrba.Abm_Automovil
         public Int32 getId() 
         {
             return this.idModelo;
-        } 
+        }
+
+        public String getModelo()
+        {
+            return this.modelo;
+        }
     }
 }

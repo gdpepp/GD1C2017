@@ -25,6 +25,12 @@ namespace UberFrba.Abm_Automovil
             this.turno = (string)unAuto.Cells["Turno"].Value;
         }
 
+        public Turno(Auto unAuto)
+        {
+            this.idTurno = unAuto.idTurno;
+            this.turno = unAuto.turno;
+        }
+
         public override string ToString()
         {
             return this.turno;

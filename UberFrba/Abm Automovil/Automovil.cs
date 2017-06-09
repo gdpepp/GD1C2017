@@ -44,30 +44,18 @@ namespace UberFrba.Abm_Automovil
         {
             try
             {   
-                //DataTable autos = dao.searchCar(comboMarca.SelectedText, textPatente.Text, textModelo.Text, textChofer.Text);
-                //this.llenarAutos(autos);
+                Marca marca = this.comboMarca.SelectedItem as Marca;
+                this.dgvAutos.DataSource = dao.searchCar(marca.getMarca(), textPatente.Text, textModelo.Text, textChofer.Text);
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 MessageBox.Show(ex.Message.ToString(), "Error");
-            }
-               
+            }               
         }
 
         private void llenarAutos(DataTable table)
         {
             //this.dataGridViewAutomoviles.DataSource = table;
-        }
-
-        private void buttonModificar_Click(object sender, EventArgs e)
-        {/*
-            if (this.dataGridViewAutomoviles.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Seleccione un auto del listado para modificar");
-                return;
-            }
-            DataGridViewRow row = this.dataGridViewAutomoviles.SelectedRows[0];
-
-            new AltaModificacionAutomoviles(row).Show();*/
         }
 
         private void buttonAlta_Click(object sender, EventArgs e)
@@ -79,7 +67,29 @@ namespace UberFrba.Abm_Automovil
         private void dgvAutos_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridViewRow unAuto = this.dgvAutos.SelectedRows[0];
-            new AltaModificacionAutomoviles(unAuto).Show();
+            bool flagAgregarTurno = false;
+            AltaModificacionAutomoviles modificacion = new AltaModificacionAutomoviles(unAuto, flagAgregarTurno);
+            modificacion.FormClosed += new System.Windows.Forms.FormClosedEventHandler(AltaModificacionAutomovilesCerrada);
+            modificacion.Show();
+        }
+
+        private void AltaModificacionAutomovilesCerrada(object sender, FormClosedEventArgs e)
+        {
+            this.setupGrid();
+        }
+
+        private void buttonAgregarTurno_Click(object sender, EventArgs e)
+        {
+            if (this.dgvAutos.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("seleccione un auto del listado para agregar turno");
+                return;
+            }
+            DataGridViewRow unAuto = this.dgvAutos.SelectedRows[0];
+            bool flagAgregarTurno = true;
+            AltaModificacionAutomoviles modificacion = new AltaModificacionAutomoviles(unAuto, flagAgregarTurno);
+            modificacion.FormClosed += new System.Windows.Forms.FormClosedEventHandler(AltaModificacionAutomovilesCerrada);
+            modificacion.Show();
         }
     }
 }

@@ -8,21 +8,27 @@ using System.Windows.Forms;
 
 namespace UberFrba.Abm_Automovil
 {
-    class Chofer
+    class Chofer_Auto
     {
         private Int32 idChofer;
         private string chofer;
 
-        public Chofer(DataRow row)
+        public Chofer_Auto(DataRow row)
         {
             this.idChofer = Convert.ToInt32(row["IdChofer"]);
             this.chofer = Convert.ToString(row["Chofer"]);
         }
 
-        public Chofer(DataGridViewRow unAuto)
+        public Chofer_Auto(DataGridViewRow unAuto)
         {
             this.idChofer = (int)unAuto.Cells["IdChofer"].Value;
             this.chofer = (string)unAuto.Cells["Chofer"].Value;
+        }
+
+        public Chofer_Auto(Auto unAuto)
+        {
+            this.idChofer = unAuto.idChofer;
+            this.chofer = unAuto.chofer;
         }
 
         public override string ToString()

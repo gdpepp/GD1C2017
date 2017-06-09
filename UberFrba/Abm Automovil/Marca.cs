@@ -25,6 +25,12 @@ namespace UberFrba.Abm_Automovil
             this.marca = (string)unAuto.Cells["Marca"].Value;
         }
 
+        public Marca(Auto unAuto)
+        {
+            this.idMarca = unAuto.idMarca;
+            this.marca = unAuto.marca;
+        }
+        
         public override string ToString()
         {
             return this.marca;

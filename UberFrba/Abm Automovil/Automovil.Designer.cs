@@ -50,12 +50,13 @@
             this.IdTurno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Turno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Habilitado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.buttonAgregarTurno = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAutos)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonAlta
             // 
-            this.buttonAlta.Location = new System.Drawing.Point(354, 59);
+            this.buttonAlta.Location = new System.Drawing.Point(346, 446);
             this.buttonAlta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAlta.Name = "buttonAlta";
             this.buttonAlta.Size = new System.Drawing.Size(100, 28);
@@ -67,7 +68,7 @@
             // labelMarca
             // 
             this.labelMarca.AutoSize = true;
-            this.labelMarca.Location = new System.Drawing.Point(12, 9);
+            this.labelMarca.Location = new System.Drawing.Point(24, 21);
             this.labelMarca.Name = "labelMarca";
             this.labelMarca.Size = new System.Drawing.Size(47, 17);
             this.labelMarca.TabIndex = 4;
@@ -77,16 +78,16 @@
             // 
             this.comboMarca.DropDownWidth = 180;
             this.comboMarca.FormattingEnabled = true;
-            this.comboMarca.Location = new System.Drawing.Point(13, 30);
+            this.comboMarca.Location = new System.Drawing.Point(77, 18);
             this.comboMarca.Name = "comboMarca";
-            this.comboMarca.Size = new System.Drawing.Size(150, 24);
+            this.comboMarca.Size = new System.Drawing.Size(225, 24);
             this.comboMarca.TabIndex = 5;
             this.comboMarca.Text = "Seleccione Marca";
             // 
             // labelPatente
             // 
             this.labelPatente.AutoSize = true;
-            this.labelPatente.Location = new System.Drawing.Point(179, 9);
+            this.labelPatente.Location = new System.Drawing.Point(335, 21);
             this.labelPatente.Name = "labelPatente";
             this.labelPatente.Size = new System.Drawing.Size(57, 17);
             this.labelPatente.TabIndex = 6;
@@ -94,15 +95,15 @@
             // 
             // textPatente
             // 
-            this.textPatente.Location = new System.Drawing.Point(182, 32);
+            this.textPatente.Location = new System.Drawing.Point(398, 18);
             this.textPatente.Name = "textPatente";
-            this.textPatente.Size = new System.Drawing.Size(150, 22);
+            this.textPatente.Size = new System.Drawing.Size(225, 22);
             this.textPatente.TabIndex = 7;
             // 
             // labelModelo
             // 
             this.labelModelo.AutoSize = true;
-            this.labelModelo.Location = new System.Drawing.Point(12, 70);
+            this.labelModelo.Location = new System.Drawing.Point(24, 54);
             this.labelModelo.Name = "labelModelo";
             this.labelModelo.Size = new System.Drawing.Size(54, 17);
             this.labelModelo.TabIndex = 8;
@@ -110,15 +111,15 @@
             // 
             // textModelo
             // 
-            this.textModelo.Location = new System.Drawing.Point(13, 91);
+            this.textModelo.Location = new System.Drawing.Point(77, 51);
             this.textModelo.Name = "textModelo";
-            this.textModelo.Size = new System.Drawing.Size(150, 22);
+            this.textModelo.Size = new System.Drawing.Size(225, 22);
             this.textModelo.TabIndex = 9;
             // 
             // labelChofer
             // 
             this.labelChofer.AutoSize = true;
-            this.labelChofer.Location = new System.Drawing.Point(182, 70);
+            this.labelChofer.Location = new System.Drawing.Point(335, 54);
             this.labelChofer.Name = "labelChofer";
             this.labelChofer.Size = new System.Drawing.Size(50, 17);
             this.labelChofer.TabIndex = 10;
@@ -126,16 +127,16 @@
             // 
             // textChofer
             // 
-            this.textChofer.Location = new System.Drawing.Point(185, 90);
+            this.textChofer.Location = new System.Drawing.Point(398, 51);
             this.textChofer.Name = "textChofer";
-            this.textChofer.Size = new System.Drawing.Size(150, 22);
+            this.textChofer.Size = new System.Drawing.Size(225, 22);
             this.textChofer.TabIndex = 11;
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(354, 26);
+            this.buttonBuscar.Location = new System.Drawing.Point(474, 88);
             this.buttonBuscar.Name = "buttonBuscar";
-            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
+            this.buttonBuscar.Size = new System.Drawing.Size(149, 28);
             this.buttonBuscar.TabIndex = 12;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
@@ -160,13 +161,13 @@
             this.IdTurno,
             this.Turno,
             this.Habilitado});
-            this.dgvAutos.Location = new System.Drawing.Point(12, 124);
+            this.dgvAutos.Location = new System.Drawing.Point(10, 122);
             this.dgvAutos.MultiSelect = false;
             this.dgvAutos.Name = "dgvAutos";
             this.dgvAutos.ReadOnly = true;
             this.dgvAutos.RowTemplate.Height = 24;
             this.dgvAutos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAutos.Size = new System.Drawing.Size(462, 268);
+            this.dgvAutos.Size = new System.Drawing.Size(643, 308);
             this.dgvAutos.TabIndex = 13;
             this.dgvAutos.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAutos_CellMouseDoubleClick);
             // 
@@ -252,11 +253,22 @@
             this.Habilitado.Name = "Habilitado";
             this.Habilitado.ReadOnly = true;
             // 
+            // buttonAgregarTurno
+            // 
+            this.buttonAgregarTurno.Location = new System.Drawing.Point(452, 446);
+            this.buttonAgregarTurno.Name = "buttonAgregarTurno";
+            this.buttonAgregarTurno.Size = new System.Drawing.Size(189, 28);
+            this.buttonAgregarTurno.TabIndex = 14;
+            this.buttonAgregarTurno.Text = "Agregar Turno";
+            this.buttonAgregarTurno.UseVisualStyleBackColor = true;
+            this.buttonAgregarTurno.Click += new System.EventHandler(this.buttonAgregarTurno_Click);
+            // 
             // Automovil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 404);
+            this.ClientSize = new System.Drawing.Size(665, 484);
+            this.Controls.Add(this.buttonAgregarTurno);
             this.Controls.Add(this.dgvAutos);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.textChofer);
@@ -273,7 +285,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Automovil";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Automovil";
             ((System.ComponentModel.ISupportInitialize)(this.dgvAutos)).EndInit();
             this.ResumeLayout(false);
@@ -305,5 +316,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IdTurno;
         private System.Windows.Forms.DataGridViewTextBoxColumn Turno;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Habilitado;
+        private System.Windows.Forms.Button buttonAgregarTurno;
     }
 }

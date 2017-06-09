@@ -59,7 +59,7 @@
     <Compile Include="Abm Automovil\AltaModificacionAutomoviles.Designer.cs">
       <DependentUpon>AltaModificacionAutomoviles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Automovil\Chofer.cs" />
+    <Compile Include="Abm Automovil\Chofer_Auto.cs" />
     <Compile Include="Abm Automovil\Marca.cs" />
     <Compile Include="Abm Automovil\Modelo.cs" />
     <Compile Include="Abm Automovil\Turno.cs" />
