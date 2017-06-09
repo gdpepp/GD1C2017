@@ -164,7 +164,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\DateUtils.cs" />
+    <Compile Include="Utils\DuplicateKeyException.cs" />
+    <Compile Include="Utils\InvalidOptionException.cs" />
     <Compile Include="Utils\SHA256.cs" />
+    <Compile Include="Utils\SqlExceptionManager.cs" />
     <EmbeddedResource Include="Abm Chofer\ABMChofer.resx">
       <DependentUpon>ABMChofer.cs</DependentUpon>
     </EmbeddedResource>

@@ -59,11 +59,12 @@ namespace UberFrba.Utils
                 SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
                 closeConnection();
             }
-            catch (Exception ex)
-            {
+            catch (SqlException ex)
+            {   
                 closeConnection();
-                throw new Exception(ex.Message + " Query: " + query);
+                SqlExceptionManager.handlerException(ex);
             }
+
         }
 
         public void executeQueryWithParameters(String query, Dictionary<String, Object> dictionary)
@@ -79,10 +80,10 @@ namespace UberFrba.Utils
                 command.ExecuteNonQuery();
                 closeConnection();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 closeConnection();
-                throw new Exception(ex.Message + " Query: " + query);
+                SqlExceptionManager.handlerException(ex);
             }
 
 
@@ -102,10 +103,10 @@ namespace UberFrba.Utils
                 command.ExecuteNonQuery();
                 closeConnection();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 closeConnection();
-                throw new Exception(ex.Message + " Query: " + query);
+                SqlExceptionManager.handlerException(ex);
             }
         }
 
@@ -123,9 +124,10 @@ namespace UberFrba.Utils
                 closeConnection();
                 return dataTable;
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + " Query: " + query);
+            catch (SqlException ex)
+            {   
+                SqlExceptionManager.handlerException(ex);
+                return null;
             }
 
         }

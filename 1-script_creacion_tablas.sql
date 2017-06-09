@@ -397,8 +397,8 @@ CREATE TABLE [FSOCIETY].[Viaje](
 	[IdChofer] [int] NOT NULL,
 	[IdCliente] [int] NOT NULL,
 	[CantKm] [int] NOT NULL,
-	[FechaHoraInicio] [date] NOT NULL,
-	[FechaHoraFin] [date] NOT NULL
+	[FechaHoraInicio] [datetime] NOT NULL,
+	[FechaHoraFin] [datetime] NOT NULL
  CONSTRAINT [PK_Viaje] PRIMARY KEY CLUSTERED 
 (
 	[Id]
@@ -481,7 +481,7 @@ GO
 --Creo al admin
 ----------------------------------------
 insert into FSOCIETY.Personas(Nombre,Apellido,DNI,Direccion,[Fecha de Nacimiento])
-values('Admin','Admin','35323521','Salvigny 1821','1990/07/25')
+values('Administrador','General','33333333','Salvigny 1821','1990/07/25')
 
 GO
 
