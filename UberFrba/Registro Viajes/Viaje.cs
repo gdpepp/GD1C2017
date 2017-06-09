@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UberFrba.Dao;
 using UberFrba.Mapping;
+using UberFrba.Utils;
+using System.Data.SqlClient;
+
 
 namespace UberFrba.Registro_Viajes
 {
@@ -43,9 +46,18 @@ namespace UberFrba.Registro_Viajes
                 dao.InsertTravelIfNotExited(this.viaje);
                 MessageBox.Show("Se ingreso el viaje correctamente");
             }
-            catch (Exception ex)
+            catch (DuplicateKeyException dex) {
+                MessageBox.Show("Viaje duplicado");
+                Console.WriteLine(dex.Message.ToString());
+            }
+            catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Ups! hubo un error. Intente mas tarde");
+                Console.WriteLine(ex.Message.ToString());
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message.ToString());
             }
         }
 

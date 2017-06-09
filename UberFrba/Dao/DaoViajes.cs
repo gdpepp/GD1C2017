@@ -57,7 +57,7 @@ namespace UberFrba.Dao
             String date = DateUtils.stringFromDate(viaje.Inicio);
             DataTable dt = db.select_query("select Id from FSOCIETY.Viaje where IdCliente = " + viaje.Cliente.getId() + " and FechaHoraInicio <= CONVERT(datetime,'"+date+"',120) and FechaHoraFin >= CONVERT(datetime,'"+date+"',120)");
             if (dt.Rows.Count > 0) {
-                throw new Exception("Viaje duplicado");
+                throw new DuplicateKeyException();
             }
         }
 
