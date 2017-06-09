@@ -39,7 +39,7 @@ namespace UberFrba.Menu
             this.IsMdiContainer = true;
             MenuStrip MnuStrip = new MenuStrip();
             this.Controls.Add(MnuStrip);
-
+            createExitItem(MnuStrip);
             createParentIntems(MnuStrip);
             this.MainMenuStrip = MnuStrip;
         }
@@ -108,16 +108,20 @@ namespace UberFrba.Menu
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Automovil a = new Automovil();
-            a.ShowDialog();
+        private void closeApp(object sender, EventArgs e) {
+            Application.Exit();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void createExitItem(MenuStrip menu)
         {
-            ABMCliente b = new ABMCliente();
-            b.ShowDialog();
+            ToolStripMenuItem exit = createMenuItems("Archivo");
+            exit.DropDownItems.Add(new ToolStripMenuItem("Salir", null, new EventHandler(closeApp)));
+            menu.Items.Add(exit);
+        }
+
+        private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

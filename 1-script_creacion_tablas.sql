@@ -397,8 +397,8 @@ CREATE TABLE [FSOCIETY].[Viaje](
 	[IdChofer] [int] NOT NULL,
 	[IdCliente] [int] NOT NULL,
 	[CantKm] [int] NOT NULL,
-	[FechaHoraInicio] [date] NOT NULL,
-	[FechaHoraFin] [date] NOT NULL
+	[FechaHoraInicio] [datetime] NOT NULL,
+	[FechaHoraFin] [datetime] NOT NULL
  CONSTRAINT [PK_Viaje] PRIMARY KEY CLUSTERED 
 (
 	[Id]
@@ -481,7 +481,7 @@ GO
 --Creo al admin
 ----------------------------------------
 insert into FSOCIETY.Personas(Nombre,Apellido,DNI,Direccion,[Fecha de Nacimiento])
-values('Admin','Admin','35323521','Salvigny 1821','1990/07/25')
+values('Administrador','General','33333333','Salvigny 1821','1990/07/25')
 
 GO
 
@@ -505,7 +505,8 @@ GO
 INSERT INTO FSOCIETY.Funcionalidades(Descripcion,FormName,IdFuncionalidadPadre)
 VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
 	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer','ABMChofer',2),
-	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8);
+	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8),
+	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10);
 
 GO
 
