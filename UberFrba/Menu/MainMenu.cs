@@ -58,8 +58,8 @@ namespace UberFrba.Menu
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            setupFunctions();
-            setupMenu();
+            /*setupFunctions();
+            setupMenu();*/
 
         }
 

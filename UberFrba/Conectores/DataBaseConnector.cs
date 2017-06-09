@@ -124,6 +124,7 @@ namespace UberFrba.Utils
                 closeConnection();
                 return dataTable;
             }
+
             catch (SqlException ex)
             {   
                 SqlExceptionManager.handlerException(ex);
