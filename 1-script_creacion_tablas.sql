@@ -426,7 +426,6 @@ GO
 CREATE TABLE [FSOCIETY].[Facturacion](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdCliente] [int] NOT NULL,
-	[IdViaje] [int] NOT NULL,
 	[FechaInicio] [smalldatetime] NOT NULL,
 	[FechaFin] [smalldatetime] NOT NULL,
 	[Importe] [money] NOT NULL,
@@ -445,15 +444,41 @@ GO
 ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Cliente]
 GO
 
-ALTER TABLE [FSOCIETY].[Facturacion]  WITH CHECK ADD  CONSTRAINT [FK_Facturacion_Viaje] FOREIGN KEY([IdViaje])
+--ALTER TABLE [FSOCIETY].[Facturacion]  WITH CHECK ADD  CONSTRAINT [FK_Facturacion_Viaje] FOREIGN KEY([IdViaje])
+--REFERENCES [FSOCIETY].[Viaje] ([Id])
+--GO
+
+--ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Viaje]
+--GO
+
+----------------------------------------
+--FacturacionViajes
+----------------------------------------
+CREATE TABLE [FSOCIETY].[FacturacionViajes](
+	[IdViaje] [int] NOT NULL,
+	[IdFactura] [int] NOT NULL,
+ CONSTRAINT [PK_FacturacionViajes] PRIMARY KEY CLUSTERED 
+(
+	[IdViaje] ASC,
+	[IdFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [FSOCIETY].[FacturacionViajes]  WITH CHECK ADD  CONSTRAINT [FK_FacturacionViajes_Viaje] FOREIGN KEY([IdViaje])
 REFERENCES [FSOCIETY].[Viaje] ([Id])
 GO
 
-ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Viaje]
+ALTER TABLE [FSOCIETY].[FacturacionViajes] CHECK CONSTRAINT [FK_FacturacionViajes_Viaje]
 GO
 
+ALTER TABLE [FSOCIETY].[FacturacionViajes]  WITH CHECK ADD  CONSTRAINT [FK_FacturacionViajes_Facturacion] FOREIGN KEY([IdFactura])
+REFERENCES [FSOCIETY].[Facturacion] ([Id])
+GO
 
-
+ALTER TABLE [FSOCIETY].[FacturacionViajes] CHECK CONSTRAINT [FK_FacturacionViajes_Facturacion]
+GO
 ----------------------------------------
 --Rendicion
 ----------------------------------------
