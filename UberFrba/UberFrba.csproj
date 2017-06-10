@@ -115,11 +115,11 @@
     <Compile Include="Dao\DAORoles.cs" />
     <Compile Include="Dao\DAOUsers.cs" />
     <Compile Include="Dao\DaoViajes.cs" />
-    <Compile Include="Facturacion\Form1.cs">
+    <Compile Include="Facturacion\Facturacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Facturacion\Facturacion.Designer.cs">
+      <DependentUpon>Facturacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\Form1.cs">
       <SubType>Form</SubType>
@@ -200,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\modif_rol.resx">
       <DependentUpon>modif_rol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\Facturacion.resx">
+      <DependentUpon>Facturacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
