@@ -506,7 +506,7 @@ INSERT INTO FSOCIETY.Funcionalidades(Descripcion,FormName,IdFuncionalidadPadre)
 VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
 	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer','ABMChofer',2),
 	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8),
-	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10);
+	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10),('Rendicion de Viaje','RendicionViaje',10);
 
 GO
 
@@ -1012,7 +1012,7 @@ AS BEGIN
 								from FSOCIETY.Chofer 
 								where Id = @idChofer)
 
-	UPDATE FSOCIETY.Cliente
+	UPDATE FSOCIETY.Chofer
 	set Telefono = @telefono, 
 	Email = @mail, 
 	Habilitado = @habilitado
@@ -1152,3 +1152,15 @@ insert into FSOCIETY.AutosTurnos(IdAuto,IdTurno)
 	Select distinct a.Id,t.Id FROM gd_esquema.Maestra m
 		inner join FSOCIETY.Autos a on a.Patente = m.Auto_Patente
 		inner join FSOCIETY.Turnos t on t.Descripcion = m.Turno_Descripcion
+
+
+--Mmigracion Rendicion
+SET IDENTITY_INSERT FSOCIETY.Rendicion ON
+INSERT INTO FSOCIETY.Rendicion(Id,ImporteTotal,Fecha,IdChofer)
+SELECT DISTINCT Rendicion_Nro,sum(Rendicion_Importe),Rendicion_Fecha, (select cli.Id from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us
+	where per.Id = us.IdPersona and us.Id = cli.Id
+		   and per.DNI = Chofer_Dni and cli.Habilitado = 1) as idChofer FROM gd_esquema.Maestra
+		   group by Rendicion_Nro, Rendicion_Fecha,Chofer_Dni
+		   having Rendicion_Nro is not null
+		   order by Rendicion_Nro;
+SET IDENTITY_INSERT FSOCIETY.Rendicion OFF
