@@ -112,6 +112,7 @@
     <Compile Include="Dao\DAOChofer.cs" />
     <Compile Include="Dao\DaoFuncionalidades.cs" />
     <Compile Include="Dao\DAOClientes.cs" />
+    <Compile Include="Dao\DAORednicionViaje.cs" />
     <Compile Include="Dao\DAORoles.cs" />
     <Compile Include="Dao\DAOUsers.cs" />
     <Compile Include="Dao\DaoViajes.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\Rendicion.cs" />
     <Compile Include="Mapping\ViajeAuto.cs" />
     <Compile Include="Mapping\Chofer.cs" />
     <Compile Include="Mapping\Funcionalidades.cs" />
@@ -221,6 +223,9 @@
     </Compile>
     <EmbeddedResource Include="Registro Viajes\Viaje.resx">
       <DependentUpon>Viaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rendicion Viajes\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

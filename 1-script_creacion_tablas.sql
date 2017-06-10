@@ -1182,3 +1182,18 @@ FROM gd_esquema.Maestra M1 JOIN gd_esquema.Maestra M2
          AND M1.Auto_Patente = M2.Auto_Patente)
 WHERE CONVERT(time, M1.Viaje_Fecha) < CONVERT(time, M2.Viaje_Fecha) 
 GROUP BY M1.Chofer_Dni, M1.Cliente_Dni, M1.Viaje_Fecha, M2.Viaje_Fecha, m1.Viaje_Cant_Kilometros
+
+-- create store procedure rendiciones 
+
+IF (OBJECT_ID ('FSOCIETY.sp_get_Viajes_by_idchoferYfecha') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_get_Viajes_by_idchoferYfecha
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_get_Viajes_by_idchoferYfecha (@id int, @date smalldatetime )
+AS BEGIN
+Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total 
+from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id 
+where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
+   
+END		   
+GO
