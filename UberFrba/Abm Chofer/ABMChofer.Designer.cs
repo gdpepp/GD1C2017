@@ -30,12 +30,14 @@
         {
             this.bt_nuevo_chofer = new System.Windows.Forms.Button();
             this.bt_buscar = new System.Windows.Forms.Button();
-            this.tb_obtener_filtro = new System.Windows.Forms.TextBox();
-            this.CBbuscarf = new System.Windows.Forms.ComboBox();
             this.BTModificar = new System.Windows.Forms.Button();
-            this.BuscarPor = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.fieldDocument = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.fieldSurname = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.BuscarPor = new System.Windows.Forms.Label();
+            this.fieldName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,23 +63,6 @@
             this.bt_buscar.UseVisualStyleBackColor = true;
             this.bt_buscar.Click += new System.EventHandler(this.button2_Click);
             // 
-            // tb_obtener_filtro
-            // 
-            this.tb_obtener_filtro.Location = new System.Drawing.Point(315, 19);
-            this.tb_obtener_filtro.Name = "tb_obtener_filtro";
-            this.tb_obtener_filtro.Size = new System.Drawing.Size(175, 20);
-            this.tb_obtener_filtro.TabIndex = 4;
-            this.tb_obtener_filtro.TextChanged += new System.EventHandler(this.tb_obtener_filtro_TextChanged);
-            // 
-            // CBbuscarf
-            // 
-            this.CBbuscarf.FormattingEnabled = true;
-            this.CBbuscarf.Location = new System.Drawing.Point(56, 19);
-            this.CBbuscarf.Name = "CBbuscarf";
-            this.CBbuscarf.Size = new System.Drawing.Size(80, 21);
-            this.CBbuscarf.TabIndex = 5;
-            this.CBbuscarf.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // BTModificar
             // 
             this.BTModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -88,16 +73,6 @@
             this.BTModificar.Text = "Modificar";
             this.BTModificar.UseVisualStyleBackColor = true;
             this.BTModificar.Click += new System.EventHandler(this.BTModificar_Click);
-            // 
-            // BuscarPor
-            // 
-            this.BuscarPor.AutoSize = true;
-            this.BuscarPor.Location = new System.Drawing.Point(30, 3);
-            this.BuscarPor.Name = "BuscarPor";
-            this.BuscarPor.Size = new System.Drawing.Size(61, 13);
-            this.BuscarPor.TabIndex = 8;
-            this.BuscarPor.Text = "Buscar por:";
-            this.BuscarPor.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataGridView1
             // 
@@ -114,26 +89,67 @@
             this.dataGridView1.Size = new System.Drawing.Size(798, 293);
             this.dataGridView1.TabIndex = 46;
             // 
+            // fieldDocument
+            // 
+            this.fieldDocument.Location = new System.Drawing.Point(409, 22);
+            this.fieldDocument.Name = "fieldDocument";
+            this.fieldDocument.Size = new System.Drawing.Size(123, 20);
+            this.fieldDocument.TabIndex = 55;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(164, 22);
+            this.label1.Location = new System.Drawing.Point(377, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 13);
-            this.label1.TabIndex = 47;
-            this.label1.Text = "Ingrese criterio de Busqueda:";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 54;
+            this.label1.Text = "DNI:";
+            // 
+            // fieldSurname
+            // 
+            this.fieldSurname.Location = new System.Drawing.Point(248, 22);
+            this.fieldSurname.Name = "fieldSurname";
+            this.fieldSurname.Size = new System.Drawing.Size(123, 20);
+            this.fieldSurname.TabIndex = 53;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(198, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.TabIndex = 52;
+            this.label2.Text = "Apellido:";
+            // 
+            // BuscarPor
+            // 
+            this.BuscarPor.AutoSize = true;
+            this.BuscarPor.Location = new System.Drawing.Point(19, 25);
+            this.BuscarPor.Name = "BuscarPor";
+            this.BuscarPor.Size = new System.Drawing.Size(47, 13);
+            this.BuscarPor.TabIndex = 51;
+            this.BuscarPor.Text = "Nombre:";
+            // 
+            // fieldName
+            // 
+            this.fieldName.Location = new System.Drawing.Point(69, 22);
+            this.fieldName.Name = "fieldName";
+            this.fieldName.Size = new System.Drawing.Size(123, 20);
+            this.fieldName.TabIndex = 50;
             // 
             // ABMChofer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 421);
+            this.Controls.Add(this.fieldDocument);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.fieldSurname);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.BuscarPor);
+            this.Controls.Add(this.fieldName);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.BTModificar);
-            this.Controls.Add(this.CBbuscarf);
-            this.Controls.Add(this.tb_obtener_filtro);
             this.Controls.Add(this.bt_buscar);
             this.Controls.Add(this.bt_nuevo_chofer);
             this.Name = "ABMChofer";
@@ -149,11 +165,13 @@
 
         private System.Windows.Forms.Button bt_nuevo_chofer;
         private System.Windows.Forms.Button bt_buscar;
-        private System.Windows.Forms.TextBox tb_obtener_filtro;
-        private System.Windows.Forms.ComboBox CBbuscarf;
         private System.Windows.Forms.Button BTModificar;
-        private System.Windows.Forms.Label BuscarPor;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox fieldDocument;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox fieldSurname;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label BuscarPor;
+        private System.Windows.Forms.TextBox fieldName;
     }
 }

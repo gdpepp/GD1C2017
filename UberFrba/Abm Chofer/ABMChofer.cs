@@ -26,27 +26,20 @@ namespace UberFrba.Abm_Chofer
               InitializeComponent();
               this.dao = new DAOChofer();
               bt_nuevo_chofer.Visible = true;
-              BTModificar.Visible = true;
-            tb_obtener_filtro.Text = inicialTB;
-              CBbuscarf.Items.Insert(0, "DNI");
-              CBbuscarf.Items.Insert(1, "Apellido");
-              CBbuscarf.Items.Insert(2, "Nombre");
-            
-
-              
-              
+              BTModificar.Visible = true;             
+      
         }
 
         private void button2_Click(object sender, EventArgs e)
             //   esta mierda queda asi
         {
-            if ((tb_obtener_filtro.Text == inicialTB) || (CBbuscarf.Text == inicialCB)) 
+            if ((this.fieldDocument.Text == inicialTB) && (this.fieldName.Text == inicialCB) && (this.fieldSurname.Text == inicialCB)) 
             { MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada"); }
             else
             {
-      
-        
-                this.dataGridView1.DataSource = dao.buscarChofer(CBbuscarf.Text, tb_obtener_filtro.Text);
+
+
+                this.dataGridView1.DataSource = dao.buscarChofer(this.fieldDocument.Text, this.fieldName.Text, this.fieldSurname.Text);
                 //todo error loco            
             }
            
@@ -128,35 +121,6 @@ namespace UberFrba.Abm_Chofer
         }
         // metodos generales
 
-        private void llenarChoferes()
-        {
-
-            if (CBbuscarf.Text == "DNI") 
-            {
-                condicionWhere = "";//buscar por dni 
-            }
-            if (CBbuscarf.Text == "Apellido") 
-            {
-                condicionWhere = "";//buscar por
-            }
-            if (CBbuscarf.Text == "Nombre") 
-            {
-                condicionWhere = "";//buscar por
-            }
-            else 
-            {
-                MessageBox.Show("ERROR no se puede realizar la busqueda"); 
-            }
-            
-        /*var connection = WindowsFormsApplication1.DBConnection.getInstance().getConnection();
-        SqlCommand get_Choferes = new SqlCommand("FSOCIETY.sp_get_Choferes", connection);
-        get_Choferes.Parameters.Add(new SqlParameter("@NombreTabla",this.condicionWhere));
-        get_Choferes.Parameters.Add(new SqlParameter("@itemABuscar", this.tb_obtener_filtro.Text));
-        get_Choferes.CommandType = CommandType.StoredProcedure;
-        connection.Open();
-        SqlDataReader reader = get_Choferes.ExecuteReader();
-        */
-
-        }
+       
     }
 }
