@@ -108,13 +108,14 @@
       <DependentUpon>modif_rol.cs</DependentUpon>
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
-    <Compile Include="Dao\DAOAutomovil.cs" />
-    <Compile Include="Dao\DAOChofer.cs" />
-    <Compile Include="Dao\DaoFuncionalidades.cs" />
-    <Compile Include="Dao\DAOClientes.cs" />
-    <Compile Include="Dao\DAORoles.cs" />
-    <Compile Include="Dao\DAOUsers.cs" />
-    <Compile Include="Dao\DaoViajes.cs" />
+    <Compile Include="DAO\DAOAutomovil.cs" />
+    <Compile Include="DAO\DAOChofer.cs" />
+    <Compile Include="DAO\DAOFacturacion.cs" />
+    <Compile Include="DAO\DAOFuncionalidades.cs" />
+    <Compile Include="DAO\DAOClientes.cs" />
+    <Compile Include="DAO\DAORoles.cs" />
+    <Compile Include="DAO\DAOUsers.cs" />
+    <Compile Include="DAO\DAOViajes.cs" />
     <Compile Include="Facturacion\Facturacion.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -27,10 +27,36 @@ namespace UberFrba.Dao
             return "select per.Nombre, per.Apellido, per.DNI, ch.Telefono, ch.Email, per.[Fecha de Nacimiento], per.Direccion, ch.Habilitado from FSOCIETY.Personas per, FSOCIETY.Chofer ch, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = ch.Id";
         }
 
-        private String getSelectClientQuery(String filtro  , String dato)
+        private String getSelectClientQuery(String docu  , String nom, String ape)
         {
-            return getAllChoferQuery() + " and " + filtro +
-                                       " like '%" + dato + "%'";
+            if (docu == "")
+            {
+                if (nom == "")
+                    return getAllChoferQuery() + " and Apellido like '%" + ape + "%';";
+                else
+                {
+                    if (ape == "")
+                        return getAllChoferQuery() + " and Nombre like '%" + nom + "%';";
+                    else
+                        return getAllChoferQuery() + " and Nombre like '%" + nom + "%' and Apellido like '%" + ape + "%';";
+                }
+            }
+            else
+            {
+                if (nom == "")
+                {
+                    if (ape == "")
+                        return getAllChoferQuery() + " and DNI like '%" + docu + "%';";
+                    else
+                        return getAllChoferQuery() + " and DNI like '%" + docu + "%' and Apellido like '%" + ape + "%';";
+                }
+                else 
+                {if(ape == "")
+                    return getAllChoferQuery() + " and DNI like '%" + docu + "%' and Nombre like '%" + nom + "%';";
+                else
+                    return getAllChoferQuery() + " and DNI like '%" + docu + "%'and Nombre like '%" + nom + "%' and Apellido like '%" + ape + "%';";
+                }
+            }
         }
 
         internal DataTable getChoferById(int id)
@@ -67,11 +93,11 @@ namespace UberFrba.Dao
         }
 
 
-        public DataTable buscarChofer(string filtro, string dato)
+        public DataTable buscarChofer(string docu, string nom,string ape)
         {
-            if (dato != "" || filtro != "")
+            if (nom != "" || docu != ""|| ape != "")
             {
-                return connector.select_query(getSelectClientQuery(filtro, dato));
+                return connector.select_query(getSelectClientQuery(docu, nom, ape));
             }
             else
             {
