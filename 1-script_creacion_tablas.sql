@@ -1222,3 +1222,23 @@ where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
    
 END		   
 GO
+
+IF (OBJECT_ID ('FSOCIETY.sp_crear_Rendicion') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_crear_chofer
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_crear_Rendicion (@idChofer int, 
+											@fecha smalldatetime,
+											@importe int)
+AS BEGIN
+    BEGIN TRANSACTION T1
+
+	insert into FSOCIETY.Rendicion(IdChofer, Fecha, ImporteTotal)
+	values (@idChofer, @fecha, @importe);
+	
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+	
+END
+GO
