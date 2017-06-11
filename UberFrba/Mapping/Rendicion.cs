@@ -33,7 +33,7 @@ namespace UberFrba.Mapping
         public Rendicion(int p, System.Windows.Forms.DateTimePicker fechaRendicion1, System.Windows.Forms.DataGridView dataGridViewRowCollection)
         {
 
-            this.id = p;
+            this.idchofer = p;
             this.fechaRendicion = Convert.ToDateTime(fechaRendicion1.Value);
             this.importeTotal = Convert.ToDecimal(dataGridViewRowCollection.CurrentRow.Cells["Total"].Value);
         }

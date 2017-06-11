@@ -22,7 +22,7 @@ namespace UberFrba.Rendicion_Viajes
         private DaoViajes dao;
         private DAOAutomovil tur;
         private DAORednicionViaje daoren;
-        private int buchon = 0;
+        private int precalculo = 0;
     
 
         public RendicionViaje()
@@ -59,7 +59,7 @@ namespace UberFrba.Rendicion_Viajes
 
         private void btCalcular_Click(object sender, EventArgs e)
         {
-           buchon = 1;
+           precalculo = 1;
             if (datosFaltantes())               
                 MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada");
             else
@@ -85,7 +85,7 @@ namespace UberFrba.Rendicion_Viajes
 
         private bool datosFaltantes()
         {
-            if (this.cbTurno.Text != "" || this.fechaRendicion.Value != DateTime.Today || this.comboChofer.Text != "")
+            if (this.cbTurno.Text == "" || this.fechaRendicion.Value == DateTime.Today || this.comboChofer.Text == "")
                 return true;
             else
                 return false;
@@ -118,17 +118,17 @@ namespace UberFrba.Rendicion_Viajes
         {
             if (datosFaltantes())
             {
-                MessageBox.Show("Por fabor complete los Datos");
+                MessageBox.Show("Por favor complete los Datos");
             }
             else
             {
-                if (buchon == 1)
+                if (precalculo == 1)
                 {
                    daoren.setRencidion(this.idechofer, fechaRendicion, dgMontoTotal);
-                   buchon = 0;
+                   precalculo = 0;
                 }
                 else
-                    MessageBox.Show("Por fabor calcule la Rendicion");
+                    MessageBox.Show("Por favor calcule la Rendicion");
             }
         }
 
