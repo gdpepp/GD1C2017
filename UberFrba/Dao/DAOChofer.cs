@@ -74,7 +74,7 @@ namespace UberFrba.Dao
             dic.Add("@idChofer", chofer.id);
             dic.Add("@habilitado", chofer.habilitado);
 
-            connector.executeProcedureWithParameters("FSOCIETY.sp_modificar_chofer", dic);//todo sp
+            connector.executeProcedureWithParameters("FSOCIETY.sp_modificar_chofer", dic);
 
             return 0;
         }
