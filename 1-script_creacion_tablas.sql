@@ -426,7 +426,6 @@ GO
 CREATE TABLE [FSOCIETY].[Facturacion](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdCliente] [int] NOT NULL,
-	[IdViaje] [int] NOT NULL,
 	[FechaInicio] [smalldatetime] NOT NULL,
 	[FechaFin] [smalldatetime] NOT NULL,
 	[Importe] [money] NOT NULL,
@@ -445,15 +444,41 @@ GO
 ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Cliente]
 GO
 
-ALTER TABLE [FSOCIETY].[Facturacion]  WITH CHECK ADD  CONSTRAINT [FK_Facturacion_Viaje] FOREIGN KEY([IdViaje])
+--ALTER TABLE [FSOCIETY].[Facturacion]  WITH CHECK ADD  CONSTRAINT [FK_Facturacion_Viaje] FOREIGN KEY([IdViaje])
+--REFERENCES [FSOCIETY].[Viaje] ([Id])
+--GO
+
+--ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Viaje]
+--GO
+
+----------------------------------------
+--FacturacionViajes
+----------------------------------------
+CREATE TABLE [FSOCIETY].[FacturacionViajes](
+	[IdViaje] [int] NOT NULL,
+	[IdFactura] [int] NOT NULL,
+ CONSTRAINT [PK_FacturacionViajes] PRIMARY KEY CLUSTERED 
+(
+	[IdViaje] ASC,
+	[IdFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [FSOCIETY].[FacturacionViajes]  WITH CHECK ADD  CONSTRAINT [FK_FacturacionViajes_Viaje] FOREIGN KEY([IdViaje])
 REFERENCES [FSOCIETY].[Viaje] ([Id])
 GO
 
-ALTER TABLE [FSOCIETY].[Facturacion] CHECK CONSTRAINT [FK_Facturacion_Viaje]
+ALTER TABLE [FSOCIETY].[FacturacionViajes] CHECK CONSTRAINT [FK_FacturacionViajes_Viaje]
 GO
 
+ALTER TABLE [FSOCIETY].[FacturacionViajes]  WITH CHECK ADD  CONSTRAINT [FK_FacturacionViajes_Facturacion] FOREIGN KEY([IdFactura])
+REFERENCES [FSOCIETY].[Facturacion] ([Id])
+GO
 
-
+ALTER TABLE [FSOCIETY].[FacturacionViajes] CHECK CONSTRAINT [FK_FacturacionViajes_Facturacion]
+GO
 ----------------------------------------
 --Rendicion
 ----------------------------------------
@@ -1164,3 +1189,36 @@ SELECT DISTINCT Rendicion_Nro,sum(Rendicion_Importe),Rendicion_Fecha, (select cl
 		   having Rendicion_Nro is not null
 		   order by Rendicion_Nro;
 SET IDENTITY_INSERT FSOCIETY.Rendicion OFF
+
+-- migracion viajes
+INSERT INTO FSOCIETY.Viaje (CantKm,IdChofer,IdCliente,FechaHoraInicio,FechaHoraFin)
+  SELECT M1.Viaje_Cant_Kilometros,
+(select cli.Id from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and per.DNI = M1.Chofer_Dni) as 
+idChofer ,
+(select cli.Id from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and per.DNI = M1.Cliente_Dni) as 
+idCliente , M1.Viaje_Fecha AS FechaInicio, M2.Viaje_Fecha AS FechaFin
+FROM gd_esquema.Maestra M1 JOIN gd_esquema.Maestra M2
+ ON(CONVERT(date, M1.Viaje_Fecha) = CONVERT(date, M2.Viaje_Fecha)
+               AND M1.Chofer_Nombre = M2.Chofer_Nombre
+         AND M1.Chofer_Apellido = M2.Chofer_Apellido
+             AND M1.Cliente_Nombre = M2.Cliente_Nombre
+               AND M1.Cliente_Apellido = M2.Cliente_Apellido
+           AND M1.Turno_Hora_Inicio = M2.Turno_Hora_Inicio
+         AND M1.Auto_Patente = M2.Auto_Patente)
+WHERE CONVERT(time, M1.Viaje_Fecha) < CONVERT(time, M2.Viaje_Fecha) 
+GROUP BY M1.Chofer_Dni, M1.Cliente_Dni, M1.Viaje_Fecha, M2.Viaje_Fecha, m1.Viaje_Cant_Kilometros
+
+-- create store procedure rendiciones 
+
+IF (OBJECT_ID ('FSOCIETY.sp_get_Viajes_by_idchoferYfecha') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_get_Viajes_by_idchoferYfecha
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_get_Viajes_by_idchoferYfecha (@id int, @date smalldatetime )
+AS BEGIN
+Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total 
+from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id 
+where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
+   
+END		   
+GO
