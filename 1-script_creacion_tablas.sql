@@ -1300,16 +1300,18 @@ GO
 -- migracion facturas 
 
 --todo
+
+SET IDENTITY_INSERT FSOCIETY.Facturacion ON
+insert into FSOCIETY.Facturacion(Id,FechaInicio,FechaFin,IdCliente)
 select c.Factura_Nro ,c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,
- sum(c.Turno_Precio_Base+ c.Turno_Precio_Base*c.Viaje_Cant_Kilometros) ,
-(select cli.Id from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and per.DNI = c.Cliente_Dni) as 
+ (select cli.Id from FSOCIETY.Personas per , FSOCIETY.Usuarios us , FSOCIETY.Cliente cli where cli.Id = us.Id and per.Id = us.IdPersona and per.DNI = c.Cliente_Dni) as 
 idCliente 
  from gd_esquema.Maestra c
 inner join gd_esquema.Maestra f on c.Cliente_Dni = f.Cliente_Dni 
 where c.Factura_Nro IS NOT NULL
 group by c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,c.Cliente_Dni,f.Factura_Fecha,c.Factura_Nro,f.Factura_Fecha,c.Factura_Fecha
 having Year(c.Factura_Fecha)=Year(f.Factura_Fecha) and Month(c.Factura_Fecha) =Month(f.Factura_Fecha)
-
+SET IDENTITY_INSERT FSOCIETY.Facturacion OFF
 
 
 --(select sum(total.Turno_Precio_Base + total.Viaje_Cant_Kilometros*total.Turno_Valor_Kilometro) from gd_esquema.Maestra total 
@@ -1323,4 +1325,5 @@ insert into FSOCIETY.FacturacionViajes (IdViaje ,IdFactura)
 select v.Id, f.Id from FSOCIETY.Viaje v 
 inner join FSOCIETY.Facturacion f on v.IdCliente = f.IdCliente and MONTH(v.FechaHoraFin) = MONTH(f.FechaFin)
 and YEAR(v.FechaHoraFin) = YEAR(f.FechaFin)
+
 
