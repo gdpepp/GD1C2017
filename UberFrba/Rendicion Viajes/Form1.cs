@@ -23,6 +23,8 @@ namespace UberFrba.Rendicion_Viajes
         private DAOAutomovil tur;
         private DAORendicionViaje daoren;
         private int precalculo = 0;
+        private int idturno;
+ 
     
 
         public RendicionViaje()
@@ -74,7 +76,7 @@ namespace UberFrba.Rendicion_Viajes
             else
             {
                 string n =  fechaRendicion.Value.ToString("yyyy-MM-dd");
-                dgViajesRealizados.DataSource = daoren.getviajes(idechofer,n );
+                dgViajesRealizados.DataSource = daoren.getviajes(idechofer,n,idturno);
                 dgMontoTotal.DataSource = daoren.getTotal(idechofer, n);
               
             }
@@ -98,7 +100,8 @@ namespace UberFrba.Rendicion_Viajes
 
         private void cbTurno_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Turno t = this.cbTurno.SelectedItem as Turno;
+                this.idturno = t.getId();
         }
 
         private void comboChofer_SelectedIndexChanged(object sender, EventArgs e)
