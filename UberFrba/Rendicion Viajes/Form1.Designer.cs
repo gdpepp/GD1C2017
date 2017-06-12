@@ -53,6 +53,7 @@
             this.dgMontoTotal = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.dgViajesRealizados = new System.Windows.Forms.DataGridView();
+            this.btRendir = new System.Windows.Forms.Button();
             this.grupoChofer.SuspendLayout();
             this.groupdatosRendicion.SuspendLayout();
             this.grendicion.SuspendLayout();
@@ -297,11 +298,22 @@
             this.dgViajesRealizados.Size = new System.Drawing.Size(438, 177);
             this.dgViajesRealizados.TabIndex = 0;
             // 
+            // btRendir
+            // 
+            this.btRendir.Location = new System.Drawing.Point(676, 355);
+            this.btRendir.Name = "btRendir";
+            this.btRendir.Size = new System.Drawing.Size(143, 42);
+            this.btRendir.TabIndex = 28;
+            this.btRendir.Text = "Rendir";
+            this.btRendir.UseVisualStyleBackColor = true;
+            this.btRendir.Click += new System.EventHandler(this.btRendir_Click);
+            // 
             // RendicionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 421);
+            this.Controls.Add(this.btRendir);
             this.Controls.Add(this.grendicion);
             this.Controls.Add(this.groupdatosRendicion);
             this.Controls.Add(this.grupoChofer);
@@ -347,5 +359,6 @@
         private System.Windows.Forms.DataGridView dgViajesRealizados;
         private System.Windows.Forms.ComboBox comboChofer;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btRendir;
     }
 }

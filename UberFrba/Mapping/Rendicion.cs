@@ -9,10 +9,11 @@ namespace UberFrba.Mapping
 {
     class Rendicion
     {
-        private Int32 id;
-        private Int32 idchofer;
-        private DateTime fechaRendicion;
-        private Int32 importeTotal;
+        public Int32 id;
+        public Int32 idchofer;
+        public DateTime fechaRendicion;
+        public decimal importeTotal; 
+
 
         public Rendicion(int i, int ic, DateTime fecha, int impo)
         {
@@ -27,6 +28,14 @@ namespace UberFrba.Mapping
             this.idchofer = Convert.ToInt32(row["idChofer"]);
             this.fechaRendicion = Convert.ToDateTime(row["Fecha"]);
             this.importeTotal = Convert.ToInt32(row["Total"]);
+        }
+
+        public Rendicion(int p, System.Windows.Forms.DateTimePicker fechaRendicion1, System.Windows.Forms.DataGridView dataGridViewRowCollection)
+        {
+
+            this.idchofer = p;
+            this.fechaRendicion = Convert.ToDateTime(fechaRendicion1.Value);
+            this.importeTotal = Convert.ToDecimal(dataGridViewRowCollection.CurrentRow.Cells["Total"].Value);
         }
     }
 }

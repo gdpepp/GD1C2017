@@ -10,15 +10,19 @@ using System.Windows.Forms;
 using UberFrba.Dao;
 using UberFrba.Mapping;
 using UberFrba.Abm_Cliente;
+using UberFrba.Abm_Automovil;
 
 namespace UberFrba.Rendicion_Viajes
 {
     public partial class RendicionViaje : Form
     {
         private List<ViajeChofer> choferes;
+        private List<Turno> turnos ;
         private int idechofer;
-        private DAOViajes dao;
-        private DAORendicionViaje daoren;
+        private DaoViajes dao;
+        private DAOAutomovil tur;
+        private DAORednicionViaje daoren;
+        private int precalculo = 0;
     
 
         public RendicionViaje()
@@ -26,10 +30,14 @@ namespace UberFrba.Rendicion_Viajes
             InitializeComponent();
             idechofer = 0;
             this.choferes = new List<ViajeChofer>();
-            this.dao = new DAOViajes();
-            this.daoren = new DAORendicionViaje();
+            this.turnos = new List<Turno>();
+            this.dao = new DaoViajes();
+            this.tur = new DAOAutomovil();
+            this.daoren = new DAORednicionViaje();
             choferes = dao.getAllDrivers();
+            turnos = tur.getAllTurn();
             setComboCHofer();
+            setComboTurno();
         }
 
 
@@ -41,13 +49,21 @@ namespace UberFrba.Rendicion_Viajes
             this.comboChofer.DataSource = choferes;
         }
 
+        private void setComboTurno()
+        {
+            this.cbTurno.ValueMember = "id";
+            this.cbTurno.DisplayMember = "Descripcion";
+            this.cbTurno.Sorted = true;
+            this.cbTurno.DataSource = turnos;
+        }
+
         private void btCalcular_Click(object sender, EventArgs e)
         {
-            if (datosFaltantes())
-                generarRendicion();     
+           precalculo = 1;
+            if (datosFaltantes())               
+                MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada");
             else
-                MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada");    
-           
+                generarRendicion(); 
         }
 
         private void generarRendicion()
@@ -69,7 +85,10 @@ namespace UberFrba.Rendicion_Viajes
 
         private bool datosFaltantes()
         {
-            return (true);
+            if (this.cbTurno.Text == "" || this.fechaRendicion.Value == DateTime.Today || this.comboChofer.Text == "")
+                return true;
+            else
+                return false;
         }
 
         private void RendicionViaje_Load(object sender, EventArgs e)
@@ -94,5 +113,25 @@ namespace UberFrba.Rendicion_Viajes
             this.idechofer = c.getId();
 
         }
+
+        private void btRendir_Click(object sender, EventArgs e)
+        {
+            if (datosFaltantes())
+            {
+                MessageBox.Show("Por favor complete los Datos");
+            }
+            else
+            {
+                if (precalculo == 1)
+                {
+                   daoren.setRencidion(this.idechofer, fechaRendicion, dgMontoTotal);
+                   precalculo = 0;
+                }
+                else
+                    MessageBox.Show("Por favor calcule la Rendicion");
+            }
+        }
+
+        
     }
 }
