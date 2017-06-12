@@ -19,14 +19,14 @@ namespace UberFrba.Dao
             this.connector = DataBaseConnector.getInstance();
         }
 
-        internal DataTable getviajes(int idechofer, string n)
+      internal DataTable getviajes(int idechofer, string n, int idturno)
         {
-            return connector.select_query(getSelectRendicionViajeQuery(idechofer, n));
+            return connector.select_query(getSelectRendicionViajeQuery(idechofer, n, idturno));
         }
 
-        private string getSelectRendicionViajeQuery(int idechofer, string n)
+        private string getSelectRendicionViajeQuery(int idechofer, string n, int idturno)
         {
-            return "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id where c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
+            return "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id where (select  q.Hora_De_Inicio from  FSOCIETY.Turnos q where q.id =" + idturno + ") = t.Hora_De_Inicio and (select  w.Hora_De_Finalizacion from FSOCIETY.Turnos w where w.id =" + idturno + ") = t.Hora_De_Finalizacion and c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
         }
 
         private string getRendicionTotalQuery(int idechofert, string nt)
