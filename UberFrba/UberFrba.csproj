@@ -113,7 +113,7 @@
     <Compile Include="DAO\DAOFacturacion.cs" />
     <Compile Include="DAO\DAOFuncionalidades.cs" />
     <Compile Include="DAO\DAOClientes.cs" />
-    <Compile Include="Dao\DAORednicionViaje.cs" />
+    <Compile Include="DAO\DAORendicionViaje.cs" />
     <Compile Include="DAO\DAORoles.cs" />
     <Compile Include="DAO\DAOUsers.cs" />
     <Compile Include="DAO\DAOViajes.cs" />
@@ -141,6 +141,9 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\ClienteFactura.cs" />
+    <Compile Include="Mapping\Factura.cs" />
+    <Compile Include="Mapping\ItemFactura.cs" />
     <Compile Include="Mapping\Rendicion.cs" />
     <Compile Include="Mapping\ViajeAuto.cs" />
     <Compile Include="Mapping\Chofer.cs" />
