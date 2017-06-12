@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UberFrba.Mapping;
 using UberFrba.Utils;
 
 namespace UberFrba.Dao
@@ -38,6 +39,25 @@ namespace UberFrba.Dao
         internal DataTable getTotal(int idechofer, string n)
         {
             return connector.select_query(getRendicionTotalQuery(idechofer, n));
+        }
+
+        internal void setRencidion(int p, DateTimePicker fechaRendicion, DataGridView dataGridViewRowCollection)
+        {
+            Rendicion ren = new Rendicion(p, fechaRendicion, dataGridViewRowCollection);
+            modificarRendicion(ren);
+        }
+
+        public int modificarRendicion(Rendicion rend)
+        {
+            Dictionary<String, Object> dic = new Dictionary<String, Object>();
+            dic.Add("@idChofer", rend.idchofer);
+            dic.Add("@fecha", rend.fechaRendicion);
+            dic.Add("@importe", rend.importeTotal);
+          
+
+            connector.executeProcedureWithParameters("FSOCIETY.sp_crear_Rendicion", dic);
+
+            return 0;
         }
     }
 }

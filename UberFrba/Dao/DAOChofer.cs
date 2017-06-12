@@ -88,7 +88,7 @@ namespace UberFrba.Dao
             dic.Add("@habilitado", chofer.habilitado);
 
             connector.executeProcedureWithParameters("FSOCIETY.sp_crear_chofer", dic);
-            //todod sp
+           
             return 0;
         }
 
