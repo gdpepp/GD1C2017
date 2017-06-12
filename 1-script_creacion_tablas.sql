@@ -1251,10 +1251,10 @@ GO
 --todo
 
 SET IDENTITY_INSERT FSOCIETY.Facturacion ON
-insert into FSOCIETY.Facturacion(Id,FechaInicio,FechaFin,IdCliente)
+insert into FSOCIETY.Facturacion(Id,FechaInicio,FechaFin,IdCliente,Importe)
 select c.Factura_Nro ,c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,
  (select cli.Id from FSOCIETY.Personas per , FSOCIETY.Usuarios us , FSOCIETY.Cliente cli where cli.Id = us.Id and per.Id = us.IdPersona and per.DNI = c.Cliente_Dni) as 
-idCliente 
+idCliente ,0
  from gd_esquema.Maestra c
 inner join gd_esquema.Maestra f on c.Cliente_Dni = f.Cliente_Dni 
 where c.Factura_Nro IS NOT NULL
