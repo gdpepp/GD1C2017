@@ -20,9 +20,20 @@ INSERT INTO FSOCIETY.Turnos(Hora_De_Inicio, Hora_De_Finalizacion, Descripcion, V
 	SELECT DISTINCT Turno_Hora_Inicio, Turno_Hora_Fin, Turno_Descripcion, Turno_Valor_Kilometro, Turno_Precio_Base, 1 FROM gd_esquema.Maestra
 
 -- Migro Autos
-INSERT INTO FSOCIETY.Autos(Patente, IdModelo, IdTurno, IdChofer, Habilitado)
-	SELECT DISTINCT	MAESTRA.Auto_Patente, MODELOS.Id, TURNOS.Id, CHOFER.Id, 1 
+INSERT INTO FSOCIETY.Autos(Patente, IdModelo, IdChofer, Habilitado)
+	SELECT DISTINCT	MAESTRA.Auto_Patente, MODELOS.Id, CHOFER.Id, 1 
 		FROM gd_esquema.Maestra MAESTRA
 			INNER JOIN FSOCIETY.Modelos MODELOS ON MAESTRA.Auto_Modelo = MODELOS.Description
-			INNER JOIN FSOCIETY.Turnos TURNOS ON MAESTRA.Turno_Descripcion = TURNOS.Descripcion
 			INNER JOIN FSOCIETY.Chofer CHOFER ON MAESTRA.Chofer_Telefono = CHOFER.Telefono
+
+-- Viajes
+INSERT INTO FSOCIETY.Viaje(IdChofer, IdCliente, CantKm, FechaHoraInicio, FechaHoraFin)
+	SELECT DISTINCT
+		CHOFER.Id AS IdChofer,
+		CLIENTE.Id AS IdCliente,
+		MAESTRA.Viaje_Cant_Kilometros AS CantKm,
+		MAESTRA.Viaje_Fecha AS Fecha_inicio,
+		MAESTRA.Viaje_Fecha AS Fecha_final
+		FROM gd_esquema.Maestra MAESTRA
+		INNER JOIN FSOCIETY.Chofer CHOFER ON MAESTRA.Chofer_Telefono = CHOFER.Telefono
+		INNER JOIN FSOCIETY.Cliente CLIENTE ON MAESTRA.Cliente_Telefono = CLIENTE.Telefono

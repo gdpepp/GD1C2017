@@ -30,7 +30,7 @@ namespace UberFrba.Menu
 
         private void setupFunctions()
         {
-            DaoFuncionalidades dao = new DaoFuncionalidades();
+            DAOFuncionalidades dao = new DAOFuncionalidades();
             this.functions = dao.getFunctionsByRol(user.getRol());
         }
 

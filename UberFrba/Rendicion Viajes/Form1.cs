@@ -19,9 +19,9 @@ namespace UberFrba.Rendicion_Viajes
         private List<ViajeChofer> choferes;
         private List<Turno> turnos ;
         private int idechofer;
-        private DaoViajes dao;
+        private DAOViajes dao;
         private DAOAutomovil tur;
-        private DAORednicionViaje daoren;
+        private DAORendicionViaje daoren;
         private int precalculo = 0;
     
 
@@ -31,9 +31,9 @@ namespace UberFrba.Rendicion_Viajes
             idechofer = 0;
             this.choferes = new List<ViajeChofer>();
             this.turnos = new List<Turno>();
-            this.dao = new DaoViajes();
+            this.dao = new DAOViajes();
             this.tur = new DAOAutomovil();
-            this.daoren = new DAORednicionViaje();
+            this.daoren = new DAORendicionViaje();
             choferes = dao.getAllDrivers();
             turnos = tur.getAllTurn();
             setComboCHofer();

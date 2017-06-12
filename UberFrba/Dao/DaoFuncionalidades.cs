@@ -9,7 +9,7 @@ using UberFrba.Utils;
 
 namespace UberFrba.Dao
 {
-    class DaoFuncionalidades
+    class DAOFuncionalidades
     {   
         public List<Funcionalidades> getFunctionsByRol(Rol rol) {
             List<Funcionalidades> functions = new List<Funcionalidades>();
