@@ -50,15 +50,18 @@ namespace UberFrba.Abm_Cliente
         public void saveButton_Click(object sender, EventArgs e)
         {
             // al guardar se hara tanto el alta como la modificacion, de acuerdo al clientId
-
-            if (this.clientId != 0)
+            if (this.checkDNInot0())
             {
-                updateOrDeleteClient(dao);
+                if (this.clientId != 0)
+                {
+                    updateOrDeleteClient(dao);
+                }
+                else
+                {
+                    createClient(dao);
+                }
+                this.Close();
             }
-            else
-            {
-                createClient(dao);
-           }
         }
 
         private bool checkDNInot0()
@@ -132,10 +135,11 @@ namespace UberFrba.Abm_Cliente
             Persona persona = new Persona(this.fieldName.Text, this.fieldSurname.Text, this.fieldDocument.Text, this.fieldStreet.Text, this.birthTimePicker.Value, this.idPersona);
             Cliente cliente = new Cliente(this.fieldTelephone.Text, this.fieldMail.Text, this.fieldZipcode.Text, this.idPersona , this.checkHabilitado.Checked);
 
-            verifyFields(dao, persona, cliente);
-            dao.modificarPersona(persona);
-            dao.modificarCliente(cliente);
-
+            if (verifyFields(dao, persona, cliente))
+            {
+                dao.modificarPersona(persona);
+                dao.modificarCliente(cliente);
+            }
             MessageBox.Show("Cambios guardados");
         }
 
