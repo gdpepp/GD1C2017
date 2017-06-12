@@ -123,9 +123,17 @@ namespace UberFrba.Rendicion_Viajes
             else
             {
                 if (precalculo == 1)
-                {
+                { try
+                    {
                    daoren.setRencidion(this.idechofer, fechaRendicion, dgMontoTotal);
                    precalculo = 0;
+                    }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                    precalculo = 0;
+                }
+
                 }
                 else
                     MessageBox.Show("Por favor calcule la Rendicion");

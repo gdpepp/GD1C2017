@@ -1233,11 +1233,13 @@ CREATE PROCEDURE FSOCIETY.sp_crear_Rendicion (@idChofer int,
 AS BEGIN
     BEGIN TRANSACTION T1
 	if((select count(*) from FSOCIETY.Rendicion r where r.IdChofer = @idChofer and CONVERT(date,r.Fecha) = CONVERT(date,@fecha)) > 0)
-		{insert into FSOCIETY.Rendicion(IdChofer, Fecha, ImporteTotal)
-		values (@idChofer, @fecha, @importe)}
-		else
-			--todo quieren insertar duplicado avisar
-	
+		begin insert into FSOCIETY.Rendicion(IdChofer, Fecha, ImporteTotal)
+			  values (@idChofer, @fecha, @importe)
+		end
+	else
+		begin
+			return 2602
+		end
 	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;
 	COMMIT TRANSACTION T1;
@@ -1247,22 +1249,22 @@ GO
 -- migracion facturas 
 
 --todo
-select c.Factura_Nro ,c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,c.Cliente_Dni,
+select c.Factura_Nro ,c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,
+ sum(c.Turno_Precio_Base+ c.Turno_Precio_Base*c.Viaje_Cant_Kilometros) ,
+(select cli.Id from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and per.DNI = c.Cliente_Dni) as 
+idCliente 
+ from gd_esquema.Maestra c
+inner join gd_esquema.Maestra f on c.Cliente_Dni = f.Cliente_Dni 
+where c.Factura_Nro IS NOT NULL
+group by c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,c.Cliente_Dni,f.Factura_Fecha,c.Factura_Nro,f.Factura_Fecha,c.Factura_Fecha
+having Year(c.Factura_Fecha)=Year(f.Factura_Fecha) and Month(c.Factura_Fecha) =Month(f.Factura_Fecha)
+
+
+
 --(select sum(total.Turno_Precio_Base + total.Viaje_Cant_Kilometros*total.Turno_Valor_Kilometro) from gd_esquema.Maestra total 
 --where total.Cliente_Dni =c.Cliente_Dni and total.Viaje_Cant_Kilometros is not null and
 --Year(f.Factura_Fecha)= Year(total.Viaje_Fecha) and Month(f.Factura_Fecha)= Month(total.Viaje_Fecha)
 --group by total.Viaje_Cant_Kilometros,total.Turno_Precio_Base,total.Turno_Valor_Kilometro )as Total,
-(select cli.Id from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us where per.Id = us.IdPersona and us.Id = cli.Id and per.DNI = c.Cliente_Dni) as 
-idCliente 
- from gd_esquema.Maestra c
-inner join gd_esquema.Maestra f on c.Cliente_Dni = f.Cliente_Dni
-where c.Factura_Nro IS NOT NULL
-group by c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,c.Cliente_Dni,f.Factura_Fecha,c.Factura_Nro,f.Factura_Fecha,c.Factura_Fecha
-having Year(c.Factura_Fecha)=Year(f.Factura_Fecha) and Month(c.Factura_Fecha) =Month(f.Factura_Fecha)
-order by c.Factura_Nro asc
-
-
-
 
 -- creacion de FacturacionViajes
 
