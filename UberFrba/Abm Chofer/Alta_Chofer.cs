@@ -50,15 +50,20 @@ namespace UberFrba.Abm_Chofer
         {
             if (tb_calle.Text != "" && tb_apellido.Text != "" && tb_DNI.Text != "" && tb_mail.Text != "" && tb_nombre.Text != "" && tb_telefono.Text != "")
             {
-                if (this.id != 0)
+                if (this.checkDNInot0())
                 {
-                    updateOrDeleteChofer(dao);
+                    if (this.id != 0)
+                    {
+                        updateOrDeleteChofer(dao);
+                    }
+                    else
+                    {
+                        createChofer(dao);
+                    }
+                    this.Close();
                 }
-                else
-                {
-                    createChofer(dao);
-                }
-                this.Close();
+
+               
             }
             else
                 MessageBox.Show("Complete todos los datos por favor");
