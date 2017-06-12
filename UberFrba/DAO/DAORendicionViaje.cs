@@ -10,11 +10,11 @@ using UberFrba.Utils;
 
 namespace UberFrba.Dao
 {
-    class DAORednicionViaje
+    class DAORendicionViaje
     {
         private DataBaseConnector connector;
 
-      public  DAORednicionViaje()
+      public  DAORendicionViaje()
         {
             this.connector = DataBaseConnector.getInstance();
         }

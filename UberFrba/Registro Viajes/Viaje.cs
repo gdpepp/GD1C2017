@@ -17,7 +17,7 @@ namespace UberFrba.Registro_Viajes
 {
     public partial class Viaje : Form
     {
-        private DaoViajes dao;
+        private DAOViajes dao;
         private List<ViajeChofer> choferes;
         private List<ViajePersona> clientes;
         private Viajes viaje;
@@ -25,7 +25,7 @@ namespace UberFrba.Registro_Viajes
         public Viaje()
         {
             InitializeComponent();
-            this.dao = new DaoViajes();
+            this.dao = new DAOViajes();
             this.viaje = new Viajes();
             this.choferes = new List<ViajeChofer>();
             this.clientes = new List<ViajePersona>();
