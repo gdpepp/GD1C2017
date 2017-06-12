@@ -17,6 +17,8 @@ namespace UberFrba.Utils
                     throw new InvalidOptionException(ex.Message.ToString() + "custom");
                 case 2601:
                     throw new DuplicateKeyException(ex.Message.ToString() + "custom");
+                case 2602:
+                    throw new DuplicateKeyException(ex.Message.ToString() + "Esta operacion ya fue Realizada");
                 default:
                     throw new Exception("Hubo un error, reintente mas tarde");
 
