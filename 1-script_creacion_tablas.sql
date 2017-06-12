@@ -75,17 +75,12 @@ END
 CLOSE proceduress
 DEALLOCATE proceduress
 
-/* DROP SCHEMA*/
-/*
-IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'FSOCIETY')
-    DROP SCHEMA FSOCIETY
-GO
-*/
+
 /* SCHEMA CREATION */
 
-/*CREATE SCHEMA FSOCIETY
+CREATE SCHEMA FSOCIETY
 GO
-*/
+
 /****** Object:  Table [FSOCIETY].[Autos]    Script Date: 21/04/2017 12:36:03 p.m. ******/
 SET ANSI_NULLS ON
 GO
@@ -595,6 +590,11 @@ EXECUTE FSOCIETY.sp_insert_user @USER,@idPersona
 
 GO
 
+
+----------------------------------
+-- Store roles
+----------------------------------
+
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_modif_roles')
 DROP PROCEDURE FSOCIETY.sp_get_modif_roles
 GO
@@ -646,9 +646,12 @@ GO
 
 CREATE PROCEDURE FSOCIETY.sp_insert_rol (@nombre VARCHAR(50), @habilitado BIT) AS 
 BEGIN TRANSACTION T1
-	INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-	VALUES (NEXT VALUE FOR Id, @nombre, @habilitado)
-COMMIT TRANSACTION T1
+	INSERT INTO FSOCIETY.Roles (Descripcion, Habilitado)
+	VALUES (@nombre, @habilitado)
+	
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_rol_funcionalidades')
@@ -689,94 +692,30 @@ BEGIN TRANSACTION T1
   DELETE FROM FSOCIETY.RolFuncionalidades
    WHERE IdRol = @idrol
      AND IdFuncionalidad = @idfun
-COMMIT TRANSACTION T1
-GO
 
-----------------------------------
--- Store roles
-----------------------------------
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_modif_roles')
-DROP PROCEDURE FSOCIETY.sp_get_modif_roles
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_get_modif_roles(@username VARCHAR(50)) 
-AS
-BEGIN TRANSACTION T1
-  /* obtiene roles para admin y todos los roles <> admin para quien no lo sea */
-  SELECT * FROM FSOCIETY.Roles
-  WHERE (ID <> 1) 
-  OR 1 = (SELECT ID
-			FROM FSOCIETY.Usuarios u, FSOCIETY.UsuariosRoles r
-            WHERE u.Username = @username
-            AND r.IdRol = u.IdPersona);
-COMMIT TRANSACTION T1
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_usuarios_roles')
-DROP PROCEDURE FSOCIETY.sp_delete_usuarios_roles
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_delete_usuarios_roles(@id int) AS 
-BEGIN TRANSACTION T1
-	DELETE FSOCIETY.Usuarios where Id = @id 
-COMMIT TRANSACTION T1
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_insert_rol')
-DROP PROCEDURE FSOCIETY.sp_insert_rol
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_insert_rol (@nombre VARCHAR(50), @habilitado BIT) AS 
-BEGIN TRANSACTION T1
-	INSERT INTO FSOCIETY.Roles (Id, Descripcion, Habilitado)
-	VALUES (NEXT VALUE FOR Id, @nombre, @habilitado)
-COMMIT TRANSACTION T1
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_get_rol_funcionalidades')
-DROP PROCEDURE FSOCIETY.sp_get_rol_funcionalidades
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_get_rol_funcionalidades(@idrol INT) AS BEGIN
-  /* Lista las funcionalidades que tiene asignado un rol */
-BEGIN TRANSACTION T1
-  SELECT func.Id, func.Descripcion
-    FROM FSOCIETY.Funcionalidades func, FSOCIETY.RolFuncionalidades rolfunc, FSOCIETY.Roles rol
-	WHERE rolfunc.IdRol = @idrol
-     AND func.Id = rolfunc.IdFuncionalidad
-     AND rol.Id = @idrol
-END 
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_insert_funcionalidad')
-DROP PROCEDURE FSOCIETY.sp_insert_funcionalidad
-GO
-
-CREATE PROCEDURE FSOCIETY.sp_insert_funcionalidad (@idrol INT, @idfun INT) AS 
-BEGIN TRANSACTION T1
-  /* agrego funcionalidad si no existe */
-    INSERT INTO FSOCIETY.RolFuncionalidades (idRol, IdFuncionalidad)
-    VALUES (@idrol, @idfun)
-    if (@@ERROR !=0)
+	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;
 COMMIT TRANSACTION T1
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_funcionalidad')
-DROP PROCEDURE FSOCIETY.sp_delete_funcionalidad
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_all_funcionalidades')
+DROP PROCEDURE FSOCIETY.sp_delete_all_funcionalidades
 GO
 
-CREATE PROCEDURE FSOCIETY.sp_delete_funcionalidad (@idrol INT, @idfun INT) AS 
+CREATE PROCEDURE FSOCIETY.sp_delete_all_funcionalidades (@idrol INT) AS 
 BEGIN TRANSACTION T1
   DELETE FROM FSOCIETY.RolFuncionalidades
    WHERE IdRol = @idrol
-     AND IdFuncionalidad = @idfun
+     
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
 COMMIT TRANSACTION T1
 GO
 
 ------------------------
 --Store Clientes
 ------------------------
+
 IF (OBJECT_ID ('FSOCIETY.sp_set_rol_cliente') IS NOT NULL)
 	DROP PROCEDURE FSOCIETY.sp_set_rol_cliente
 GO
@@ -984,7 +923,7 @@ CREATE PROCEDURE FSOCIETY.sp_crear_chofer (@telefono varchar(50),
 AS BEGIN
     BEGIN TRANSACTION T1
 
-	insert into FSOCIETY.Cliente(id, Telefono, Email, Habilitado)
+	insert into FSOCIETY.Chofer(id, Telefono, Email, Habilitado)
 	values (@idChofer, @telefono, @mail, @habilitado);
 	
 	if (@@ERROR !=0)
@@ -1048,6 +987,183 @@ AS BEGIN
         ROLLBACK TRANSACTION T1;
 	COMMIT TRANSACTION T1;
 	
+END
+GO
+
+----------------------------------
+--Store Turnos
+----------------------------------
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_crear_turno')
+DROP PROCEDURE FSOCIETY.sp_crear_turno
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_crear_turno](@Descripcion varchar(100),@horainicio int, @horafin int, @valorkm smallmoney, @preciobase smallmoney, @habilitado bit)
+AS
+BEGIN TRANSACTION T1
+	insert into FSOCIETY.Turnos (Descripcion, Hora_De_Inicio, Hora_De_Finalizacion,Valor_Km,Precio_Base,Habilitado)
+	values(@Descripcion, @horainicio, @horafin, @valorkm, @preciobase,@habilitado)
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	else COMMIT TRANSACTION T1
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_delete_rel_autoTurno')
+DROP PROCEDURE FSOCIETY.sp_delete_rel_autoTurno
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_delete_rel_autoTurno](@id int)
+AS
+BEGIN TRANSACTION T1
+	
+	DELETE FSOCIETY.AutosTurnos 
+	WHERE IdTurno = @id
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	else COMMIT TRANSACTION T1
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_update_turno')
+DROP PROCEDURE FSOCIETY.sp_update_turno
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_update_turno](@id int, @Descripcion varchar(100),@horainicio int, @horafin int, @valorkm smallmoney, @preciobase smallmoney, @habilitado bit)
+AS
+BEGIN TRANSACTION T1
+
+	declare @estadoprevio int = (select tur.Habilitado from FSOCIETY.Turnos tur where tur.Id = @id)
+
+	update FSOCIETY.Turnos 
+	set Descripcion= @Descripcion, 
+	Hora_De_Inicio = @horainicio, 
+	Hora_De_Finalizacion = @horafin,
+	Valor_Km = @valorkm,
+	Precio_Base = @preciobase,
+	Habilitado= @habilitado
+	where Id = @id
+
+	if (@estadoPrevio = 1 and @estadoPrevio != @habilitado)
+		execute FSOCIETY.sp_delete_rel_autoTurno @id;
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	else COMMIT TRANSACTION T1
+GO
+
+----------------------------------
+--Store Autos
+----------------------------------
+
+IF (OBJECT_ID ('FSOCIETY.sp_crear_auto') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_crear_auto
+GO
+
+CREATE PROCEDURE [FSOCIETY].[sp_crear_auto](@idMarca INT, @modelo NVARCHAR(255), @patente NVARCHAR(255), @idTurno INT, @idChofer INT, @habilitado BIT)
+
+AS BEGIN
+
+DECLARE @idModelo INT
+DECLARE @idAuto INT
+
+    BEGIN TRANSACTION T1
+
+	INSERT INTO FSOCIETY.Modelos(IdMarca, Description)
+	VALUES (@idMarca, @modelo)
+
+	SELECT @idModelo = MODELOS.Id FROM FSOCIETY.Modelos MODELOS WHERE MODELOS.Description = @modelo
+	INSERT INTO FSOCIETY.Autos(Patente, IdModelo, IdChofer, Habilitado)
+	VALUES (@patente, @idModelo, @idChofer, @habilitado)
+
+	SELECT @idAuto = AUTOS.Id FROM FSOCIETY.Autos AUTOS WHERE AUTOS.Patente = @patente
+	INSERT INTO FSOCIETY.AutosTurnos(IdAuto, IdTurno)
+	VALUES (@idAuto, @idTurno)
+	
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+END
+GO
+
+IF (OBJECT_ID ('FSOCIETY.sp_eliminar_auto') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_eliminar_auto
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_eliminar_auto(@idAuto INT, @idModelo INT, @idTurno INT)
+
+AS BEGIN
+
+	BEGIN TRANSACTION T1
+
+	IF EXISTS (SELECT * FROM FSOCIETY.AutosTurnos WHERE IdAuto = @idAuto AND IdTurno = @idTurno)
+		DELETE FSOCIETY.AutosTurnos
+		WHERE IdAuto = @idAuto AND IdTurno = @idTurno
+
+	IF NOT EXISTS (SELECT * FROM FSOCIETY.Autos AUTOS WHERE AUTOS.IdModelo = @idModelo)
+		DELETE FSOCIETY.Modelos
+		WHERE Id = @idModelo
+
+	IF NOT EXISTS (SELECT * FROM FSOCIETY.AutosTurnos AUTOSTURNOS WHERE AUTOSTURNOS.IdAuto = @idAuto)
+		DELETE FSOCIETY.Autos
+		WHERE Id = @idAuto
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+
+END
+GO
+
+
+IF (OBJECT_ID ('FSOCIETY.sp_agregar_turno') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_agregar_turno
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_agregar_turno(@idAuto INT, @idTurno INT)
+
+AS BEGIN
+
+	BEGIN TRANSACTION T1
+
+	INSERT INTO FSOCIETY.AutosTurnos(IdAuto, IdTurno)
+	VALUES (@idAuto, @idTurno)
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+
+END
+GO
+
+IF (OBJECT_ID ('FSOCIETY.sp_actualizar_auto') IS NOT NULL)
+  DROP PROCEDURE FSOCIETY.sp_actualizar_auto
+GO
+
+CREATE PROCEDURE FSOCIETY.sp_actualizar_auto(@idAuto INT, @idModelo INT, @patente NVARCHAR(255), @modelo NVARCHAR(255), @idChofer INT, @idMarca INT,   @idTurno INT,  @habilitado BIT, @idTurnoViejo INT)
+
+AS BEGIN
+
+    BEGIN TRANSACTION T1
+
+	UPDATE FSOCIETY.Modelos
+	SET Description = @modelo
+	WHERE Id = @idModelo
+
+	UPDATE FSOCIETY.Autos
+	SET Patente = @patente, IdChofer = @idChofer, Habilitado = @habilitado
+	WHERE Id = @idAuto
+
+	IF EXISTS (SELECT * FROM FSOCIETY.AutosTurnos WHERE IdAuto = @idAuto AND IdTurno = @idTurnoViejo)
+		UPDATE FSOCIETY.AutosTurnos
+		SET IdTurno = @idTurno
+		WHERE IdAuto = @idAuto AND IdTurno = @idTurnoViejo
+	
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
 END
 GO
 
