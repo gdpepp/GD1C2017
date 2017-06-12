@@ -1333,4 +1333,22 @@ inner join FSOCIETY.Facturacion f on v.IdCliente = f.IdCliente and MONTH(v.Fecha
 and YEAR(v.FechaHoraFin) = YEAR(f.FechaFin)
 
 
-select* from FSOCIETY.Facturacion
+select f.id, SUM(((v.CantKm * Valor_Km)+t.Precio_Base)) total
+into #totales
+from FSOCIETY.Facturacion as f
+		join FSOCIETY.FacturacionViajes as fv on f.Id = fv.IdFactura
+		join FSOCIETY.Viaje as v on v.Id = fv.IdViaje
+		join FSOCIETY.Chofer ch on ch.Id = v.IdChofer
+		join FSOCIETY.Autos a on a.IdChofer = ch.Id
+		join FSOCIETY.AutosTurnos at on at.IdAuto = a.Id
+		join FSOCIETY.Turnos t on t.Id = at.IdTurno
+where (DATEPART(hh,v.FechaHoraInicio) between t.Hora_De_Inicio and t.Hora_De_Finalizacion)
+group by f.Id
+
+
+update FSOCIETY.Facturacion
+set Importe =#totales.total
+from #totales
+where  FSOCIETY.Facturacion.Id = #totales.id
+
+drop table #totales
