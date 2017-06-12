@@ -1303,23 +1303,29 @@ GO
 
 SET IDENTITY_INSERT FSOCIETY.Facturacion ON
 insert into FSOCIETY.Facturacion(Id,FechaInicio,FechaFin,IdCliente,Importe)
-select c.Factura_Nro ,c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,
+select 
+c.Factura_Nro ,
+c.Factura_Fecha_Inicio,
+c.Factura_Fecha_Fin,
  (select cli.Id from FSOCIETY.Personas per , FSOCIETY.Usuarios us , FSOCIETY.Cliente cli where cli.Id = us.Id and per.Id = us.IdPersona and per.DNI = c.Cliente_Dni) as 
-idCliente ,0
+idCliente ,
+
+convert(money ,(Select SUM(((v.CantKm * Valor_Km)+t.Precio_Base)) from FSOCIETY.Facturacion as f
+		join FSOCIETY.FacturacionViajes as fv on f.Id = fv.IdFactura
+		join FSOCIETY.Viaje as v on v.Id = fv.IdViaje
+		join FSOCIETY.Chofer ch on ch.Id = v.IdChofer
+		join FSOCIETY.Autos a on a.IdChofer = ch.Id
+		join FSOCIETY.AutosTurnos at on at.IdAuto = a.Id
+		join FSOCIETY.Turnos t on t.Id = at.IdTurno
+	where f.id = c.Factura_Nro ))
  from gd_esquema.Maestra c
 inner join gd_esquema.Maestra f on c.Cliente_Dni = f.Cliente_Dni 
 where c.Factura_Nro IS NOT NULL
 group by c.Factura_Fecha_Inicio,c.Factura_Fecha_Fin,c.Cliente_Dni,f.Factura_Fecha,c.Factura_Nro,f.Factura_Fecha,c.Factura_Fecha
 having Year(c.Factura_Fecha)=Year(f.Factura_Fecha) and Month(c.Factura_Fecha) =Month(f.Factura_Fecha)
+
 SET IDENTITY_INSERT FSOCIETY.Facturacion OFF
 
-
---(select sum(total.Turno_Precio_Base + total.Viaje_Cant_Kilometros*total.Turno_Valor_Kilometro) from gd_esquema.Maestra total 
---where total.Cliente_Dni =c.Cliente_Dni and total.Viaje_Cant_Kilometros is not null and
---Year(f.Factura_Fecha)= Year(total.Viaje_Fecha) and Month(f.Factura_Fecha)= Month(total.Viaje_Fecha)
---group by total.Viaje_Cant_Kilometros,total.Turno_Precio_Base,total.Turno_Valor_Kilometro )as Total,
-
--- creacion de FacturacionViajes
 
 insert into FSOCIETY.FacturacionViajes (IdViaje ,IdFactura)
 select v.Id, f.Id from FSOCIETY.Viaje v 
@@ -1327,3 +1333,4 @@ inner join FSOCIETY.Facturacion f on v.IdCliente = f.IdCliente and MONTH(v.Fecha
 and YEAR(v.FechaHoraFin) = YEAR(f.FechaFin)
 
 
+select* from FSOCIETY.Facturacion
