@@ -428,7 +428,7 @@ CREATE TABLE [FSOCIETY].[Facturacion](
 	[IdCliente] [int] NOT NULL,
 	[FechaInicio] [smalldatetime] NOT NULL,
 	[FechaFin] [smalldatetime] NOT NULL,
-	[Importe] [money] NOT NULL,
+	[Importe] [money] NULL,
  CONSTRAINT [PK_Facturacion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -531,7 +531,8 @@ INSERT INTO FSOCIETY.Funcionalidades(Descripcion,FormName,IdFuncionalidadPadre)
 VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
 	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer','ABMChofer',2),
 	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8),
-	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10),('Rendicion de Viaje','RendicionViaje',10);
+	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10),('Rendicion de Viaje','RendicionViaje',10),
+	  ('Facturacion','Facturacion',10);
 
 GO
 
@@ -1222,6 +1223,56 @@ where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
    
 END		   
 GO
+--- facturacion
+Create PROCEDURE FSOCIETY.sp_facturar (@id INT,
+                                        @month INT,
+										@year INT)
+										
+AS BEGIN
+    BEGIN TRANSACTION T1
+	
+Select Id,IdChofer,FechaHoraInicio,FechaHoraFin,CantKm 
+	into #t
+	from FSOCIETY.Viaje v 
+	where IdCliente = @id and MONTH(v.FechaHoraInicio) = @month and YEAR(v.FechaHoraInicio) = @year;
+
+	declare @inicio datetime
+	declare @fin datetime
+
+	set @inicio = (select top 1 FechaHoraInicio from #t order by FechaHoraInicio asc)
+	set @fin = (select top 1 FechaHoraInicio from #t order by FechaHoraInicio desc)
+
+	Insert into FSOCIETY.Facturacion(IdCliente,FechaInicio,FechaFin)
+	values(@id,@inicio,@fin)
+
+	declare @idFact INT
+
+	set @idFact = (Select Id from FSOCIETY.Facturacion where IdCliente = @id)
+
+	Insert into FSOCIETY.FacturacionViajes(IdViaje,IdFactura)
+	Select Id,@idFact from #t
+	
+	drop table #t
+
+	declare @importe money
+	
+	set @importe = (Select SUM(((v.CantKm * Valor_Km)+t.Precio_Base)) from FSOCIETY.Facturacion as f
+		join FSOCIETY.FacturacionViajes as fv on f.Id = fv.IdFactura
+		join FSOCIETY.Viaje as v on v.Id = fv.IdViaje
+		join FSOCIETY.Chofer ch on ch.Id = v.IdChofer
+		join FSOCIETY.Autos a on a.IdChofer = ch.Id
+		join FSOCIETY.AutosTurnos at on at.IdAuto = a.Id
+		join FSOCIETY.Turnos t on t.Id = at.IdTurno
+	where f.id = @idFact and (DATEPART(hh,v.FechaHoraInicio) between t.Hora_De_Inicio and t.Hora_De_Finalizacion) and t.Hora_De_Finalizacion <> DATEPART(hh,v.FechaHoraInicio))
+	Update FSOCIETY.Facturacion
+	set Importe = @importe
+	where Id = @idFact
+
+	if (@@ERROR !=0)
+        ROLLBACK TRANSACTION T1;
+	COMMIT TRANSACTION T1;
+END
+GO
 
 IF (OBJECT_ID ('FSOCIETY.sp_crear_Rendicion') IS NOT NULL)
 	DROP PROCEDURE FSOCIETY.sp_crear_Rendicion
@@ -1275,7 +1326,4 @@ select v.Id, f.Id from FSOCIETY.Viaje v
 inner join FSOCIETY.Facturacion f on v.IdCliente = f.IdCliente and MONTH(v.FechaHoraFin) = MONTH(f.FechaFin)
 and YEAR(v.FechaHoraFin) = YEAR(f.FechaFin)
 
-/*
-select cli.Id from FSOCIETY.Personas per inner join FSOCIETY.Usuarios us on per.Id = us.IdPersona inner join FSOCIETY.Cliente cli on cli.Id = us.Id
-select cli.Id from FSOCIETY.Personas per , FSOCIETY.Usuarios us , FSOCIETY.Cliente cli where cli.Id = us.Id and per.Id = us.IdPersona
-*\
+

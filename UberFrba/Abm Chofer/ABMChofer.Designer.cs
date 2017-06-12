@@ -142,6 +142,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 421);
+            this.ControlBox = false;
             this.Controls.Add(this.fieldDocument);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.fieldSurname);
@@ -153,6 +154,7 @@
             this.Controls.Add(this.bt_buscar);
             this.Controls.Add(this.bt_nuevo_chofer);
             this.Name = "ABMChofer";
+            this.ShowIcon = false;
             this.Text = "Gestion de choferes";
             this.Load += new System.EventHandler(this.ABMChofer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

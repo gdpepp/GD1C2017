@@ -108,19 +108,20 @@
       <DependentUpon>modif_rol.cs</DependentUpon>
     </Compile>
     <Compile Include="Conectores\DataBaseConnector.cs" />
-    <Compile Include="Dao\DAOAutomovil.cs" />
-    <Compile Include="Dao\DAOChofer.cs" />
-    <Compile Include="Dao\DaoFuncionalidades.cs" />
-    <Compile Include="Dao\DAOClientes.cs" />
-    <Compile Include="Dao\DAORednicionViaje.cs" />
-    <Compile Include="Dao\DAORoles.cs" />
-    <Compile Include="Dao\DAOUsers.cs" />
-    <Compile Include="Dao\DaoViajes.cs" />
-    <Compile Include="Facturacion\Form1.cs">
+    <Compile Include="DAO\DAOAutomovil.cs" />
+    <Compile Include="DAO\DAOChofer.cs" />
+    <Compile Include="DAO\DAOFacturacion.cs" />
+    <Compile Include="DAO\DAOFuncionalidades.cs" />
+    <Compile Include="DAO\DAOClientes.cs" />
+    <Compile Include="DAO\DAORendicionViaje.cs" />
+    <Compile Include="DAO\DAORoles.cs" />
+    <Compile Include="DAO\DAOUsers.cs" />
+    <Compile Include="DAO\DAOViajes.cs" />
+    <Compile Include="Facturacion\Facturacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Facturacion\Facturacion.Designer.cs">
+      <DependentUpon>Facturacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\Form1.cs">
       <SubType>Form</SubType>
@@ -140,6 +141,9 @@
     <Compile Include="Login\SelectProfile.Designer.cs">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\ClienteFactura.cs" />
+    <Compile Include="Mapping\Factura.cs" />
+    <Compile Include="Mapping\ItemFactura.cs" />
     <Compile Include="Mapping\Rendicion.cs" />
     <Compile Include="Mapping\ViajeAuto.cs" />
     <Compile Include="Mapping\Chofer.cs" />
@@ -202,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\modif_rol.resx">
       <DependentUpon>modif_rol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\Facturacion.resx">
+      <DependentUpon>Facturacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>

@@ -9,12 +9,12 @@ using UberFrba.Mapping;
 
 namespace UberFrba.Dao
 {
-    class DaoViajes
+    class DAOViajes
     {
         private DataBaseConnector db;
 
 
-        public DaoViajes() {
+        public DAOViajes() {
 
             this.db = DataBaseConnector.getInstance();
             
