@@ -1,6 +1,6 @@
 ﻿namespace UberFrba.Menu
 {
-    partial class MainMenu
+    partial class MainMenuView
     {
         /// <summary>
         /// Required designer variable.

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using UberFrba.Mapping;
 using UberFrba.Dao;
 using UberFrba.Menu;
+using UberFrba.Utils;
 
 namespace UberFrba.Login
 {
@@ -17,9 +18,12 @@ namespace UberFrba.Login
     {
         private Usuario user;
         private List<Rol> roles;
+        MainMenuView menu;
 
-        public SelectProfile(Object user)
+
+        public SelectProfile(Object user,Form menu)
         {
+            this.menu = (MainMenuView)menu;
             this.user = (Usuario)user;
             setupRoles();
             InitializeComponent();
@@ -32,6 +36,7 @@ namespace UberFrba.Login
         {
             Rol r = comboBox1.SelectedItem as Rol;
             user.setRol(r);
+            UserLogin.getInstance().User = user;
             showMainMenu();
         }
 
@@ -51,9 +56,9 @@ namespace UberFrba.Login
         }
 
         private void showMainMenu() {
-            UberFrba.Menu.MainMenu menu = new UberFrba.Menu.MainMenu(user);
-            this.Hide();//reimplementar con un close.
-            menu.ShowDialog();
+            this.Close();
+            this.menu.reload();
+            this.menu.Visible = true;
         }
 
         public void present()
@@ -71,7 +76,7 @@ namespace UberFrba.Login
 
         private void SelectProfile_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

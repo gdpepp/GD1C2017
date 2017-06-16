@@ -155,11 +155,11 @@
     <Compile Include="Mapping\ViajeChofer.cs" />
     <Compile Include="Mapping\Viajes.cs" />
     <Compile Include="Mapping\ViajePersona.cs" />
-    <Compile Include="Menu\MainMenu.cs">
+    <Compile Include="Menu\MainMenuView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu\MainMenu.Designer.cs">
-      <DependentUpon>MainMenu.cs</DependentUpon>
+    <Compile Include="Menu\MainMenuView.Designer.cs">
+      <DependentUpon>MainMenuView.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu\MenuItemFactory.cs" />
     <Compile Include="Program.cs" />
@@ -181,6 +181,7 @@
     <Compile Include="Utils\InvalidOptionException.cs" />
     <Compile Include="Utils\SHA256.cs" />
     <Compile Include="Utils\SqlExceptionManager.cs" />
+    <Compile Include="Utils\UserLogin.cs" />
     <EmbeddedResource Include="Abm Chofer\ABMChofer.resx">
       <DependentUpon>ABMChofer.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,8 +221,8 @@
     <EmbeddedResource Include="Login\SelectProfile.resx">
       <DependentUpon>SelectProfile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu\MainMenu.resx">
-      <DependentUpon>MainMenu.cs</DependentUpon>
+    <EmbeddedResource Include="Menu\MainMenuView.resx">
+      <DependentUpon>MainMenuView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

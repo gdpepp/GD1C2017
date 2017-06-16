@@ -13,19 +13,21 @@ using UberFrba.Dao;
 using UberFrba.Abm_Rol;
 using UberFrba.Abm_Cliente;
 using System.Reflection;
+using UberFrba.Utils;
 
 namespace UberFrba.Menu
 {
-    public partial class MainMenu : Form
+    public partial class MainMenuView : Form
     {
         private Usuario user;
         private List<Funcionalidades> functions;
+        private UserLogin userLoged;
+        private MenuStrip menu;
 
-        public MainMenu(Object user)
-        {
+        public MainMenuView() {
             InitializeComponent();
-            this.user = (Usuario)user;
-          
+            this.userLoged = UserLogin.getInstance();
+            this.menu = new MenuStrip();
         }
 
         private void setupFunctions()
@@ -37,11 +39,10 @@ namespace UberFrba.Menu
         private void setupMenu()
         {
             this.IsMdiContainer = true;
-            MenuStrip MnuStrip = new MenuStrip();
-            this.Controls.Add(MnuStrip);
-            createExitItem(MnuStrip);
-            createParentIntems(MnuStrip);
-            this.MainMenuStrip = MnuStrip;
+            this.Controls.Add(menu);
+            createFileItem();
+            createParentIntems();
+            this.MainMenuStrip = menu;
         }
 
         private ToolStripMenuItem createSubMenuItems(Funcionalidades f)
@@ -58,19 +59,34 @@ namespace UberFrba.Menu
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+            this.user = userLoged.User;
+            if (user == null)
+            {
+                LoginView view = new LoginView(this);
+                this.Hide();
+                view.ShowDialog();
+            }
+            else {
+                setupFunctions();
+                setupMenu(); 
+            }
+        }
+
+        public void reload() {
+            this.user = UserLogin.getInstance().User;
             setupFunctions();
-            setupMenu();
+            setupMenu(); 
 
         }
 
-        private void createParentIntems(MenuStrip MnuStrip)
+        private void createParentIntems()
         {
             List<Funcionalidades> func = functions.Where(item => item.getParent() == "").ToList();
             foreach (Funcionalidades f in func)
             {
                 ToolStripMenuItem parent = createMenuItems(f.getDescription());
                 createChildrenItems(f, parent);
-                MnuStrip.Items.Add(parent);
+                this.menu.Items.Add(parent);
             }
         }
 
@@ -112,16 +128,38 @@ namespace UberFrba.Menu
             Application.Exit();
         }
 
-        private void createExitItem(MenuStrip menu)
-        {
+
+        private void createFileItem() {
             ToolStripMenuItem exit = createMenuItems("Archivo");
-            exit.DropDownItems.Add(new ToolStripMenuItem("Salir", null, new EventHandler(closeApp)));
-            menu.Items.Add(exit);
+            exit.DropDownItems.Add(createLoginItem());
+            exit.DropDownItems.Add(createExitItem());
+            this.menu.Items.Add(exit);
+        }
+
+        private ToolStripMenuItem createExitItem()
+        {
+            return new ToolStripMenuItem("Salir", null, new EventHandler(closeApp));
+        }
+
+        private ToolStripMenuItem createLoginItem() {
+            if(userLoged.User == null){
+                return new ToolStripMenuItem("Iniciar Sesión", null, new EventHandler(closeApp));
+            }else{
+                return new ToolStripMenuItem("Cambiar usuario", null, new EventHandler(closeApp));
+            }
+            
         }
 
         private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void setupForm(){
+            this.IsMdiContainer = true;
+            this.Controls.Add(menu);
+            createParentIntems();
+            this.MainMenuStrip = menu;
         }
     }
 }

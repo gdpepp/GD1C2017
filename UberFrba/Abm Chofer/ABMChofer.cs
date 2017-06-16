@@ -18,7 +18,6 @@ namespace UberFrba.Abm_Chofer
     {
         private String inicialTB = "";
         private String inicialCB = "";
-        private String condicionWhere;
         private DAOChofer dao;
        
         public ABMChofer()

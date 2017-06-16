@@ -11,6 +11,7 @@ using UberFrba.Dao;
 using UberFrba.Mapping;
 using UberFrba.Utils;
 using UberFrba.Login;
+using UberFrba.Menu;
 
 namespace UberFrba
 {
@@ -18,11 +19,13 @@ namespace UberFrba
     {
         String username = "";
         String password = "";
-        
-        public LoginView()
+        MainMenuView menu;
+
+
+        public LoginView(Form menu)
         {
             InitializeComponent();
-            
+            this.menu = (MainMenuView)menu;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,8 +87,8 @@ namespace UberFrba
 
         private void showSelectProfile(Usuario u)
         {
-            SelectProfile profile = new SelectProfile(u);
-            this.Hide();
+            SelectProfile profile = new SelectProfile(u,menu);
+            this.Close();
             profile.present();
         }
     }
