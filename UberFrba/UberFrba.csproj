@@ -113,6 +113,7 @@
     <Compile Include="DAO\DAOFacturacion.cs" />
     <Compile Include="DAO\DAOFuncionalidades.cs" />
     <Compile Include="DAO\DAOClientes.cs" />
+    <Compile Include="DAO\DAOListado.cs" />
     <Compile Include="DAO\DAORendicionViaje.cs" />
     <Compile Include="DAO\DAORoles.cs" />
     <Compile Include="DAO\DAOUsers.cs" />
@@ -123,11 +124,11 @@
     <Compile Include="Facturacion\Facturacion.Designer.cs">
       <DependentUpon>Facturacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.cs">
+    <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\LoginView.cs">
       <SubType>Form</SubType>
@@ -209,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Facturacion\Facturacion.resx">
       <DependentUpon>Facturacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
