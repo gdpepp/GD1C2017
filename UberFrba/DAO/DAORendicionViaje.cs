@@ -34,7 +34,16 @@ namespace UberFrba.Dao
             return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id group by t.Precio_Base , v.CantKm,t.Valor_Km ,v.FechaHoraInicio, c.Id having c.id = " + idechofert + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + nt + "';";
         }
 
-
+        public List<ViajeChofer> getviajesbyfecha(string fecha)
+       {
+           DataTable dt = connector.select_query("select distinct idChofer from FSOCIETY.Viaje v where cast(CAST(v.FechaHoraInicio as date)as char) ='" + fecha + "';");
+           List<ViajeChofer> list = new List<ViajeChofer>();
+           foreach (DataRow r in dt.Rows)
+           {
+               list.Add(new ViajeChofer(r));
+           }
+           return list;
+       }
 
         internal DataTable getTotal(int idechofer, string n)
         {

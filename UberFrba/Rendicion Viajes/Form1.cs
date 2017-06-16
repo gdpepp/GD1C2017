@@ -24,6 +24,7 @@ namespace UberFrba.Rendicion_Viajes
         private DAORendicionViaje daoren;
         private int precalculo = 0;
         private int idturno;
+        private string fecha;
  
     
 
@@ -31,14 +32,23 @@ namespace UberFrba.Rendicion_Viajes
         {
             InitializeComponent();
             idechofer = 0;
+            cargarTodo();
+        }
+ 
+        
+        private void cargarTodo(){
+            this.fechaRendicion.Value = DateTime.Today;
             this.choferes = new List<ViajeChofer>();
             this.turnos = new List<Turno>();
             this.dao = new DAOViajes();
             this.tur = new DAOAutomovil();
             this.daoren = new DAORendicionViaje();
-            choferes = dao.getAllDrivers();
             turnos = tur.getAllTurn();
-            setComboCHofer();
+            this.cbTurno.Enabled = false;
+            this.comboChofer.Enabled = false;
+            this.btCalcular.Enabled = false;
+            this.btRendir.Enabled = false;
+            this.fechaRendicion.Enabled = true;
             setComboTurno();
         }
 
@@ -65,7 +75,9 @@ namespace UberFrba.Rendicion_Viajes
             if (datosFaltantes())               
                 MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada");
             else
-                generarRendicion(); 
+                generarRendicion();
+            this.btCalcular.Enabled = false;
+            this.btRendir.Enabled = true;
         }
 
         private void generarRendicion()
@@ -75,9 +87,9 @@ namespace UberFrba.Rendicion_Viajes
                 MessageBox.Show("No se puede realizar una busqueda, por favor complete la informacion adecuada");
             else
             {
-                string n =  fechaRendicion.Value.ToString("yyyy-MM-dd");
-                dgViajesRealizados.DataSource = daoren.getviajes(idechofer,n,idturno);
-                dgMontoTotal.DataSource = daoren.getTotal(idechofer, n);
+                //string n =  fechaRendicion.Value.ToString("yyyy-MM-dd");
+                dgViajesRealizados.DataSource = daoren.getviajes(idechofer,this.fecha,idturno);
+                dgMontoTotal.DataSource = daoren.getTotal(idechofer, this.fecha);
               
             }
         }
@@ -102,10 +114,24 @@ namespace UberFrba.Rendicion_Viajes
         {
             Turno t = this.cbTurno.SelectedItem as Turno;
                 this.idturno = t.getId();
+                this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
+                this.fechaRendicion.Enabled = false;
+            choferes = dao.getAllDrivers();
+            choferesconviaje();
+            setComboCHofer();
+                this.comboChofer.Enabled = true;
+        }
+
+        private void choferesconviaje()
+        {
+           List<ViajeChofer> chof = daoren.getviajesbyfecha(this.fecha);
+           choferes.RemoveAll(chofer => chofer.getId()== 1);
+            //todo esta mierda saque a todos los que no estan en chof
         }
 
         private void comboChofer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.cbTurno.Enabled = false;
             ViajeChofer c = this.comboChofer.SelectedItem as ViajeChofer;
             this.txtCNombre.Text = c.getName();
             this.txtCApellido.Text = c.getLastname();
@@ -114,6 +140,8 @@ namespace UberFrba.Rendicion_Viajes
             this.txtCMail.Text = c.getEmail();
             this.dtCFecha.Value = c.getDate();
             this.idechofer = c.getId();
+            this.btCalcular.Enabled = true;
+
 
         }
 
@@ -141,6 +169,16 @@ namespace UberFrba.Rendicion_Viajes
                 else
                     MessageBox.Show("Por favor calcule la Rendicion");
             }
+        }
+
+        private void fechaRendicion_ValueChanged(object sender, EventArgs e)
+        {
+            this.cbTurno.Enabled = true;
+        }
+
+        private void btNewcarga_Click(object sender, EventArgs e)
+        {
+            cargarTodo();
         }
 
         
