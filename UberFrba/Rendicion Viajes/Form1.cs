@@ -125,7 +125,7 @@ namespace UberFrba.Rendicion_Viajes
         private void choferesconviaje()
         {
            List<ViajeChofer> chof = daoren.getviajesbyfecha(this.fecha);
-           choferes.RemoveAll(chofer => chofer.getId()== 1);
+           choferes.RemoveAll(chofer => !chof.Contains(chofer) );
             //todo esta mierda saque a todos los que no estan en chof
         }
 
