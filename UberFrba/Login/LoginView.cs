@@ -91,5 +91,18 @@ namespace UberFrba
             this.Close();
             profile.present();
         }
+
+        private void LoginView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (UserLogin.getInstance().User == null)
+            {
+                Application.Exit();
+            }
+            else {
+                this.Close();
+            }
+        }
+
+
     }
 }

@@ -35,8 +35,7 @@ namespace UberFrba.Login
         private void btnContinuar_Click(object sender, EventArgs e)
         {
             Rol r = comboBox1.SelectedItem as Rol;
-            user.setRol(r);
-            UserLogin.getInstance().User = user;
+            setRolUser(r);
             showMainMenu();
         }
 
@@ -69,9 +68,14 @@ namespace UberFrba.Login
             }
             else
             {
-                user.setRol(roles[0]);
+                setRolUser(roles[0]);
                 showMainMenu();
             }
+        }
+
+        private void setRolUser(Rol rol) {
+            user.setRol(rol);
+            UserLogin.getInstance().User = user;
         }
 
         private void SelectProfile_FormClosed(object sender, FormClosedEventArgs e)
