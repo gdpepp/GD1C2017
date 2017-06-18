@@ -106,13 +106,14 @@
             this.dgvListadoEstadistico.AllowUserToAddRows = false;
             this.dgvListadoEstadistico.AllowUserToDeleteRows = false;
             this.dgvListadoEstadistico.AllowUserToResizeRows = false;
-            this.dgvListadoEstadistico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvListadoEstadistico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvListadoEstadistico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvListadoEstadistico.Enabled = false;
             this.dgvListadoEstadistico.Location = new System.Drawing.Point(13, 74);
             this.dgvListadoEstadistico.MultiSelect = false;
             this.dgvListadoEstadistico.Name = "dgvListadoEstadistico";
             this.dgvListadoEstadistico.ReadOnly = true;
+            this.dgvListadoEstadistico.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvListadoEstadistico.RowTemplate.Height = 24;
             this.dgvListadoEstadistico.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListadoEstadistico.Size = new System.Drawing.Size(654, 375);
