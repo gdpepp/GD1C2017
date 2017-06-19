@@ -111,5 +111,12 @@ namespace UberFrba.Listado_Estadistico
                 throw new Exception("Debe seleccionar en los tres campos.");
             }
         }
+
+        private void comboListados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.comboAnios.SelectedItem = null;
+            this.comboTrimestres.SelectedItem = null;
+            this.dgvListadoEstadistico.DataSource = null;
+        }
     }
 }
