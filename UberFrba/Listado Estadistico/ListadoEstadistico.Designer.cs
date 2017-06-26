@@ -60,7 +60,8 @@
             this.comboListados.Location = new System.Drawing.Point(13, 34);
             this.comboListados.Name = "comboListados";
             this.comboListados.Size = new System.Drawing.Size(175, 24);
-            this.comboListados.TabIndex = 1;
+            this.comboListados.TabIndex = 0;
+            this.comboListados.SelectedIndexChanged += new System.EventHandler(this.comboListados_SelectedIndexChanged);
             // 
             // labelAnio
             // 
@@ -77,7 +78,7 @@
             this.comboAnios.Location = new System.Drawing.Point(198, 34);
             this.comboAnios.Name = "comboAnios";
             this.comboAnios.Size = new System.Drawing.Size(175, 24);
-            this.comboAnios.TabIndex = 3;
+            this.comboAnios.TabIndex = 1;
             // 
             // labelTrimestre
             // 
@@ -99,20 +100,21 @@
             this.comboTrimestres.Location = new System.Drawing.Point(383, 34);
             this.comboTrimestres.Name = "comboTrimestres";
             this.comboTrimestres.Size = new System.Drawing.Size(175, 24);
-            this.comboTrimestres.TabIndex = 5;
+            this.comboTrimestres.TabIndex = 2;
             // 
             // dgvListadoEstadistico
             // 
             this.dgvListadoEstadistico.AllowUserToAddRows = false;
             this.dgvListadoEstadistico.AllowUserToDeleteRows = false;
             this.dgvListadoEstadistico.AllowUserToResizeRows = false;
-            this.dgvListadoEstadistico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvListadoEstadistico.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvListadoEstadistico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvListadoEstadistico.Enabled = false;
             this.dgvListadoEstadistico.Location = new System.Drawing.Point(13, 74);
             this.dgvListadoEstadistico.MultiSelect = false;
             this.dgvListadoEstadistico.Name = "dgvListadoEstadistico";
             this.dgvListadoEstadistico.ReadOnly = true;
+            this.dgvListadoEstadistico.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvListadoEstadistico.RowTemplate.Height = 24;
             this.dgvListadoEstadistico.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListadoEstadistico.Size = new System.Drawing.Size(654, 375);
@@ -123,7 +125,7 @@
             this.buttonBuscar.Location = new System.Drawing.Point(567, 31);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
-            this.buttonBuscar.TabIndex = 7;
+            this.buttonBuscar.TabIndex = 3;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);

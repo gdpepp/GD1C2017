@@ -15,7 +15,6 @@ GO
 
 SET ANSI_PADDING ON
 GO
-
 ----------------------------------------
 --Roles
 ----------------------------------------
@@ -452,7 +451,7 @@ VALUES('Clientes',NULL,NULL),('Choferes',NULL,NULL),('Autos',NULL,NULL),
 	  ('Alta Cliente','ABMCliente',1),('Baja Cliente',NULL,1),('Alta Chofer','ABMChofer',2),
 	  ('Consultas Autos','Automovil',3),('Roles',NULL,NULL),('Abm Roles','AbmRol',8),
 	  ('Viajes',NULL,NULL),('Registrar Viaje','Viaje',10),('Rendicion de Viaje','RendicionViaje',10),
-	  ('Facturacion','Facturacion',10);
+	  ('Facturacion','Facturacion',10),('Listados',NULL,NULL),('Consulta','ListadoEstadistico',14);
 
 GO
 
