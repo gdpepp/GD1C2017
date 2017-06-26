@@ -26,17 +26,20 @@ namespace UberFrba.Dao
 
         private string getSelectRendicionViajeQuery(int idechofer, string n, int idturno)
         {
-            return "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id where (select  q.Hora_De_Inicio from  FSOCIETY.Turnos q where q.id =" + idturno + ") = t.Hora_De_Inicio and (select  w.Hora_De_Finalizacion from FSOCIETY.Turnos w where w.id =" + idturno + ") = t.Hora_De_Finalizacion and c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
-        }
+            string subquery = "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id where datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ") and c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
+
+            return subquery;
+            }
 
         private string getRendicionTotalQuery(int idechofert, string nt)
         {
             return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id group by t.Precio_Base , v.CantKm,t.Valor_Km ,v.FechaHoraInicio, c.Id having c.id = " + idechofert + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + nt + "';";
         }
 
-        public List<ViajeChofer> getviajesbyfecha(string fecha)
+        public List<ViajeChofer> getviajesbyfecha(string fecha, int idturno)
        {
-           DataTable dt = connector.select_query("select distinct idChofer from FSOCIETY.Viaje v where cast(CAST(v.FechaHoraInicio as date)as char) ='" + fecha + "';");
+           string subquery = "select distinct idChofer from FSOCIETY.Viaje v where cast(CAST(v.FechaHoraInicio as date)as char) ='" + fecha + "'and datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ")";
+           DataTable dt = connector.select_query("select distinct a.Patente, ma.Description as Marca, m.Description as Modelo, c.Id,p.Nombre,p.Apellido,p.DNI,c.Telefono, c.Email,p.[Fecha de Nacimiento] as Fecha from FSOCIETY.Chofer as c join FSOCIETY.Usuarios as u on c.Id = u.Id join FSOCIETY.Personas as p on p.Id = u.IdPersona join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Modelos m on m.Id = a.IdModelo join FSOCIETY.Marcas ma on ma.Id = m.IdMarca where c.id in (" + subquery + ");");
            List<ViajeChofer> list = new List<ViajeChofer>();
            foreach (DataRow r in dt.Rows)
            {
@@ -67,6 +70,15 @@ namespace UberFrba.Dao
             connector.executeProcedureWithParameters("FSOCIETY.sp_crear_Rendicion", dic);
 
             return 0;
+        }
+
+        internal bool existren(string p1, int p2)
+        {
+            DataTable dt = connector.select_query("select count(*)from FSOCIETY.Viaje where IdChofer =" + p1 + "and cast(CAST(FechaHoraInicio as date)as char) = '"+p2 +"';");
+            if (dt.Rows.Count > 0)
+                return true;
+            else
+                return false;
         }
     }
 }

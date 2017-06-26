@@ -59,7 +59,7 @@ namespace UberFrba.Dao
             }
         }
 
-        internal DataTable getChoferById(int id)
+        public DataTable getChoferById(int id)
         {
             String query = getAllChoferQuery() + "and ch.Id = '" + id + "'";
             return connector.select_query(query);

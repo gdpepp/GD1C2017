@@ -116,16 +116,17 @@ namespace UberFrba.Rendicion_Viajes
                 this.idturno = t.getId();
                 this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
                 this.fechaRendicion.Enabled = false;
-            choferes = dao.getAllDrivers();
-            choferesconviaje();
+            //choferes = dao.getAllDrivers();
+                choferes = daoren.getviajesbyfecha(this.fecha , this.idturno);
+          //  choferesconviaje();
             setComboCHofer();
                 this.comboChofer.Enabled = true;
         }
 
         private void choferesconviaje()
         {
-           List<ViajeChofer> chof = daoren.getviajesbyfecha(this.fecha);
-           choferes.RemoveAll(chofer => !chof.Contains(chofer) );
+          // List<ViajeChofer> chof = daoren.getviajesbyfecha(this.fecha);
+          // choferes.RemoveAll(chofer => !chof.Contains(chofer) );
             //todo esta mierda saque a todos los que no estan en chof
         }
 
@@ -153,7 +154,7 @@ namespace UberFrba.Rendicion_Viajes
             }
             else
             {
-                if (precalculo == 1)
+                if (precalculo == 1 && daoren.existren(this.fecha,this.idechofer))
                 { try
                     {
                    daoren.setRencidion(this.idechofer, fechaRendicion, dgMontoTotal);
