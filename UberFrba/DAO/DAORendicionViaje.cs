@@ -26,19 +26,19 @@ namespace UberFrba.Dao
 
         private string getSelectRendicionViajeQuery(int idechofer, string n, int idturno)
         {
-            string subquery = "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id where datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ") and c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
+            string subquery = "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  where datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ") and c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
 
             return subquery;
             }
 
         private string getRendicionTotalQuery(int idechofert, string nt)
         {
-            return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Turnos t on t.Id = a.Id group by t.Precio_Base , v.CantKm,t.Valor_Km ,v.FechaHoraInicio, c.Id having c.id = " + idechofert + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + nt + "';";
+            return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  group by t.Precio_Base , v.CantKm,t.Valor_Km ,v.FechaHoraInicio, c.Id having c.id = " + idechofert + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + nt + "';";
         }
 
         public List<ViajeChofer> getviajesbyfecha(string fecha, int idturno)
-       {
-           string subquery = "select distinct idChofer from FSOCIETY.Viaje v where cast(CAST(v.FechaHoraInicio as date)as char) ='" + fecha + "'and datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ")";
+        { // select distinct idChofer from FSOCIETY.Viaje v 
+            string subquery = "select distinct v.idChofer from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id where CAST(v.FechaHoraInicio as date) ='2015-11-01'and datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos  where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ")";
            DataTable dt = connector.select_query("select distinct a.Patente, ma.Description as Marca, m.Description as Modelo, c.Id,p.Nombre,p.Apellido,p.DNI,c.Telefono, c.Email,p.[Fecha de Nacimiento] as Fecha from FSOCIETY.Chofer as c join FSOCIETY.Usuarios as u on c.Id = u.Id join FSOCIETY.Personas as p on p.Id = u.IdPersona join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.Modelos m on m.Id = a.IdModelo join FSOCIETY.Marcas ma on ma.Id = m.IdMarca where c.id in (" + subquery + ");");
            List<ViajeChofer> list = new List<ViajeChofer>();
            foreach (DataRow r in dt.Rows)
