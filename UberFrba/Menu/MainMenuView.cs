@@ -79,6 +79,7 @@ namespace UberFrba.Menu
         public void reload()
         {
             this.user = UserLogin.getInstance().User;
+            closeAllForms();
             setupFunctions();
             setupMenu();
 
@@ -181,6 +182,11 @@ namespace UberFrba.Menu
             this.Controls.Add(menu);
             createParentIntems();
             this.MainMenuStrip = menu;
+        }
+
+        private void closeAllForms() {
+            foreach (var form in Application.OpenForms.Cast<Form>().Where(f => f.IsMdiChild).ToArray())
+                form.Close();
         }
     }
 }

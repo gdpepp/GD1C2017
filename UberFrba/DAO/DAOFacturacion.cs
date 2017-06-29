@@ -19,14 +19,27 @@ namespace UberFrba.Dao
         }
 
 
-        public List<ClienteFactura> getClientToSelect() {
+        public List<ClienteFactura> getClientsToSelect() {
             DateTime now = DateTime.Now;
-            //DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = 12 and YEAR(v.FechaHoraInicio) = 2015");
-            DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = '"+ now.Month + "' and YEAR(v.FechaHoraInicio) = '"+ now.Year +"'");
+            DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = 12 and YEAR(v.FechaHoraInicio) = 2015");
+            //DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = '"+ now.Month + "' and YEAR(v.FechaHoraInicio) = '"+ now.Year +"'");
             List<ClienteFactura> list = new List<ClienteFactura>();
             foreach (DataRow r in dt.Rows)
             {
                 list.Add(new ClienteFactura(r));   
+            }
+            return list;
+        }
+
+
+        public List<ClienteFactura> getClientToSelect(Usuario user)
+        {
+            DateTime now = DateTime.Now;
+            DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where c.Id = '" + user.getId() + "' and MONTH(v.FechaHoraInicio) = '" + now.Month + "' and YEAR(v.FechaHoraInicio) = '" + now.Year + "'");
+            List<ClienteFactura> list = new List<ClienteFactura>();
+            foreach (DataRow r in dt.Rows)
+            {
+                list.Add(new ClienteFactura(r));
             }
             return list;
         }

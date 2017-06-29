@@ -33,7 +33,15 @@ namespace UberFrba.Facturacion
         }
 
         private void setupComboBox() {
-            List<ClienteFactura> list = this.dao.getClientToSelect();
+            List<ClienteFactura> list;
+            Usuario user = UserLogin.getInstance().User;
+            if (user.getRol().getId().Equals(1))
+            {
+                list = this.dao.getClientsToSelect();
+            }
+            else {
+                list = this.dao.getClientToSelect(user);
+            }
             this.cbCliente.ValueMember = "id";
             this.cbCliente.DisplayMember = "prettyName";
             this.cbCliente.Sorted = true;
