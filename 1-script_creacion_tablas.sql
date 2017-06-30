@@ -496,7 +496,35 @@ GO
 
 ALTER TABLE [FSOCIETY].[Rendicion] CHECK CONSTRAINT [FK_Rendicion_Chofer]
 GO
+---------------------------------------
+-- creo RendicionViajes
+---------------------------------------
+CREATE TABLE [FSOCIETY].[RendicionViaje](
+[IdViaje] [int] NOT NULL,
+[IdRendicion] [int] NOT NULL,
+[Importe] [money] NOT NULL
+CONSTRAINT [PK_RendicionViajes] PRIMARY KEY CLUSTERED 
+(
+[IdViaje] ASC,
+[IdRendicion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [FSOCIETY].[RendicionViaje]  WITH CHECK ADD  CONSTRAINT [FK_RendicionViaje_Viaje] FOREIGN KEY([IdViaje])
+REFERENCES [FSOCIETY].[Viaje] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[RendicionViaje] CHECK CONSTRAINT [FK_RendicionViaje_Viaje]
+GO
+
+ALTER TABLE [FSOCIETY].[RendicionViaje]  WITH CHECK ADD  CONSTRAINT [FK_RendicionViaje_Rendicion] FOREIGN KEY([IdRendicion])
+REFERENCES [FSOCIETY].[Rendicion] ([Id])
+GO
+
+ALTER TABLE [FSOCIETY].[RendicionViaje] CHECK CONSTRAINT [FK_RendicionViaje_Rendicion]
+GO
 ----------------------------------------
 --Creo al admin
 ----------------------------------------
@@ -623,7 +651,7 @@ COMMIT TRANSACTION T1
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_update_roles')
-DROP PROCEDURE FSOCIETY.sp_get_modif_roles
+DROP PROCEDURE FSOCIETY.sp_update_roles
 GO
 
 CREATE PROCEDURE FSOCIETY.sp_update_roles (@id INT, @nombre VARCHAR(50), @habilitado BIT) 
@@ -1340,6 +1368,9 @@ where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
 END		   
 GO
 --- facturacion
+IF (OBJECT_ID ('FSOCIETY.sp_facturar') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_facturar
+GO
 Create PROCEDURE FSOCIETY.sp_facturar (@id INT,
                                         @month INT,
 										@year INT)
@@ -1468,3 +1499,37 @@ from #totales
 where  FSOCIETY.Facturacion.Id = #totales.id
 
 drop table #totales
+
+go
+
+-- migro viajes rendicion
+select * from FSOCIETY.RendicionViaje
+
+select *from FSOCIETY.Viaje
+
+Select v.Id as IdVIaje ,(select distinct r.Id from FSOCIETY.Rendicion r inner join
+	FSOCIETY.Chofer c2 on r.IdChofer = c2.Id inner join
+	FSOCIETY.Autos a2 on a2.IdChofer = c2.Id inner join
+	FSOCIETY.AutosTurnos at2 on at2.IdAuto = a2.Id inner join
+	FSOCIETY.Turnos t2 on t2.Id =at2.IdTurno
+ 	where r.IdChofer =v.IdChofer and cast(v.FechaHoraInicio as date) = cast(r.Fecha as date) and t.Id = t2.Id
+) as idRendicion,
+
+(t.Precio_Base + v.CantKm*t.Valor_Km) as Total 
+	from FSOCIETY.Chofer c inner join
+	 FSOCIETY.Viaje v on v.IdChofer = c.Id inner join
+	 FSOCIETY.Autos a on a.IdChofer = c.Id inner join
+	 FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id inner join 
+	 FSOCIETY.Turnos t on ta.IdTurno = t.Id  
+	order by v.Id
+
+
+	select r.Id,v.Id, (t2.Precio_Base + v.CantKm*t2.Valor_Km)*0.2 as Total	
+	 from FSOCIETY.Rendicion r inner join
+	FSOCIETY.Chofer c2 on r.IdChofer = c2.Id inner join
+	FSOCIETY.Autos a2 on a2.IdChofer = c2.Id inner join
+	FSOCIETY.AutosTurnos at2 on at2.IdAuto = a2.Id inner join
+	FSOCIETY.Turnos t2 on t2.Id =at2.IdTurno inner join
+	FSOCIETY.Viaje v on v.IdChofer = r.IdChofer and cast(v.FechaHoraInicio as date) = cast(r.Fecha as date) and datepart(HH,v.FechaHoraInicio) between t2.Hora_De_Inicio and t2.Hora_De_Finalizacion
+
+	order by v.Id
