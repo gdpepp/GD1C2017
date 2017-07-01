@@ -77,7 +77,10 @@ namespace UberFrba.Rendicion_Viajes
             else
                 generarRendicion();
             this.btCalcular.Enabled = false;
-            this.btRendir.Enabled = true;
+            if (daoren.existren(this.fecha,this.idechofer))
+            {}
+            else
+            { this.btRendir.Enabled = true;}
         }
 
         private void generarRendicion()
@@ -118,9 +121,16 @@ namespace UberFrba.Rendicion_Viajes
                 this.fechaRendicion.Enabled = false;
             //choferes = dao.getAllDrivers();
                 choferes = daoren.getviajesbyfecha(this.fecha , this.idturno);
-          //  choferesconviaje();
-            setComboCHofer();
-                this.comboChofer.Enabled = true;
+                if (choferes.Count > 0)
+                {
+                    setComboCHofer();
+                    this.comboChofer.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("en esta fecha y turno no hay choferes para rendir");
+                    cargarTodo(); 
+                }
         }
 
         private void choferesconviaje()
