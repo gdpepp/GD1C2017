@@ -82,7 +82,10 @@ namespace UberFrba.Facturacion
         private void refreshView(Int32 id,Factura f) {
             loadTable(id);
             lbTotal.Visible = true;
-            lbTotal.Text = "Total : " + f.Total.ToString(); 
+            if (!(f == null))
+            {
+                lbTotal.Text = "Total : " + f.Total.ToString();
+            }
         }
 
         private void setupTable() {

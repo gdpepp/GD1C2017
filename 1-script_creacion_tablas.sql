@@ -485,6 +485,12 @@ SELECT 1, Id FROM FSOCIETY.Funcionalidades
 
 GO
 
+INSERT INTO FSOCIETY.RolFuncionalidades(IdRol,IdFuncionalidad)
+VALUES(3,10),(3,13)
+
+GO
+
+
 SET ANSI_PADDING OFF
 GO
 
@@ -1283,21 +1289,18 @@ GROUP BY M1.Chofer_Dni, M1.Cliente_Dni, M1.Viaje_Fecha, M2.Viaje_Fecha, m1.Viaje
 -- migro viajes rendicion
 --select * from FSOCIETY.Viaje
 go
-drop table #temporalChofer
-go 
-drop table #temporalCliete
-go
-create table #temporalCliete (id int , dni varchar(8));
-go
-insert into #temporalCliete 
-select cli.Id , per.DNI from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us 
-														where per.Id = us.IdPersona and us.Id = cli.Id and cli.Habilitado = 1
-create table #temporalChofer (id int , dni varchar(8));
+
+select cli.Id , per.DNI 
+into #temporalCliente 
+from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us 
+where per.Id = us.IdPersona and us.Id = cli.Id and cli.Habilitado = 1
+
 go
 
-insert into #temporalChofer 
-select cli.Id, per.DNI from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us 
-														where per.Id = us.IdPersona and us.Id = cli.Id and cli.Habilitado = 1
+select chofer.Id, per.DNI 
+into #temporalChofer 
+from FSOCIETY.Personas per, FSOCIETY.Chofer chofer, FSOCIETY.Usuarios us 														
+where per.Id = us.IdPersona and us.Id = chofer.Id and chofer.Habilitado = 1
 ------------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------
@@ -1314,15 +1317,14 @@ select v2.id,(select r.Id from FSOCIETY.Rendicion r where v2.IdChofer = r.IdChof
 									   v2.CantKm = m.Viaje_Cant_Kilometros and
 									   v2.IdChofer =(select c.id from #temporalChofer c where c.dni = m.Chofer_Dni)
 														 and
-									   v2.IdCliente = (select c.id from #temporalCliete c where c.dni = m.Cliente_Dni)
+									   v2.IdCliente = (select c.id from #temporalCliente c where c.dni = m.Cliente_Dni)
 									
 where m.Rendicion_Nro is not null
 
 go
-
 drop table #temporalChofer
 go 
-drop table #temporalCliete
+drop table #temporalCliente
 go
 -- create store procedure rendiciones 
 
@@ -1494,7 +1496,6 @@ update FSOCIETY.Facturacion
 set Importe =#totales.total
 from #totales
 where  FSOCIETY.Facturacion.Id = #totales.id
-
 drop table #totales
 
 go
