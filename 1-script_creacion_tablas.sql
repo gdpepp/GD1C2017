@@ -1498,12 +1498,19 @@ AS BEGIN
 	declare @idrendicion int;
 	declare @ganancia int = 0.2;
 	select Id= @idrendicion from FSOCIETY.Rendicion where IdChofer=@idChofer and cast(Fecha as date) = cast(@fecha as date) --and ImporteTotal = 7.01
-	insert into FSOCIETY.RendicionViaje 
-	Select v.id as IdViaje ,@idrendicion,(t.Precio_Base + v.CantKm*t.Valor_Km)*@ganancia as Total from 
-			FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join 
-			FSOCIETY.Autos a on a.IdChofer = c.Id join
-			FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join 
-			FSOCIETY.Turnos t on ta.IdTurno = t.Id  where c.id = @idChofer and CAST(v.FechaHoraInicio as date) =@fecha 
+	if (@idrendicion is null)
+		begin
+			return 2602
+		end
+	else
+		begin
+			insert into FSOCIETY.RendicionViaje 
+			Select v.id as IdViaje ,@idrendicion,(t.Precio_Base + v.CantKm*t.Valor_Km)*@ganancia as Total from 
+					FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join 
+					FSOCIETY.Autos a on a.IdChofer = c.Id join
+					FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join 
+					FSOCIETY.Turnos t on ta.IdTurno = t.Id  where c.id = @idChofer and CAST(v.FechaHoraInicio as date) =@fecha 
+		end
 	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;
 	COMMIT TRANSACTION T1;
