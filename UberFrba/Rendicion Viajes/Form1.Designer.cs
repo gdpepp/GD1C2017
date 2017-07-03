@@ -54,6 +54,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dgViajesRealizados = new System.Windows.Forms.DataGridView();
             this.btRendir = new System.Windows.Forms.Button();
+            this.btNewcarga = new System.Windows.Forms.Button();
             this.grupoChofer.SuspendLayout();
             this.groupdatosRendicion.SuspendLayout();
             this.grendicion.SuspendLayout();
@@ -182,6 +183,7 @@
             // 
             // groupdatosRendicion
             // 
+            this.groupdatosRendicion.Controls.Add(this.btNewcarga);
             this.groupdatosRendicion.Controls.Add(this.comboChofer);
             this.groupdatosRendicion.Controls.Add(this.label4);
             this.groupdatosRendicion.Controls.Add(this.btCalcular);
@@ -250,6 +252,7 @@
             this.fechaRendicion.Size = new System.Drawing.Size(216, 20);
             this.fechaRendicion.TabIndex = 15;
             this.fechaRendicion.Value = new System.DateTime(2017, 6, 10, 17, 10, 28, 0);
+            this.fechaRendicion.ValueChanged += new System.EventHandler(this.fechaRendicion_ValueChanged);
             // 
             // label1
             // 
@@ -308,6 +311,16 @@
             this.btRendir.UseVisualStyleBackColor = true;
             this.btRendir.Click += new System.EventHandler(this.btRendir_Click);
             // 
+            // btNewcarga
+            // 
+            this.btNewcarga.Location = new System.Drawing.Point(6, 170);
+            this.btNewcarga.Name = "btNewcarga";
+            this.btNewcarga.Size = new System.Drawing.Size(94, 33);
+            this.btNewcarga.TabIndex = 21;
+            this.btNewcarga.Text = "Volver a cargar";
+            this.btNewcarga.UseVisualStyleBackColor = true;
+            this.btNewcarga.Click += new System.EventHandler(this.btNewcarga_Click);
+            // 
             // RendicionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -360,5 +373,6 @@
         private System.Windows.Forms.ComboBox comboChofer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btRendir;
+        private System.Windows.Forms.Button btNewcarga;
     }
 }

@@ -420,7 +420,32 @@ GO
 
 ALTER TABLE [FSOCIETY].[Rendicion] CHECK CONSTRAINT [FK_Rendicion_Chofer]
 GO
+---------------------------------------
+-- creo RendicionViajes
+---------------------------------------
+CREATE TABLE [FSOCIETY].[RendicionViaje](
+[IdViaje] [int] not null,
+[IdRendicion] [int] NOT NULL,
+[Importe] [money] NOT NULL)
 
+GO
+
+ALTER TABLE [FSOCIETY].[RendicionViaje]  WITH CHECK ADD  FOREIGN KEY([IdViaje])
+REFERENCES [FSOCIETY].[Viaje] ([Id])
+GO
+
+
+ALTER TABLE [FSOCIETY].[RendicionViaje]  WITH CHECK ADD FOREIGN KEY([IdRendicion])
+REFERENCES [FSOCIETY].[Rendicion] ([Id])
+GO
+
+
+--ALTER TABLE [FSOCIETY].[RendicionViaje]  WITH CHECK ADD  CONSTRAINT [FK_RendicionViaje_Rendicion] FOREIGN KEY([IdRendicion])
+--REFERENCES [FSOCIETY].[Rendicion] ([Id])
+--GO
+
+--ALTER TABLE [FSOCIETY].[RendicionViaje] CHECK CONSTRAINT [FK_RendicionViaje_Rendicion]
+--GO
 ----------------------------------------
 --Creo al admin
 ----------------------------------------
@@ -547,7 +572,7 @@ COMMIT TRANSACTION T1
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'sp_update_roles')
-DROP PROCEDURE FSOCIETY.sp_get_modif_roles
+DROP PROCEDURE FSOCIETY.sp_update_roles
 GO
 
 CREATE PROCEDURE FSOCIETY.sp_update_roles (@id INT, @nombre VARCHAR(50), @habilitado BIT) 
@@ -1221,15 +1246,18 @@ insert into FSOCIETY.AutosTurnos(IdAuto,IdTurno)
 
 
 --Mmigracion Rendicion
-SET IDENTITY_INSERT FSOCIETY.Rendicion ON
-INSERT INTO FSOCIETY.Rendicion(Id,ImporteTotal,Fecha,IdChofer)
-SELECT DISTINCT Rendicion_Nro,sum(Rendicion_Importe),Rendicion_Fecha, (select cli.Id from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us
+
+
+INSERT INTO FSOCIETY.Rendicion(ImporteTotal,Fecha,IdChofer)
+SELECT DISTINCT 
+sum(Rendicion_Importe)*0.2,cast(Rendicion_Fecha as date) as Fecha, (select cli.Id from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us
 	where per.Id = us.IdPersona and us.Id = cli.Id
 		   and per.DNI = Chofer_Dni and cli.Habilitado = 1) as idChofer FROM gd_esquema.Maestra
-		   group by Rendicion_Nro, Rendicion_Fecha,Chofer_Dni
-		   having Rendicion_Nro is not null
-		   order by Rendicion_Nro;
-SET IDENTITY_INSERT FSOCIETY.Rendicion OFF
+		   		   where Rendicion_Nro is not null
+		   group by cast(Rendicion_Fecha as date) ,Chofer_Dni
+
+		   order by idChofer;
+
 
 -- migracion viajes
 INSERT INTO FSOCIETY.Viaje (CantKm,IdChofer,IdCliente,FechaHoraInicio,FechaHoraFin)
@@ -1240,8 +1268,10 @@ idChofer ,
 idCliente , M1.Viaje_Fecha AS FechaInicio, M2.Viaje_Fecha AS FechaFin
 FROM gd_esquema.Maestra M1 JOIN gd_esquema.Maestra M2
  ON(CONVERT(date, M1.Viaje_Fecha) = CONVERT(date, M2.Viaje_Fecha)
+				and M1.Chofer_Dni = M2.Chofer_Dni
                AND M1.Chofer_Nombre = M2.Chofer_Nombre
          AND M1.Chofer_Apellido = M2.Chofer_Apellido
+		 AND M1.Cliente_Dni = M2.Cliente_Dni
              AND M1.Cliente_Nombre = M2.Cliente_Nombre
                AND M1.Cliente_Apellido = M2.Cliente_Apellido
            AND M1.Turno_Hora_Inicio = M2.Turno_Hora_Inicio
@@ -1249,6 +1279,51 @@ FROM gd_esquema.Maestra M1 JOIN gd_esquema.Maestra M2
 WHERE CONVERT(time, M1.Viaje_Fecha) < CONVERT(time, M2.Viaje_Fecha) 
 GROUP BY M1.Chofer_Dni, M1.Cliente_Dni, M1.Viaje_Fecha, M2.Viaje_Fecha, m1.Viaje_Cant_Kilometros
 
+
+-- migro viajes rendicion
+--select * from FSOCIETY.Viaje
+go
+drop table #temporalChofer
+go 
+drop table #temporalCliete
+go
+create table #temporalCliete (id int , dni varchar(8));
+go
+insert into #temporalCliete 
+select cli.Id , per.DNI from FSOCIETY.Personas per, FSOCIETY.Cliente cli, FSOCIETY.Usuarios us 
+														where per.Id = us.IdPersona and us.Id = cli.Id and cli.Habilitado = 1
+create table #temporalChofer (id int , dni varchar(8));
+go
+
+insert into #temporalChofer 
+select cli.Id, per.DNI from FSOCIETY.Personas per, FSOCIETY.Chofer cli, FSOCIETY.Usuarios us 
+														where per.Id = us.IdPersona and us.Id = cli.Id and cli.Habilitado = 1
+------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------PORCENTAJE------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------														
+insert into FSOCIETY.RendicionViaje
+select v2.id,(select r.Id from FSOCIETY.Rendicion r where v2.IdChofer = r.IdChofer and cast(v2.FechaHoraInicio as date) = cast(r.Fecha as date)),m.Rendicion_Importe*0.2 from gd_esquema.Maestra m  inner join 
+						FSOCIETY.Viaje v2 on
+										cast(v2.FechaHoraInicio as date) = cast(m.Rendicion_Fecha as date) and
+									   v2.CantKm = m.Viaje_Cant_Kilometros and
+									   v2.IdChofer =(select c.id from #temporalChofer c where c.dni = m.Chofer_Dni)
+														 and
+									   v2.IdCliente = (select c.id from #temporalCliete c where c.dni = m.Cliente_Dni)
+									
+where m.Rendicion_Nro is not null
+
+go
+
+drop table #temporalChofer
+go 
+drop table #temporalCliete
+go
 -- create store procedure rendiciones 
 
 IF (OBJECT_ID ('FSOCIETY.sp_get_Viajes_by_idchoferYfecha') IS NOT NULL)
@@ -1264,6 +1339,9 @@ where c.id = @id and CONVERT(date, v.FechaHoraInicio) =CONVERT(date, @date)
 END		   
 GO
 --- facturacion
+IF (OBJECT_ID ('FSOCIETY.sp_facturar') IS NOT NULL)
+	DROP PROCEDURE FSOCIETY.sp_facturar
+GO
 Create PROCEDURE FSOCIETY.sp_facturar (@id INT,
                                         @month INT,
 										@year INT)
@@ -1314,6 +1392,16 @@ Select Id,IdChofer,FechaHoraInicio,FechaHoraFin,CantKm
 END
 GO
 
+------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------PORCENTAJE------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
 IF (OBJECT_ID ('FSOCIETY.sp_crear_Rendicion') IS NOT NULL)
 	DROP PROCEDURE FSOCIETY.sp_crear_Rendicion
 GO
@@ -1330,6 +1418,22 @@ AS BEGIN
 	else
 		begin
 			return 2602
+		end
+	declare @idrendicion int;
+	declare @ganancia int = 0.2;
+	select Id= @idrendicion from FSOCIETY.Rendicion where IdChofer=@idChofer and cast(Fecha as date) = cast(@fecha as date) --and ImporteTotal = 7.01
+/*	if (@idrendicion is null)
+		begin
+			return 2602
+		end
+	else*/
+		begin
+			insert into FSOCIETY.RendicionViaje 
+			Select v.id as IdViaje ,@idrendicion,(t.Precio_Base + v.CantKm*t.Valor_Km)*@ganancia as Total from 
+					FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join 
+					FSOCIETY.Autos a on a.IdChofer = c.Id join
+					FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join 
+					FSOCIETY.Turnos t on ta.IdTurno = t.Id  where c.id = @idChofer and CAST(v.FechaHoraInicio as date) =@fecha 
 		end
 	if (@@ERROR !=0)
         ROLLBACK TRANSACTION T1;
@@ -1392,3 +1496,6 @@ from #totales
 where  FSOCIETY.Facturacion.Id = #totales.id
 
 drop table #totales
+
+go
+
