@@ -486,7 +486,7 @@ SELECT 1, Id FROM FSOCIETY.Funcionalidades
 GO
 
 INSERT INTO FSOCIETY.RolFuncionalidades(IdRol,IdFuncionalidad)
-VALUES(3,10),(3,13)
+VALUES(3,10),(3,13),(2,12),(2,10),(2,11)
 
 GO
 
