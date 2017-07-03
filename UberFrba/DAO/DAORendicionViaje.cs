@@ -13,7 +13,7 @@ namespace UberFrba.Dao
     class DAORendicionViaje
     {
         private DataBaseConnector connector;
-        private double ganancia = 0.2;
+        private string ganancia = "0.2";
 
       public  DAORendicionViaje()
         {
@@ -35,7 +35,7 @@ namespace UberFrba.Dao
 
         private string getRendicionTotalQuery(int idechofert, string nt)
         {
-            return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  group by t.Precio_Base , v.CantKm,t.Valor_Km ,v.FechaHoraInicio, c.Id having c.id = " + idechofert + "and CAST(v.FechaHoraInicio as date) ='" + nt + "';";
+            return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  group by v.IdChofer,c.Id,v.FechaHoraInicio having c.id = " + idechofert + "and CAST(v.FechaHoraInicio as date) ='" + nt + "';";
         }
 
         public List<ViajeChofer> getviajesbyfecha(string fecha, int idturno)
