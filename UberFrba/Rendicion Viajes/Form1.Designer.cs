@@ -258,6 +258,7 @@
             // fechaRendicion
             // 
             this.fechaRendicion.CustomFormat = "yyyy-MM-dd";
+            this.fechaRendicion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.fechaRendicion.Location = new System.Drawing.Point(133, 19);
             this.fechaRendicion.Name = "fechaRendicion";
             this.fechaRendicion.Size = new System.Drawing.Size(216, 20);

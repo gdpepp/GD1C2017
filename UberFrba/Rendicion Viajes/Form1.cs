@@ -27,15 +27,17 @@ namespace UberFrba.Rendicion_Viajes
         private int precalculo = 0;
         private int idturno =0;
         private string fecha;
+         
         
     
 
         public RendicionViaje()
         {
             InitializeComponent();
-            idechofer = 0;
+            
             
              user = UserLogin.getInstance().User;
+             idechofer = user.getId();
             if (user.getRol().getId().Equals(1))
             {
                 cargarTodo();
@@ -55,36 +57,46 @@ namespace UberFrba.Rendicion_Viajes
             this.dao = new DAOViajes();
             this.tur = new DAOAutomovil();
             this.daoren = new DAORendicionViaje();
-         //   turnos = tur.getAllTurn();
             this.cbTurno.Enabled = false;
             this.comboChofer.Enabled = false;
             this.btCalcular.Enabled = false;
             this.btRendir.Enabled = false;
             this.fechaRendicion.Enabled = true;
-          //  setComboTurno();
+            turnos = tur.getAllTurn();
+            setComboTurno();
+            ViajeChofer c = daoren.getviajessinturno(this.idechofer).First() ;
+            this.idechofer = c.getId();
+            this.txtCNombre.Text = c.getName();
+            this.txtCApellido.Text = c.getLastname();
+            this.txtCDoc.Text = c.getDoc();
+            this.txtCTel.Text = c.getPhone();
+            this.txtCMail.Text = c.getEmail();
+            this.dtCFecha.Value = c.getDate();
+            this.btCalcular.Enabled = true;
+            dgViajesRealizados.DataSource = null;
+            dgMontoTotal.DataSource = null;
+            //dgViajesRealizados.Refresh();
+            //dgMontoTotal.Refresh();
 
-            this.cbTurno.Enabled = false;
-     //       choferes = daoren.getviajessinturno(user.getId() , this.fecha);// buscar el chofer
-       //     ViajeChofer c = choferes.First();
-         ///   this.txtCNombre.Text = c.getName();
-//            this.txtCApellido.Text = c.getLastname();
- //           this.txtCDoc.Text = c.getDoc();
-//            this.txtCTel.Text = c.getPhone();
-// /           this.txtCMail.Text = c.getEmail();
-  //          this.dtCFecha.Value = c.getDate();
-    //        this.idechofer = c.getId();
-      //      this.btCalcular.Enabled = true;
+            
+
         }
         private void cargarviajesdelusuario(){
 
-            this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
+            
             this.fechaRendicion.Enabled = false;
+            this.btCalcular.Enabled = false;
             //choferes = dao.getAllDrivers();
+            //this.fechaRendicion.Value = DateTime.Today;
             choferes = daoren.getviajesbyfechasinturno(this.fecha, this.idechofer);
-            setComboCHofer();
-            if (choferes.Count > 0)
+             if (choferes.Count > 0)
             {
                 generarRendicion();
+                if (daoren.existren(this.fecha, this.idechofer)) { }
+                else
+                {
+                    this.btRendir.Enabled = true;
+                }
             }
             else
             {
@@ -108,6 +120,10 @@ namespace UberFrba.Rendicion_Viajes
             this.btRendir.Enabled = false;
             this.fechaRendicion.Enabled = true;
             setComboTurno();
+            dgViajesRealizados.DataSource = null;
+            dgMontoTotal.DataSource = null;
+            //dgViajesRealizados.Refresh();
+            //dgMontoTotal.Refresh();
         }
 
 
@@ -161,7 +177,13 @@ namespace UberFrba.Rendicion_Viajes
         private bool datosFaltantes()
         {
             if (this.cbTurno.Text == "" || this.fechaRendicion.Value == DateTime.Today || this.comboChofer.Text == "")
-                return true;
+                if (user.getRol().getId().Equals(1))
+                {
+                    return true;
+                }
+                    else
+                {return false;
+                }
             else
                 return false;
         }
@@ -178,17 +200,34 @@ namespace UberFrba.Rendicion_Viajes
                 this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
                 this.fechaRendicion.Enabled = false;
             //choferes = dao.getAllDrivers();
-                choferes = daoren.getviajesbyfecha(this.fecha , this.idturno);
-                if (choferes.Count > 0)
+
+                if (user.getRol().getId().Equals(1))
                 {
-                    setComboCHofer();
-                    this.comboChofer.Enabled = true;
+                    choferes = daoren.getviajesbyfecha(this.fecha, this.idturno);
+                    if (choferes.Count > 0)
+                    {
+                        setComboCHofer();
+                        this.comboChofer.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("en esta fecha y turno no hay choferes para rendir");
+                        cargarTodo();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("en esta fecha y turno no hay choferes para rendir");
-                    cargarTodo(); 
+
+                    cargarviajesdelusuario();
+                    // this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
+                    //choferes = daoren.getviajessinturno(user.getId(), this.fecha);
+
                 }
+
+
+
+
+
         }
 
         private void choferesconviaje()
@@ -242,29 +281,22 @@ namespace UberFrba.Rendicion_Viajes
 
         private void fechaRendicion_ValueChanged(object sender, EventArgs e)
         {
-            this.cbTurno.Enabled = true;
-            if (user.getRol().getId().Equals(1))
-            { }
-            else
-            {
-                
-                if (this.fechaRendicion.Value == DateTime.Today) { }
-                else
-                {
-                    cargarviajesdelusuario();
-                   // this.fecha = fechaRendicion.Value.ToString("yyyy-MM-dd");
-                    //choferes = daoren.getviajessinturno(user.getId(), this.fecha);
-                }
-            }
-           
+            this.cbTurno.Enabled = true;           
         }
 
         private void btNewcarga_Click(object sender, EventArgs e)
         {
-            cargarTodo();
+            if (user.getRol().getId().Equals(1))
+            {
+                cargarTodo();
+            }
+            else 
+            {
+                cargarPorUsuario();
+            }
         }
 
-        private void groupdatosRendicion_Enter(object sender, EventArgs e)
+      private void groupdatosRendicion_Enter(object sender, EventArgs e)
         {
 
         }
