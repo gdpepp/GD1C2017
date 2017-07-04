@@ -42,6 +42,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.groupdatosRendicion = new System.Windows.Forms.GroupBox();
+            this.btNewcarga = new System.Windows.Forms.Button();
             this.comboChofer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btCalcular = new System.Windows.Forms.Button();
@@ -54,7 +55,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dgViajesRealizados = new System.Windows.Forms.DataGridView();
             this.btRendir = new System.Windows.Forms.Button();
-            this.btNewcarga = new System.Windows.Forms.Button();
             this.grupoChofer.SuspendLayout();
             this.groupdatosRendicion.SuspendLayout();
             this.grendicion.SuspendLayout();
@@ -197,6 +197,17 @@
             this.groupdatosRendicion.TabIndex = 26;
             this.groupdatosRendicion.TabStop = false;
             this.groupdatosRendicion.Text = "Datos de la Rendicion";
+            this.groupdatosRendicion.Enter += new System.EventHandler(this.groupdatosRendicion_Enter);
+            // 
+            // btNewcarga
+            // 
+            this.btNewcarga.Location = new System.Drawing.Point(6, 170);
+            this.btNewcarga.Name = "btNewcarga";
+            this.btNewcarga.Size = new System.Drawing.Size(94, 33);
+            this.btNewcarga.TabIndex = 21;
+            this.btNewcarga.Text = "Volver a cargar";
+            this.btNewcarga.UseVisualStyleBackColor = true;
+            this.btNewcarga.Click += new System.EventHandler(this.btNewcarga_Click);
             // 
             // comboChofer
             // 
@@ -247,6 +258,7 @@
             // fechaRendicion
             // 
             this.fechaRendicion.CustomFormat = "yyyy-MM-dd";
+            this.fechaRendicion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.fechaRendicion.Location = new System.Drawing.Point(133, 19);
             this.fechaRendicion.Name = "fechaRendicion";
             this.fechaRendicion.Size = new System.Drawing.Size(216, 20);
@@ -310,16 +322,6 @@
             this.btRendir.Text = "Rendir";
             this.btRendir.UseVisualStyleBackColor = true;
             this.btRendir.Click += new System.EventHandler(this.btRendir_Click);
-            // 
-            // btNewcarga
-            // 
-            this.btNewcarga.Location = new System.Drawing.Point(6, 170);
-            this.btNewcarga.Name = "btNewcarga";
-            this.btNewcarga.Size = new System.Drawing.Size(94, 33);
-            this.btNewcarga.TabIndex = 21;
-            this.btNewcarga.Text = "Volver a cargar";
-            this.btNewcarga.UseVisualStyleBackColor = true;
-            this.btNewcarga.Click += new System.EventHandler(this.btNewcarga_Click);
             // 
             // RendicionViaje
             // 
