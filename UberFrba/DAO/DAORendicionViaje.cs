@@ -45,14 +45,16 @@ namespace UberFrba.Dao
         private string getSelectRendicionViajeQuery(int idechofer, string n, int idturno)
         {
             string betwen = " datepart(hh, v.FechaHoraInicio) between (select Hora_De_Inicio from FSOCIETY.Turnos where id =" + idturno + ") and (select Hora_De_Finalizacion from FSOCIETY.Turnos where id =" + idturno + ") and";
-            string subquery = "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km)*"+this.ganancia+" as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  where c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
+            string subquery = "Select v.FechaHoraInicio,v.FechaHoraFin,v.CantKm,t.Precio_Base,t.Valor_Km, (t.Precio_Base + v.CantKm*t.Valor_Km)*" + this.ganancia + " as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id and datepart(HH ,v.FechaHoraInicio) between t.Hora_De_Inicio and t.Hora_De_Finalizacion where c.id = " + idechofer + "and cast(CAST(v.FechaHoraInicio as date)as char) ='" + n + "';";
 
             return subquery;
             }
 
         private string getRendicionTotalQuery(int idechofert, string nt)
         {
-            return "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km) as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id  group by v.IdChofer,c.Id,v.FechaHoraInicio having c.id = " + idechofert + "and CAST(v.FechaHoraInicio as date) ='" + nt + "';";
+            
+              string subq =  "Select sum(t.Precio_Base + v.CantKm*t.Valor_Km)*"+this.ganancia+" as Total from FSOCIETY.Chofer c  join FSOCIETY.Viaje v on v.IdChofer = c.Id  join FSOCIETY.Autos a on a.IdChofer = c.Id join FSOCIETY.AutosTurnos ta on ta.IdAuto = a.Id join FSOCIETY.Turnos t on ta.IdTurno = t.Id and datepart(HH ,v.FechaHoraInicio) between t.Hora_De_Inicio and t.Hora_De_Finalizacion  group by v.IdChofer,c.Id,v.FechaHoraInicio having c.id = " + idechofert + "and CAST(v.FechaHoraInicio as date) ='" + nt + "';";
+              return subq;
         }
 
         public List<ViajeChofer> getviajesbyfecha(string fecha, int idturno)

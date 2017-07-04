@@ -72,7 +72,7 @@ namespace UberFrba.Rendicion_Viajes
             this.txtCTel.Text = c.getPhone();
             this.txtCMail.Text = c.getEmail();
             this.dtCFecha.Value = c.getDate();
-            this.btCalcular.Enabled = true;
+            //this.btCalcular.Enabled = true;
             dgViajesRealizados.DataSource = null;
             dgMontoTotal.DataSource = null;
             //dgViajesRealizados.Refresh();
