@@ -64,20 +64,28 @@ namespace UberFrba.Rendicion_Viajes
             this.fechaRendicion.Enabled = true;
             turnos = tur.getAllTurn();
             setComboTurno();
-            ViajeChofer c = daoren.getviajessinturno(this.idechofer).First() ;
-            this.idechofer = c.getId();
-            this.txtCNombre.Text = c.getName();
-            this.txtCApellido.Text = c.getLastname();
-            this.txtCDoc.Text = c.getDoc();
-            this.txtCTel.Text = c.getPhone();
-            this.txtCMail.Text = c.getEmail();
-            this.dtCFecha.Value = c.getDate();
-            //this.btCalcular.Enabled = true;
-            dgViajesRealizados.DataSource = null;
-            dgMontoTotal.DataSource = null;
-            //dgViajesRealizados.Refresh();
-            //dgMontoTotal.Refresh();
-
+            List<ViajeChofer> ca = daoren.getviajessinturno(this.idechofer) ;
+            if (ca.Count().Equals(0)) 
+            {
+                MessageBox.Show("Usted no posee viajes");
+                this.fechaRendicion.Enabled = false;
+            }
+            else
+            {
+                ViajeChofer c = ca.First();
+                this.idechofer = c.getId();
+                this.txtCNombre.Text = c.getName();
+                this.txtCApellido.Text = c.getLastname();
+                this.txtCDoc.Text = c.getDoc();
+                this.txtCTel.Text = c.getPhone();
+                this.txtCMail.Text = c.getEmail();
+                this.dtCFecha.Value = c.getDate();
+                //this.btCalcular.Enabled = true;
+                dgViajesRealizados.DataSource = null;
+                dgMontoTotal.DataSource = null;
+                //dgViajesRealizados.Refresh();
+                //dgMontoTotal.Refresh();
+            }
             
 
         }
