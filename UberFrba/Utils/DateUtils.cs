@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace UberFrba.Utils
 {
@@ -13,6 +14,10 @@ namespace UberFrba.Utils
 
         public static String stringFromDate(DateTime time) {
             return time.ToString(format);
+        }
+
+        public static DateTime getDateFromConfig() {
+            return DateTime.Parse(ConfigurationManager.AppSettings["current_date"].ToString());
         }
 
     }

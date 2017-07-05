@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UberFrba.Utils;
 using UberFrba.Mapping;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace UberFrba.Dao
 {
@@ -20,8 +21,7 @@ namespace UberFrba.Dao
 
 
         public List<ClienteFactura> getClientsToSelect() {
-            DateTime now = DateTime.Now;
-            //DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = 12 and YEAR(v.FechaHoraInicio) = 2015");
+            DateTime now = DateUtils.getDateFromConfig();
             DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where MONTH(v.FechaHoraInicio) = '"+ now.Month + "' and YEAR(v.FechaHoraInicio) = '"+ now.Year +"'");
             List<ClienteFactura> list = new List<ClienteFactura>();
             foreach (DataRow r in dt.Rows)
@@ -34,7 +34,7 @@ namespace UberFrba.Dao
 
         public List<ClienteFactura> getClientToSelect(Usuario user)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateUtils.getDateFromConfig();
             DataTable dt = db.select_query("Select distinct c.Id,p.Nombre, p.Apellido from FSOCIETY.Viaje as v join FSOCIETY.Cliente as c on v.IdCliente=c.Id join FSOCIETY.Usuarios as u on u.Id = c.Id join FSOCIETY.Personas as p on p.Id=u.IdPersona where c.Id = '" + user.getId() + "' and MONTH(v.FechaHoraInicio) = '" + now.Month + "' and YEAR(v.FechaHoraInicio) = '" + now.Year + "'");
             List<ClienteFactura> list = new List<ClienteFactura>();
             foreach (DataRow r in dt.Rows)
@@ -45,7 +45,7 @@ namespace UberFrba.Dao
         }
 
         public void generateInvoice(Int32 id) {
-            DateTime now = DateTime.Now;
+            DateTime now = DateUtils.getDateFromConfig();
 
             try
             {   
@@ -65,8 +65,8 @@ namespace UberFrba.Dao
             
         }
 
-        public Factura getInvoice(Int32 id) { 
-            DateTime now = DateTime.Now;
+        public Factura getInvoice(Int32 id) {
+            DateTime now = DateUtils.getDateFromConfig();
             DataTable table = db.select_query("select Id,Importe from FSOCIETY.Facturacion where IdCliente = " + id + " and MONTH(FechaInicio) = " + now.Month +" and YEAR(FechaInicio) = " + now.Year);
             if (table.Rows.Count == 0) {
                 return null;

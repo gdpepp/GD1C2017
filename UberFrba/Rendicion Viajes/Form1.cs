@@ -51,7 +51,7 @@ namespace UberFrba.Rendicion_Viajes
 
         private void cargarPorUsuario()
         {
-            this.fechaRendicion.Value = DateTime.Today;
+            this.fechaRendicion.Value = DateUtils.getDateFromConfig();
             this.choferes = new List<ViajeChofer>();
             this.turnos = new List<Turno>();
             this.dao = new DAOViajes();

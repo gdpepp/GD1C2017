@@ -150,7 +150,7 @@ namespace UberFrba.Registro_Viajes
 
         private void setupDates()
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateUtils.getDateFromConfig();
             this.dtInicio.Value = now;
             this.dtFin.Value = now.AddMinutes(10);
         }
