@@ -1,0 +1,1 @@
+sqlcmd -S IE11WIN7\SQLSERVER2012 -i 1-script_creacion_tablas.sql  -a 32767 -o resultado_output.txt
