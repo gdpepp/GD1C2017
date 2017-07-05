@@ -136,6 +136,7 @@
             this.fieldName.Name = "fieldName";
             this.fieldName.Size = new System.Drawing.Size(123, 20);
             this.fieldName.TabIndex = 50;
+            this.fieldName.TextChanged += new System.EventHandler(this.fieldName_TextChanged);
             // 
             // ABMChofer
             // 

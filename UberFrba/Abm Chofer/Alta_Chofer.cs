@@ -76,27 +76,48 @@ namespace UberFrba.Abm_Chofer
             {
                 if (this.checkDNInot0())
                 {
-
-                    Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
-                    Chofer chofer = new Chofer(this.id, this.tb_telefono.Text, this.tb_mail.Text, this.cbHabilitado.Checked);
-
-                    try
+                    if (sqlinject()) 
                     {
-                        pers.crearPersona(persona);
-                        chofer.setIdChofer(pers.getIdPersona(persona));
-                        dao.crearChofer(chofer);
-                        success = true;
+                        MessageBox.Show("Hayc campos con caracteres invalidos");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                    }
+                    else
+                        {
+                        Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
+                        Chofer chofer = new Chofer(this.id, this.tb_telefono.Text, this.tb_mail.Text, this.cbHabilitado.Checked);
 
-                    MessageBox.Show("El cliente fue creado exitosamente");
-                    this.Close();
+                        try
+                        {
+                            pers.crearPersona(persona);
+                            chofer.setIdChofer(pers.getIdPersona(persona));
+                            dao.crearChofer(chofer);
+                            success = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message.ToString());
+                        }
+
+                        MessageBox.Show("El cliente fue creado exitosamente");
+                        this.Close();
+                    }
+                    return success;
                 }
+                return success;
             }
             return success;
+        }
+
+        private bool sqlinject()
+        {
+            string sqlcontain =this.tb_nombre.Text + this.tb_apellido.Text + this.tb_DNI.Text + this.tb_calle.Text + this.birthTimePicker.Value + this.id + this.tb_telefono.Text + this.tb_mail.Text ;
+            if (sqlcontain.Contains("%") || sqlcontain.Contains("'") || sqlcontain.Contains("--"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -118,14 +139,21 @@ namespace UberFrba.Abm_Chofer
 
         private void updateOrDeleteChofer(DAOChofer dao)
         {
-            Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
-            Chofer chofer = new Chofer(this.id, this.tb_telefono.Text, this.tb_mail.Text, this.cbHabilitado.Checked);
+            if (sqlinject())
+            {
+                MessageBox.Show("Hayc campos con caracteres invalidos");
+            }
+            else
+            {
+                Persona persona = new Persona(this.tb_nombre.Text, this.tb_apellido.Text, this.tb_DNI.Text, this.tb_calle.Text, this.birthTimePicker.Value, this.id);
+                Chofer chofer = new Chofer(this.id, this.tb_telefono.Text, this.tb_mail.Text, this.cbHabilitado.Checked);
 
-            verifyFields(pers,dao, persona, chofer);
-            pers.modificarPersona(persona);
-            dao.modificarChofer(chofer);
+                verifyFields(pers, dao, persona, chofer);
+                pers.modificarPersona(persona);
+                dao.modificarChofer(chofer);
 
-            MessageBox.Show("Cambios guardados");
+                MessageBox.Show("Cambios guardados");
+            }
         }
 
         private void bt_volver_abm_Click(object sender, EventArgs e)

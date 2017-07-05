@@ -37,9 +37,18 @@ namespace UberFrba.Abm_Chofer
             else
             {
 
-
-                this.dataGridView1.DataSource = dao.buscarChofer(this.fieldDocument.Text, this.fieldName.Text, this.fieldSurname.Text);
-                //todo error loco            
+                string dni = this.fieldDocument.Text;
+                string nombre = this.fieldName.Text;
+                string apellido = this.fieldSurname.Text;
+                if (dni.Contains("'") || nombre.Contains("'") || apellido.Contains("'"))
+                     {
+                         MessageBox.Show("No se puede realizar una busqueda caracter no valido");
+                     }
+                else
+                    {
+                    this.dataGridView1.DataSource = dao.buscarChofer(dni, nombre, apellido );
+                    }
+            
             }
            
 
@@ -115,6 +124,11 @@ namespace UberFrba.Abm_Chofer
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void fieldName_TextChanged(object sender, EventArgs e)
         {
 
         }
